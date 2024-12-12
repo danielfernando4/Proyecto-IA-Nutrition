@@ -53,6 +53,13 @@ body {
   transition: color 0.3s;
 }
 
+.menu ul li a img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 .menu ul li a:hover {
   color: #007BFF;
 }
