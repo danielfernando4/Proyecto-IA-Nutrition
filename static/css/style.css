@@ -2,7 +2,7 @@
 body {
 
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: ui-sans-serif,system-ui,sans-serif;
   font-weight: 4000;
   display: flex;
   height: 100vh;
@@ -14,23 +14,31 @@ body {
   width: 100%;
 }
 
+
 /* Sidebar Styles */
-  .sidebar {
-    width: 250px;
-    font-weight: 400;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-  }
+.sidebar {
+  width: 190px;
+  font-weight: 400;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
+  padding-bottom: 30px;
+}
+
+.logo img {
+  margin-right: 10px;
+  width: 70px; 
+  height: 70px; 
 }
 
 #menu{
@@ -42,15 +50,16 @@ body {
   padding: 0;
 }
 
-.menu ul li {
-  margin-bottom: 15px;
-}
-
 .menu ul li a {
+  display: flex; 
+  align-items: start; 
+  padding: 10px; 
   text-decoration: none;
   color: #333;
-  font-size: 16px;
-  transition: color 0.3s;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s, box-shadow 0.3s;
 }
 
 .menu ul li a img {
@@ -61,14 +70,14 @@ body {
 }
 
 .menu ul li a:hover {
-  color: #007BFF;
+  /* color: #007BFF; */
+  box-shadow: 0 4px 8px rgba(20, 19, 19, 0.107); 
+  background-color: rgba(60, 55, 55, 0.05);
+  border-radius: 10px;
 }
 
 .extras a {
   display: block;
-  text-decoration: none;
-  color: #007BFF;
-  margin-top: 10px;
 }
 
 footer {
