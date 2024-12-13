@@ -17,7 +17,7 @@ def base():
 def login():
     return render_template("login.html")
 
-@app.route("/config")
+@app.route("/config.html")
 def config():
     return render_template("config.html")
 
