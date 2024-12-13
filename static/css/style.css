@@ -182,12 +182,11 @@ footer button:hover {
 
 .dropdown-menu {
   display: none; /* Oculto por defecto */
-  position: absolute;
   top: 100%; /* Alinea la parte superior del menú con la parte inferior del perfil */
   left: 0; /* Alinea el menú con el lado izquierdo del perfil */
-  background-color: #fff;
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
   z-index: 1000;
   margin-top: 10px; /* Espacio entre el perfil y el menú */
