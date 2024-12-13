@@ -1,15 +1,11 @@
 #app main
-<<<<<<< HEAD:main.py
+
 
 from flask import Flask, render_template, redirect, url_for
-=======
-from flask import Flask, render_template
 from configdb import Configdb
 from basemodels import Comida, PlanNutricional, Usuario, db
 
 
-
->>>>>>> fe470124b9ff66dcd0088b1266476605e05ab3df:application.py
 app = Flask(__name__, template_folder="templates")
 
 
