@@ -16,7 +16,7 @@ def base():
 def index2():
     return render_template("index2.html")
 
-@app.route("/login")
+@app.route("/login.html")
 def login():
     return render_template("login.html")
 
