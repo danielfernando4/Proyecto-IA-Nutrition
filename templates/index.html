@@ -1,71 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mr. Cook - Mis Recetas</title>
-    <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="static/logo/logo.png" alt="Logo Icon"> EatWiseIA
-            </div>
+{% extends "base.html"%}
 
-            <div class="section-title">
-                Mi sección
-            </div>
+{% block content %}
 
-            <nav class="menu">
-                <ul>
-                    <li><a href="/templates/login.html"><img src="static/icons/calendar.png" alt="Plan Icon"> Plan nutricional</a></li>
-                    <li><a href="#"><img src="static/icons/neuronal.png" alt="Generar Icon"> Generar IA</a></li>
-                    <li><a href="#"><img src="static/icons/chef.png" alt="Descubre Icon"> Descubre platillos</a></li>
-                </ul>
-            </nav>
-
-            <div class="extras">
-                <a href="#">Descubra</a>
-                <a href="#">Buscar usuarios</a>
-            </div>
-
-
-            <footer>
-                <p>Empieza tu vida más sana</p>
-                <button>Empieza ahora mismo</button>
-                <div class="user-profile">
-                    <img src="https://dus6dayednven.cloudfront.net/app/uploads/2022/05/1-DSC00855-Editar_baja.jpg" alt="User Avatar">
-                    <span>Cesar Pantoja</span>
-                    
-                </div>
-            </footer>
-        </aside>
-
-
-        <main class="main-content">
-            <header>
-                <h1>Mis recetas</h1>
-                <div class="search-bar">
-                    <input type="text" placeholder="Busca por título, ingredientes o contenido...">
-                    <button class="filter-btn">Filtros</button>
-                </div>
-            </header>
-            
-            <section class="recipes">
-                {%for a in range(1,10)%}
-                <div class="recipe">
-                    <img src="static/images/comida1.jpg" alt="Pollo al Curry con Coco y Espinacas">
-                    <h2>Pollo al Curry con Coco y Espinacas</h2>
-                </div>
-                {%endfor%}
-                <div class="recipe">
-                    <img src="https://www.goya.com/media/6146/shredded-chicken-tacos-new.jpg?quality=80" alt="Tacos de Pollo a la Parrilla con Salsa Fresca">
-                    <h2>Tacos de Pollo a la Parrilla con Salsa Fresca</h2>
-                </div>
-            </section>
-        </main>
+<section class="recipes">
+    {%for a in range(1,10)%}
+    <div class="recipe">
+        <img src="static/images/comida1.jpg" alt="Pollo al Curry con Coco y Espinacas">
+        <h2>Pollo al Curry con Coco y Espinacas</h2>
     </div>
-    <script src="script.js"></script>
-</body>
-</html>
+    {%endfor%}
+    <div class="recipe">
+        <img src="https://www.goya.com/media/6146/shredded-chicken-tacos-new.jpg?quality=80" alt="Tacos de Pollo a la Parrilla con Salsa Fresca">
+        <h2>Tacos de Pollo a la Parrilla con Salsa Fresca</h2>
+    </div>
+</section>
+
+
+{% endblock%}
