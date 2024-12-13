@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EatWise IA</title>
+    
+    <!-- El archivo CSS base siempre estará presente -->
     <link rel="stylesheet" href="static/css/style.css">
+
+    <!-- Aquí se insertarán los archivos CSS adicionales -->
+    {% block css %}{% endblock %}
+
 </head>
 <body>
     <div class="container">
@@ -30,11 +36,9 @@
                 <a href="#">Buscar usuarios</a>
             </div>
 
-
             <footer>
                 <p>Empieza tu vida más sana</p>
                 <button>Empieza ahora mismo</button>
-                
             </footer>
 
             <ul class="user-menu">
@@ -56,13 +60,10 @@
             </ul>
         </aside>
 
-        
         <main class="main-content">
             {% block content %} 
-            
-            {% endblock%} 
+            {% endblock %} 
         </main>
- 
     </div>
     <script src="/static/js/drawer.js"></script>
 </body>
