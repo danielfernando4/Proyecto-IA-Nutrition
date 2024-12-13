@@ -17,5 +17,9 @@ def base():
 def login():
     return render_template("login.html")
 
+@app.route("/config")
+def config():
+    return render_template("config.html")
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5111, debug=True)
