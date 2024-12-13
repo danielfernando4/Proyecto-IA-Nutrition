@@ -1,12 +1,11 @@
 /* General Styles */
 body {
-
   margin: 0;
   font-family: ui-sans-serif,system-ui,sans-serif;
   font-weight: 4000;
   display: flex;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-color: #FAFAF9;
 }
 
 .container {
@@ -19,12 +18,18 @@ body {
 .sidebar {
   width: 190px;
   font-weight: 400;
-  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: start;
-  padding: 20px;
+  padding: 18px;
   border-right: 1px solid #ddd;
+}
+
+.section-title {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #696565; 
 }
 
 .logo {
@@ -32,7 +37,7 @@ body {
   align-items: center;
   font-size: 20px;
   font-weight: 700;
-  padding-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .logo img {
@@ -47,6 +52,8 @@ body {
 
 .menu ul {
   list-style: none;
+  margin-block-start: 5px;
+  margin-block-end: 5px;
   padding: 0;
 }
 
@@ -72,7 +79,7 @@ body {
 .menu ul li a:hover {
   /* color: #007BFF; */
   box-shadow: 0 4px 8px rgba(20, 19, 19, 0.107); 
-  background-color: rgba(60, 55, 55, 0.05);
+  background-color: rgba(56, 56, 56, 0.05);
   border-radius: 10px;
 }
 
