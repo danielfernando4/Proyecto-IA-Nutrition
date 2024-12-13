@@ -1,4 +1,4 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 
 {% block content %}
 <section class="plan-continer">
@@ -7,17 +7,84 @@
     </div>
 </section>
 
-<section class="plan2">
-    <div class="plan-content">
-        <div class="plan-card">
-            <div class="plan-card-header">
-                <h2>Desayuno</h2>
-            </div>
-            <div class="plan-card-body">
-                <h3>Alimentos</h3>
-            </div>
-        </div>
+<section class="plan-continer2">
+    <div class="plan-title2">
+        <h2>Desayunos</h2>
     </div>
-</section>  
+</section>
 
-{% endblock%}
+<section class="plan-thumbnails">
+    <!-- Los thumbnails de los platos se generarán dinámicamente aquí -->
+</section>
+
+<section class="plan-details" id="details-section" style="display:none;">
+    <h2>Detalles del Plato</h2>
+    <img id="plato-imagen" src="" alt="Imagen del plato" style="width:100%; height:auto;">
+    <h3>Ingredientes:</h3>
+    <ul id="plato-ingredientes"></ul>
+    <h3>Propiedades:</h3>
+    <ul id="plato-propiedades"></ul>
+</section>
+
+<script>
+// Datos de los platos (ejemplo)
+const platos = [
+  {
+    nombre: 'Plato 1',
+    imagen: '/static/images/comida1.jpg',
+    dia: 'Lunes',
+    propiedades: ['Proteínas: 20g', 'Grasas: 10g', 'Calorías: 350'],
+    ingredientes: ['Ingrediente 1', 'Ingrediente 2', 'Ingrediente 3']
+  },
+  {
+    nombre: 'Plato 2',
+    imagen: '/static/images/comida10.jpg',
+    dia: 'Martes',
+    propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
+    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
+  },
+  // Puedes añadir más platos aquí
+];
+
+// Función para mostrar los detalles de un plato
+function mostrarDetalles(plato) {
+  const detallesSection = document.getElementById('details-section');
+  const imagen = document.getElementById('plato-imagen');
+  const ingredientesList = document.getElementById('plato-ingredientes');
+  const propiedadesList = document.getElementById('plato-propiedades');
+
+  // Rellenar los datos del plato
+  imagen.src = plato.imagen;
+  ingredientesList.innerHTML = '';
+  propiedadesList.innerHTML = '';
+
+  plato.ingredientes.forEach(ingrediente => {
+    const li = document.createElement('li');
+    li.textContent = ingrediente;
+    ingredientesList.appendChild(li);
+  });
+
+  plato.propiedades.forEach(propiedad => {
+    const li = document.createElement('li');
+    li.textContent = propiedad;
+    propiedadesList.appendChild(li);
+  });
+
+  // Mostrar la sección de detalles
+  detallesSection.style.display = 'block';
+}
+
+// Crear los thumbnails dinámicamente
+const thumbnailsContainer = document.querySelector('.plan-thumbnails');
+platos.forEach(plato => {
+  const thumbnail = document.createElement('div');
+  thumbnail.classList.add('thumbnail');
+  thumbnail.innerHTML = `
+    <img src="${plato.imagen}" alt="${plato.nombre}" style="width:100px; height:100px;">
+    <div class="thumbnail-nombre">${plato.nombre}</div>
+  `;
+  thumbnail.addEventListener('click', () => mostrarDetalles(plato));
+  thumbnailsContainer.appendChild(thumbnail);
+});
+</script>
+{% endblock %}
