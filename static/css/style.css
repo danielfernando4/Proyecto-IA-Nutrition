@@ -30,6 +30,7 @@ body {
   justify-content: start;
   padding: 18px;
   border-right: 1px solid #ddd;
+  overflow: hidden;
 }
 
 .section-title {
@@ -179,6 +180,31 @@ footer button:hover {
   border-radius: 10px;
 }
 
+.dropdown-menu {
+  display: none; /* Oculto por defecto */
+  position: absolute;
+  top: 100%; /* Alinea la parte superior del menú con la parte inferior del perfil */
+  left: 0; /* Alinea el menú con el lado izquierdo del perfil */
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1000;
+  margin-top: 10px; /* Espacio entre el perfil y el menú */
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: background-color 0.1s;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f4f4f4;
+}
 .main-content {
   flex: 1;
   padding: 20px;
