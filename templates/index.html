@@ -14,7 +14,7 @@
 </section>
 
 <section class="plan-thumbnails">
-    <!-- Los thumbnails de los platos se generarán dinámicamente aquí -->
+    
 </section>
 
 <section class="plan-details" id="details-section" style="display:none;">
@@ -27,7 +27,7 @@
 </section>
 
 <script>
-// Datos de los platos (ejemplo)
+
 const platos = [
   {
     nombre: 'Plato 1',
@@ -43,17 +43,16 @@ const platos = [
     propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
     ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
   },
-  // Puedes añadir más platos aquí
+  
 ];
 
-// Función para mostrar los detalles de un plato
 function mostrarDetalles(plato) {
   const detallesSection = document.getElementById('details-section');
   const imagen = document.getElementById('plato-imagen');
   const ingredientesList = document.getElementById('plato-ingredientes');
   const propiedadesList = document.getElementById('plato-propiedades');
 
-  // Rellenar los datos del plato
+ 
   imagen.src = plato.imagen;
   ingredientesList.innerHTML = '';
   propiedadesList.innerHTML = '';
@@ -70,11 +69,10 @@ function mostrarDetalles(plato) {
     propiedadesList.appendChild(li);
   });
 
-  // Mostrar la sección de detalles
   detallesSection.style.display = 'block';
 }
 
-// Crear los thumbnails dinámicamente
+
 const thumbnailsContainer = document.querySelector('.plan-thumbnails');
 platos.forEach(plato => {
   const thumbnail = document.createElement('div');
