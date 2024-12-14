@@ -36,7 +36,7 @@ body {
 
 .section-title {
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   color: #696565; 
 }
@@ -81,7 +81,7 @@ body {
   text-decoration: none;
   color: #333;
   text-overflow: ellipsis;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   transition: color 0.3s, box-shadow 0.1s;
 }
@@ -142,7 +142,7 @@ footer button:hover {
   padding: 7px;
   text-decoration: none;
   color: #333;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   transition: color 0.1s, box-shadow 0.1s, background-color 0.1s;
 }
@@ -160,7 +160,7 @@ footer button:hover {
 }
 
 .user-menu .user-profile a small {
-  font-size: 12px; 
+  font-size: 14px; 
   color: #888; 
 }
 
@@ -195,7 +195,7 @@ footer button:hover {
   padding: 10px;
   text-decoration: none;
   color: #333;
-  font-size: 14px;
+  font-size: 11px;
   transition: background-color 0.1s;
 }
 
