@@ -31,9 +31,6 @@ def index():
     return render_template("index.html")
 
 
-
-
-
 @app.route("/datos")
 def datos():
     comidas = Comida.query.all()

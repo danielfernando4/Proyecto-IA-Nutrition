@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+CO+Guides&family=Trade+Winds&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playwrite+CO+Guides&family=Trade+Winds&display=swap');
+
+
+.plan-continer {
+    display: flex;
+    flex-direction: column;
+    height: 15vh;
+    text-align: center; /* Centra texto */
+  }
+  
+  .plan-continer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(78deg, #ffffffd3 0%,#ffffffcc 100%), url(../icons/fruitsPlan.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    clip-path: polygon(100% 0, 100% 17%, 58% 14%, 17.7% 17%, 17.7% 0);
+    z-index: -1;
+  }
+  .plan-title {
+    font-size: 30px;
+    color: #14b56f;
+    font-family: "Trade Winds", system-ui;
+    margin-top: -15px;
+  } 
+  
+  .plan-title2 {
+    font-size: 30px;
+    color: #333;
+    font-family: "Parisienne", cursive;
+    margin-top: -25px;
+  }
+  
+  /* Agrega tus estilos CSS aquí */
+  .plan-details {
+      display: flex;
+      justify-content: space-between;
+  }
+  
+  .plan-day {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+  }
+  
+  .day-box {
+      padding: 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+  }
+  
+  .plan-properties, .plan-ingredients {
+      flex: 1;
+      margin: 10px;
+  }
+  
+  .plan-image {
+      flex: 2;
+      text-align: center;
+  }
+  
+  .plan-image img {
+      width: 100%;
+      height: auto;
+  }
+  
+  .thumbnail {
+      display: inline-block;
+      margin: 10px;
+      cursor: pointer;
+  }
+  
+  .thumbnail img {
+      width: 100px;
+      height: 100px;
+  }
+  
