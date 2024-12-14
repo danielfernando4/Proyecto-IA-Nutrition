@@ -1,8 +1,12 @@
 #app main
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="templates")
+
+@app.route("/generation") #& Decorador para mi puerto
+def generation():
+    return render_template("generation.html")
 
 @app.route("/base.html")
 def base():
@@ -20,6 +24,8 @@ def config():
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5111, debug=True)
