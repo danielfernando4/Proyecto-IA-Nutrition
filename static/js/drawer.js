@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
     });
 
-    document.addEventListener('click', function(event) {
+    document.addEventListenezr('click', function(event) {
         if (!userProfileLink.contains(event.target) && !dropdownMenu.contains(event.target)) {
             dropdownMenu.style.display = 'none';
         }
