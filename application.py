@@ -30,6 +30,14 @@ def config():
 def index():
     return render_template("index.html")
 
+<<<<<<< HEAD
+=======
+@app.route("/registro.html")
+def registro():
+    return render_template("registro.html")
+
+
+>>>>>>> 8991a9cb0b92baf4f4e58f8e33028e96a30c8e88
 
 @app.route("/datos")
 def datos():
