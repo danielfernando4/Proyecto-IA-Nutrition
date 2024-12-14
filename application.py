@@ -34,6 +34,9 @@ def datos():
     comidas = Comida.query.all()
     return '<br>'.join([f'ID: {comida.id_comida}, Nombre: {comida.nombre_comida}' for comida in comidas])
 
+@app.route("/descubre.html")
+def descubre():
+    return render_template("descubre.html")
 
 @app.route("/homepage.html")
 def homepage():
