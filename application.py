@@ -27,14 +27,7 @@ def config():
     return render_template("config.html")
 
 @app.route("/")
-def index():
-    return render_template("index.html")
-
-@app.route("/registro.html")
-def registro():
-    return render_template("registro.html")
-
-
+def index():    return render_template("index.html")
 
 @app.route("/datos")
 def datos():
