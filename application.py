@@ -1,8 +1,16 @@
 #app main
 
-from flask import Flask, render_template, request
+
+from flask import Flask, render_template, redirect, url_for
+from configdb import Configdb
+from basemodels import Comida, PlanNutricional, Usuario, db
+
 
 app = Flask(__name__, template_folder="templates")
+
+
+app.config.from_object(Configdb)
+db.init_app(app)
 
 @app.route("/generation") #& Decorador para mi puerto
 def generation():
@@ -22,8 +30,18 @@ def config():
     return render_template("config.html")
 
 @app.route("/")
-def index():
-    return render_template("index.html")
+def index():    return render_template("index.html")
+
+@app.route("/datos")
+def datos():
+    comidas = Comida.query.all()
+    return '<br>'.join([f'ID: {comida.id_comida}, Nombre: {comida.nombre_comida}' for comida in comidas])
+
+
+@app.route("/homepage.html")
+def homepage():
+    return render_template("homepage.html")
+
 
 
 

@@ -134,7 +134,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("assets/nut.jpg");
+  background: url("/static/back/fondo1.png");
   background-size: cover;
   background-position: center;
 }

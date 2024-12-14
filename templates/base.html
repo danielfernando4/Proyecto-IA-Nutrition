@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="static/css/style.css">
 
     <!-- Aquí se insertarán los archivos CSS adicionales -->
-    {% block css %}{% endblock %}
+    {% block css %} {% endblock %}
 
 </head>
 <body>
@@ -31,19 +31,9 @@
                 </ul>
             </nav>
 
-            <div class="extras">
-                <a href="#">Descubra</a>
-                <a href="#">Buscar usuarios</a>
-            </div>
-
-            <footer>
-                <p>Empieza tu vida más sana</p>
-                <button>Empieza ahora mismo</button>
-            </footer>
-
             <ul class="user-menu">
                 <li class="user-profile">
-                    <a href="/config.html">
+                    <a href="#" id="user-profile-link">
                         <img src="https://dus6dayednven.cloudfront.net/app/uploads/2022/05/1-DSC00855-Editar_baja.jpg" alt="User Avatar">
                         <div>
                             <span>Cesar Pantoja</span>
@@ -51,6 +41,11 @@
                         </div>
                         <img class="more-options" src="static/icons/prof.png" alt="More Options Icon">
                     </a>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <a href="/profile.html">Perfil</a>
+                        <a href="/settings.html">Configuración</a>
+                        <a href="/homepage.html">Cerrar sesión</a>
+                    </div>
                 </li>
             </ul>
         </aside>
@@ -60,6 +55,6 @@
             {% endblock %} 
         </main>
     </div>
-    <script src="script.js"></script>
+    <script src="/static/js/drawer.js"></script>
 </body>
 </html>

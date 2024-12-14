@@ -2,9 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-# Modelo Usuario
 class Usuario(db.Model):
-    __tablename__ = 'usuario'  # Nombre de la tabla en la base de datos
+    __tablename__ = 'usuario'
 
     id_usuario = db.Column(db.BigInteger, primary_key=True)
     nombre = db.Column(db.String(50))
@@ -16,15 +15,13 @@ class Usuario(db.Model):
     password_usuario = db.Column(db.String(60))
     nivel_actividad = db.Column(db.String(20))
 
-    # Relación con PlanNutricional
     planes_nutricionales = db.relationship('PlanNutricional', backref='usuario', lazy=True)
 
     def __repr__(self):
         return f'<Usuario {self.nombre}>'
 
-# Modelo Comida
 class Comida(db.Model):
-    __tablename__ = 'comida'  # Nombre de la tabla en la base de datos
+    __tablename__ = 'comida'  
 
     id_comida = db.Column(db.BigInteger, primary_key=True)
     nombre_comida = db.Column(db.String(100), unique=True, nullable=False)
@@ -37,15 +34,14 @@ class Comida(db.Model):
     grupo = db.Column(db.Integer)
     url_imagen = db.Column(db.String(255))
 
-    # Relación con PlanNutricional
     planes_nutricionales = db.relationship('PlanNutricional', backref='comida', lazy=True)
 
     def __repr__(self):
         return f'<Comida {self.nombre_comida}>'
 
-# Modelo PlanNutricional
+
 class PlanNutricional(db.Model):
-    __tablename__ = 'plan_nutricional'  # Nombre de la tabla en la base de datos
+    __tablename__ = 'plan_nutricional'  
 
     id_plan = db.Column(db.BigInteger, primary_key=True)
     calificacion = db.Column(db.Integer)
