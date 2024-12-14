@@ -30,7 +30,9 @@ def config():
 def index():
     return render_template("index.html")
 
-
+@app.route("/registro.html")
+def registro():
+    return render_template("registro.html")
 
 
 
