@@ -13,27 +13,29 @@
 
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form>
+            <form action="{{url_for('loginRegister')}}" method="post">
                 <h1>Crea tu cuenta</h1>
                 <div class="social-icons">
                     <img src="static/logo/logo.png" alt="Logo Icon">
                 </div>
-                <input type="text" placeholder="Nombres">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Contraseña">
-                <button type="button" id="register-btn">Registrarse</button>
+                <input type="text" name="nombre" placeholder="Nombres">
+                <input type="email" name="correo" placeholder="Email">
+                <input type="password" name="password" placeholder="Contraseña">
+                <input type="hidden" name="form_type" value="registro">
+                <button type="submit" id="register-btn">Registrarse</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form>
+            <form action="{{url_for('loginRegister')}}" method="post">
                 <h1>Iniciar Sesión</h1>
                 <div class="social-icons">
                     <img src="static/logo/logo.png" alt="Logo Icon" style="width: 60px, height=60px;">
                 </div>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Contraseña">
+                <input type="email" name="correo" placeholder="Email">
+                <input type="password" name="password" placeholder="Contraseña">
+                <input type="hidden" name="form_type" value="login">
                 <a href="#">Olvidaste tu contraseña?</a>
-                <button type="button" id="login-btn">Ingresar</button>
+                <button type="submit" id="login-btn">Ingresar</button>
             </form>
         </div>
         <div class="toggle-container">
