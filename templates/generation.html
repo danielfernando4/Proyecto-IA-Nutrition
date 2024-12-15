@@ -4,14 +4,26 @@
 
 {% block content %}
 <div class="generarIA">
-  <img class="image" src="/static/icons/brocoli.png"/> <h1> <strong>Ingresa tus datos !!</strong></h1>
+
+   <!-- Titulo -->
+
+
+   <!-- Forms -->
   <form action="#" methods=["POST", "GET" ]>
     <fieldset>
+      <legend> 
+        <div class="header">
+        <img src="/static/icons/brocoli.png" class="image" /> 
+        <h1> <strong>Ingresa tus datos !!</strong></h1>
+        <img src="/static/icons/activo.png" class="image" /> 
+        </div>
+      </legend>
+      
       <div class="formulario">
 
 
 
-        <div>
+      <div>
         <div class="input-group">
           <input required="" type="number" name="number" autocomplete="off" class="input">
           <label class="user-label">Peso kg</label>
@@ -21,6 +33,7 @@
           <label class="user-label">Edad</label>
         </div>
       </div>
+
       <div>
         <div class="input-group">
           <input required="" type="number" name="number" autocomplete="off" class="input">
@@ -73,11 +86,16 @@
           </div>
           <label>Femenino </label>
         </div>
+
       </div>
     </div>
     </fieldset>
   </form>
-  <button class="button" onclick="postMethods()">
+
+
+
+  <!-- Generar IA-->
+  <button class="button" onclick="postMethods()" >
     <div class="dots_border"></div>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="sparkle">
       <path class="path" stroke-linejoin="round" stroke-linecap="round" stroke="black" fill="black"
@@ -95,11 +113,9 @@
 
   <!-- Targeteros-->
   <div class="card-container">
-    <!-- <div class="card">
-      <h3 class = "card.heading">TITULO</h3>
-      <p class = "card-body">descriptiom</p>
-    </div> -->
+   
   </div>
+
   {% block js %}	<script src="../static/js/generation.js"></script> {% endblock %}
 </div>
 {% endblock %}

@@ -42,7 +42,9 @@ const postMethods = () => {
       <div class = "recipe-cards">
           <div>
           <h3>${postData.title}</h3>
-          <img src="${postData.image}" alt="${postData.title}" class=".image">
+          <img src="${postData.image}" alt="${
+      postData.title
+    }"  class = "recipe-card">
           </div> 
 
           <div>
