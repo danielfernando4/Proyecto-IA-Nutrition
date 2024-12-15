@@ -26,6 +26,42 @@ const recetas = [
     carbohidratos: 5,
     calorias: 350,
   },
+  {
+    title: "Pollo Aguacate",
+
+    proteinas: 30,
+    image: "/static/images/comida112.jpg",
+    grasas: 18,
+    carbohidratos: 5,
+    calorias: 350,
+  },
+  {
+    title: "Pollo Aguacate",
+
+    proteinas: 30,
+    image: "/static/images/comida112.jpg",
+    grasas: 18,
+    carbohidratos: 5,
+    calorias: 350,
+  },
+  {
+    title: "Pollo Aguacate",
+
+    proteinas: 30,
+    image: "/static/images/comida112.jpg",
+    grasas: 18,
+    carbohidratos: 5,
+    calorias: 350,
+  },
+  {
+    title: "Pollo Aguacate",
+
+    proteinas: 30,
+    image: "/static/images/comida112.jpg",
+    grasas: 18,
+    carbohidratos: 5,
+    calorias: 350,
+  },
 ];
 
 const postContainer = document.querySelector(".card-container");
@@ -69,5 +105,3 @@ const postMethods = () => {
     postContainer.appendChild(card);
   });
 };
-
-postMethods();
