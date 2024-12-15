@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* Boton para el apartado de datos */
     const abrirDatos = document.getElementById("edit_stats");
-    const cerrarDatos = document.getElementById("close_recipe");
-    const panelDatos = document.getElementById("recipe_info");
+    const cerrarDatos = document.getElementById("close_stats");
+    const panelDatos = document.getElementById("stats_conf");
 
     if (abrirDatos && cerrarDatos && panelDatos) {
         abrirDatos.addEventListener("click", () => {
