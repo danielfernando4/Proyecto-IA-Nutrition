@@ -12,7 +12,7 @@ class Usuario(db.Model):
     edad = db.Column(db.Integer)
     estatura = db.Column(db.Integer)
     sexo = db.Column(db.String(1))
-    password_usuario = db.Column(db.String(60))
+    password_usuario = db.Column(db.String(200))
     nivel_actividad = db.Column(db.String(20))
 
     planes_nutricionales = db.relationship('PlanNutricional', backref='usuario', lazy=True)
