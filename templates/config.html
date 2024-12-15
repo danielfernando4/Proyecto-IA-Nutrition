@@ -1,7 +1,114 @@
 {% extends "base.html"%}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/config.css"> {% endblock %}
+
 {% block content %}
 <div class="configs">
+    <div class="header">
+        <h1 class="headercontent">Cuenta</h1>
+    </div>
 
+    <div class="profile-container">
+        <!-- Imagen del perfil -->
+        <img src="https://dus6dayednven.cloudfront.net/app/uploads/2022/05/1-DSC00855-Editar_baja.jpg"
+            alt="Foto de perfil" class="profile-image" />
+
+        <!-- Información del usuario -->
+        <div class="profile-info">
+            <div class="profile-name-container">
+                <div class="profile-name">Cesar Pantoja</div>
+                <button class="edit-button" aria-label="Editar perfil" id="edit_profile">
+                    <img src="/static/icons/editar.png" alt="Editar" class="edit-icon" id="edit_profile">
+                </button>
+            </div>
+            <div class="profile-handle">@cesar.pantoja</div>
+        </div>
+    </div>
+
+    <div class="statistics">
+        <h2 class="statistics-title">Datos personales
+            <button class="edit-button" aria-label="Editar datos" id="edit_stats">
+                <img src="/static/icons/editar.png" alt="Editar-datos" class="edit-icon">
+            </button>
+        </h2>
+
+        <div class="statistics-grid">
+            <div class="stat-card">
+                <img src="/static/icons/pastel.png" alt="Icono" class="stat-icon">
+                <div>
+                    <div class="stat-number">21 años</div>
+                    <div class="stat-label">Edad</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <img src="/static/icons/peso.png" alt="Icono" class="stat-icon">
+                <div>
+                    <div class="stat-number">57 kg</div>
+                    <div class="stat-label">Peso</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <img src="/static/icons/estatura.png" alt="Icono" class="stat-icon">
+                <div>
+                    <div class="stat-number">171 cm</div>
+                    <div class="stat-label">Estatura</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <img src="/static/icons/actividad.png" alt="Icono" class="stat-icon">
+                <div>
+                    <div class="stat-number">Moderada</div>
+                    <div class="stat-label">Nivel de actividad física</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="profile_conf">
+        <button class="close-button" aria-label="Cerrar" id = "close_profile">
+            <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
+        </button>
+        <h2>Perfil</h2>
+        <p class="mod_desc">Actualiza tus datos personales. Configura tu perfil a tu conveniencia, nadie tendrá acceso a tus datos.</p>
+        <label for="input-box">Nombres</label>
+        <input type="text" id="input-box" class="input-box" />
+
+        <label for="input-box">Correo</label>
+        <input type="text" id="input-box" class="input-box" />
+
+        <label for="input-box">Contraseña</label>
+        <input type="text" id="input-box" class="input-box" />
+        
+        <button class="update-button">Actualizar perfil</button>
+    </div>
+
+
+    <div class="modal" id="stats_conf">
+        <button class="close-button" aria-label="Cerrar" id = "close_stats">
+            <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
+        </button>
+
+        <h2>Datos personales</h2>
+        <p class="mod_desc">Actualiza tus datos personales. Ayudará a nuestra IA a darte recomendaciones actualizadas y precisas.</p>
+       
+
+        <label for="input-box">Edad</label>
+        <input type="text" id="input-box" class="input-box"/>
+
+        <label for="input-box">Peso</label>
+        <input type="text" id="input-box" class="input-box" />
+
+        <label for="input-box">Estatura</label>
+        <input type="text" id="input-box" class="input-box" />
+
+        <label for="input-box">Actividad Física</label>
+        <input type="text" id="input-box" class="input-box" />
+        <button class="update-button">Actualizar datos</button>
+
+    </div>
 </div>
 {% endblock%}
+
+{% block scriptjs %}
+<script src="/static/js/config.js"></script> {% endblock %}
