@@ -162,6 +162,11 @@
     margin: 10px 5px;
 }
 
+.form-container{
+    display: flex;
+    flex-direction: column;
+}
+
 .close-button {
     background-color: transparent;
     border: none;

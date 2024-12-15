@@ -70,9 +70,10 @@
             <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
         </button>
         <h2>Perfil</h2>
-        <p class="mod_desc">Actualiza tus datos personales. Configura tu perfil a tu conveniencia, nadie tendrá acceso a tus datos.</p>
-        
-        <form method="POST" action="{{ url_for('config') }}">
+        <p class="mod_desc">Actualiza tus datos personales. Configura tu perfil a tu conveniencia, nadie tendrá acceso a
+            tus datos.</p>
+
+        <form method="POST" action="{{ url_for('config') }}" class="form-container">
             <label for="nombre">Nombres</label>
             <input type="text" id="nombre" name="nombre" class="input-box" required>
 
@@ -86,29 +87,31 @@
 
             <button type="submit" class="update-button">Actualizar perfil</button>
         </form>
+
     </div>
 
 
     <div class="modal" id="stats_conf">
-        <button class="close-button" aria-label="Cerrar" id = "close_stats">
+        <button class="close-button" aria-label="Cerrar" id="close_stats">
             <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
         </button>
 
         <h2>Datos personales</h2>
-        <p class="mod_desc">Actualiza tus datos personales. Ayudará a nuestra IA a darte recomendaciones actualizadas y precisas.</p>
-       
-        <form method="post" action="{{url_for('config')}}">
+        <p class="mod_desc">Actualiza tus datos personales. Ayudará a nuestra IA a darte recomendaciones actualizadas y
+            precisas.</p>
+
+        <form method="post" action="{{url_for('config')}}" class="form-container">
             <label for="input-box">Edad</label>
-            <input type="text" id="input-box" class="input-box" name="edad"/>
+            <input type="text" id="input-box" class="input-box" name="edad" />
 
             <label for="input-box">Peso</label>
-            <input type="text" id="input-box" class="input-box" name="peso"/>
+            <input type="text" id="input-box" class="input-box" name="peso" />
 
             <label for="input-box">Estatura</label>
-            <input type="text" id="input-box" class="input-box" name="estatura"/>
+            <input type="text" id="input-box" class="input-box" name="estatura" />
 
             <label for="input-box">Actividad Física</label>
-            <input type="text" id="input-box" class="input-box" name="actividad"/>
+            <input type="text" id="input-box" class="input-box" name="actividad" />
 
             <input type="hidden" name="type_config" value="datos">
 
