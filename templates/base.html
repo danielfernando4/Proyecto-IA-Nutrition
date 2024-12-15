@@ -26,8 +26,9 @@
             <nav class="menu">
                 <ul>
                     <li><a href="/"><img src="static/icons/calendar.png" alt="Plan Icon"> Plan nutricional</a></li>
-                    <li><a href="/generation.html"><img src="static/icons/neuronal.png" alt="Generar Icon"> Generar IA</a></li>
-                    <li><a href="/descubre.html"><img src="static/icons/chef.png" alt="Descubre Icon"> Descubre platillos</a></li>
+                    <li><a href="{{ url_for('generation') }}"><img src="static/icons/neuronal.png" alt="Generar Icon"> Generar IA</a></li>
+                    <li><a href="{{ url_for('descubre') }}"><img src="static/icons/chef.png" alt="Descubre Icon"> Descubre platillos</a></li>
+                    <li><a href="{{ url_for('kmeans') }}"><img src="/static/icons/team.png" alt="kmeans Icon"> Recetas extra</a></li>
                 </ul>
             </nav>
 
@@ -36,15 +37,15 @@
                     <a href="#" id="user-profile-link">
                         <img src="https://dus6dayednven.cloudfront.net/app/uploads/2022/05/1-DSC00855-Editar_baja.jpg" alt="User Avatar">
                         <div>
-                            <span>Cesar Pantoja</span>
-                            <small>@cesarpantoja</small>
+                            <span>{{nombre}}</span>
+                            <small>{{correo}}</small>
                         </div>
                         <img class="more-options" src="static/icons/prof.png" alt="More Options Icon">
                     </a>
                     <div class="dropdown-menu" id="dropdown-menu">
-                        <a href="/profile.html">Perfil</a>
-                        <a href="/config.html">Configuración</a>
-                        <a href="/homepage.html">Cerrar sesión</a>
+                        <a href="#">Perfil</a>
+                        <a href="{{ url_for('config') }}">Configuración</a>
+                        <a href="{{ url_for('cerrarsesion') }}">Cerrar sesión</a>
                     </div>
                 </li>
             </ul>

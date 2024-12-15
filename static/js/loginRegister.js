@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerFormBtn = document.getElementById('register-btn');
 
     loginFormBtn.addEventListener('click', function() {
-        window.location.href = '/';
+        window.location.href = '/loginRegister';
     });
 
     registerFormBtn.addEventListener('click', function() {
-        window.location.href = '/';
+        window.location.href = '/loginRegister';
     });
 });

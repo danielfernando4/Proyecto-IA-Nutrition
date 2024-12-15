@@ -17,57 +17,109 @@
         <!-- Información del usuario -->
         <div class="profile-info">
             <div class="profile-name-container">
-                <div class="profile-name">Cesar Pantoja</div>
-                <button class="edit-button" aria-label="Editar perfil">
-                    <img src="/static/icons/editar.png" alt="Editar" class="edit-icon">
+                <div class="profile-name">{{nombre_config}}</div>
+                <button class="edit-button" aria-label="Editar perfil" id="edit_profile">
+                    <img src="/static/icons/editar.png" alt="Editar" class="edit-icon" id="edit_profile">
                 </button>
             </div>
-            <div class="profile-handle">@cesar.pantoja</div>
+            <div class="profile-handle">{{correo_config}}</div>
         </div>
     </div>
 
     <div class="statistics">
         <h2 class="statistics-title">Datos personales
-            <button class="edit-button" aria-label="Editar perfil">
-                <img src="/static/icons/editar.png" alt="Editar" class="edit-icon">
+            <button class="edit-button" aria-label="Editar datos" id="edit_stats">
+                <img src="/static/icons/editar.png" alt="Editar-datos" class="edit-icon">
             </button>
         </h2>
-        
-
 
         <div class="statistics-grid">
             <div class="stat-card">
                 <img src="/static/icons/pastel.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">21 años</div>
+                    <div class="stat-number">{{edad}} años</div>
                     <div class="stat-label">Edad</div>
                 </div>
             </div>
             <div class="stat-card">
                 <img src="/static/icons/peso.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">57 kg</div>
+                    <div class="stat-number">{{peso}} kg</div>
                     <div class="stat-label">Peso</div>
                 </div>
             </div>
             <div class="stat-card">
                 <img src="/static/icons/estatura.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">171 cm</div>
+                    <div class="stat-number">{{estatura}} cm</div>
                     <div class="stat-label">Estatura</div>
                 </div>
             </div>
             <div class="stat-card">
                 <img src="/static/icons/actividad.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">Moderada</div>
+                    <div class="stat-number">{{actividad}}</div>
                     <div class="stat-label">Nivel de actividad física</div>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <div class="modal" id="profile_conf">
+        <button class="close-button" aria-label="Cerrar" id="close_profile">
+            <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
+        </button>
+        <h2>Perfil</h2>
+        <p class="mod_desc">Actualiza tus datos personales. Configura tu perfil a tu conveniencia, nadie tendrá acceso a
+            tus datos.</p>
+
+        <form method="POST" action="{{ url_for('config') }}" class="form-container">
+            <label for="nombre">Nombres</label>
+            <input type="text" id="nombre" name="nombre" class="input-box" required>
+
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" class="input-box" required>
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" class="input-box" required>
+
+            <input type="hidden" name="type_config" value="perfil">
+
+            <button type="submit" class="update-button">Actualizar perfil</button>
+        </form>
+
+    </div>
 
 
+    <div class="modal" id="stats_conf">
+        <button class="close-button" aria-label="Cerrar" id="close_stats">
+            <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
+        </button>
+
+        <h2>Datos personales</h2>
+        <p class="mod_desc">Actualiza tus datos personales. Ayudará a nuestra IA a darte recomendaciones actualizadas y
+            precisas.</p>
+
+        <form method="post" action="{{url_for('config')}}" class="form-container">
+            <label for="input-box">Edad</label>
+            <input type="text" id="input-box" class="input-box" name="edad" />
+
+            <label for="input-box">Peso</label>
+            <input type="text" id="input-box" class="input-box" name="peso" />
+
+            <label for="input-box">Estatura</label>
+            <input type="text" id="input-box" class="input-box" name="estatura" />
+
+            <label for="input-box">Actividad Física</label>
+            <input type="text" id="input-box" class="input-box" name="actividad" />
+
+            <input type="hidden" name="type_config" value="datos">
+
+            <button type="submit" class="update-button">Actualizar datos</button>
+        </form>
+    </div>
 </div>
 {% endblock%}
+
+{% block scriptjs %}
+<script src="/static/js/config.js"></script> {% endblock %}

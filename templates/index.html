@@ -2,6 +2,10 @@
   {% block css %} 
     <link rel="stylesheet" href="static/css/index_style.css">
   {% endblock %}
+
+  {% block scriptjs %} 
+    <script src="static/js/index_Bor.js"></script>
+  {% endblock %} 
 {% block content %}
 
 <section class="plan-continer">
@@ -11,16 +15,17 @@
 </section>
 
 <section class="plan-continer2">
-    <div class="plan-title2">
-        <h2>Desayunos</h2>
-    </div>
+  <div class="plan-title2">
+      <h2><img src="static/icons/desayuno.png" alt="Icono" class="title-icon"> Desayunos</h2>
+  </div>
 </section>
+
 
 <section class="plan-thumbnails">
 </section>
 
 <section class="plan-details" id="details-section" style="display:none;">
-    <h2>Detalles del Plato</h2>
+    <h2><img src="static/icons/detalles.png" alt="Icono" class="title-icon2"> Detalles del Plato</h2>
     <div class="plan-day">
         <div class="day-box" id="plato-dia">Lunes</div>
     </div>
@@ -37,64 +42,4 @@
         <ul id="plato-ingredientes"></ul>
     </div>
 </section>
-
-<script>
-const platos = [
-  {
-    nombre: 'Panqueques de Plátano',
-    imagen: '/static/images/comida1.jpg',
-    dia: 'Lunes',
-    propiedades: ['Proteínas: 20g', 'Grasas: 10g', 'Calorías: 350'],
-    ingredientes: ['Ingrediente 1', 'Ingrediente 2', 'Ingrediente 3']
-  },
-  {
-    nombre: 'Avena con Frutas y Miel',
-    imagen: '/static/images/comida10.jpg',
-    dia: 'Martes',
-    propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
-    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
-  },
-];
-
-function mostrarDetalles(plato) {
-  const detallesSection = document.getElementById('details-section');
-  const imagen = document.getElementById('plato-imagen');
-  const nombre = document.getElementById('plato-nombre'); // Nueva línea para obtener el elemento de nombre
-  const dia = document.getElementById('plato-dia');
-  const ingredientesList = document.getElementById('plato-ingredientes');
-  const propiedadesList = document.getElementById('plato-propiedades');
-
-  imagen.src = plato.imagen;
-  nombre.textContent = plato.nombre; // Actualiza el texto con el nombre del plato
-  dia.innerText = plato.dia;
-  ingredientesList.innerHTML = '';
-  propiedadesList.innerHTML = '';
-
-  plato.ingredientes.forEach(ingrediente => {
-    const li = document.createElement('li');
-    li.textContent = ingrediente;
-    ingredientesList.appendChild(li);
-  });
-
-  plato.propiedades.forEach(propiedad => {
-    const li = document.createElement('li');
-    li.textContent = propiedad;
-    propiedadesList.appendChild(li);
-  });
-
-  detallesSection.style.display = 'block';
-}
-
-const thumbnailsContainer = document.querySelector('.plan-thumbnails');
-platos.forEach(plato => {
-  const thumbnail = document.createElement('div');
-  thumbnail.classList.add('thumbnail');
-  thumbnail.innerHTML = `
-    <img src="${plato.imagen}" alt="${plato.nombre}" style="width:100px; height:100px;">
-    <div class="thumbnail-name">${plato.nombre}</div>
-  `;
-  thumbnail.addEventListener('click', () => mostrarDetalles(plato));
-  thumbnailsContainer.appendChild(thumbnail);
-});
-</script>
 {% endblock %}
