@@ -1,7 +1,7 @@
 const recetas = [
   {
-    title: "Receta 1",
-    description: "COCONUT",
+    title: "Arroz relleno",
+
     proteinas: 5, // Gramos de proteína
     grasas: 20, // Gramos de grasa
     image: "/static/images/comida112.jpg",
@@ -9,8 +9,8 @@ const recetas = [
     calorias: 240, // Calorías totales
   },
   {
-    title: "Receta 2",
-    description: "ARROZ con Pescado",
+    title: "Arroz Marinero",
+
     proteinas: 25,
     image: "/static/images/comida112.jpg",
     grasas: 10,
@@ -18,8 +18,8 @@ const recetas = [
     calorias: 400,
   },
   {
-    title: "Receta 3",
-    description: "Pollo Aguacate",
+    title: "Pollo Aguacate",
+
     proteinas: 30,
     image: "/static/images/comida112.jpg",
     grasas: 18,
