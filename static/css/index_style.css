@@ -1,41 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Playwrite+CO+Guides&family=Trade+Winds&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Playwrite+CO+Guides&family=Trade+Winds&display=swap');
-
 
 .plan-continer {
+    position: relative;
     display: flex;
     flex-direction: column;
-    height: 15vh;
-    text-align: center; /* Centra texto */
+    align-items: center;
+    font-family: "Segoe UI";
   }
   
   .plan-continer::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(78deg, #ffffffd3 0%,#ffffffcc 100%), url(../icons/fruitsPlan.jpg);
+    top: -18px; 
+    left: -600px; 
+    background-image: linear-gradient(78deg, #ffffffd3 0%, #ffffffcc 100%), url(../icons/fruitsPlan.jpg);
     background-size: contain;
     background-repeat: no-repeat;
-    clip-path: polygon(100% 0, 100% 17%, 58% 14%, 17.7% 17%, 17.7% 0);
+    clip-path: polygon(100% 0, 100% 17%, 61% 14%, 14.7% 17%, 14.7% 0);
     z-index: -1;
+    width: 1900px; 
+    height: 800px; 
   }
-  .plan-title {
-    font-size: 30px;
-    color: #14b56f;
-    font-family: "Trade Winds", system-ui;
-    margin-top: -15px;
-  } 
   
-  .plan-title2 {
+  .plan-title {
+    font-size: 40px;
+    color: #14b56f;
+    font-family: "Segoe UI";
+    margin-top: -60px;
+  } 
+
+.plan-title2 {
     font-size: 25px;
     color: #333;
     font-family: "Segoe UI";
     margin-top: -25px;
-  }
-  
+    padding-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.title-icon {
+    width: 30px; /* Ajusta el tamaño del ícono */
+    height: 30px;
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
   /* ---Estilo de los platos---------- */
   /* Detalles del Plato */
 
@@ -45,20 +53,27 @@
     grid-template-areas: 
       "day-box day-box day-box"
       "properties image ingredients";
-    gap: 20px;
+    gap: 550px;
     position: relative;
-    margin-top: 50px;
+    margin-top: 40px;
     font-family: "Segoe UI";
     font-size: 25px;
     background-color: #8cf3ca68;
     border: 5px solid #6ac577e1;
     width: 100%; /* Ajustar el ancho */
-    max-width: 1200px; /* Establecer un ancho máximo */
-    height: 450px; /* Ajustar la altura automáticamente */
-    box-sizing: border-box; /* Incluir el padding y border en el cálculo del tamaño total */
-    padding-left: 20px; /* Añadir padding al contenedor */
+    max-width: 1200px; 
+    height: 450px; 
+    box-sizing: border-box; 
+    padding-left: 80px; 
+    top: -10px;
+    border-radius: 10px;
 }
 
+.title-icon2 {
+  width: 32px; /* Ajusta el tamaño del ícono */
+  height: 32px;
+  margin-right: 5px; /* Espacio entre el ícono y el texto */
+}
 
 .plan-day {
     position: absolute;
@@ -68,7 +83,7 @@
     justify-content: flex-end;
     font-family: "ui-sans-serif";
     align-items: center; /* Para centrar verticalmente el contenido */
-    
+
 }
 
 .day-box {
@@ -121,6 +136,7 @@
     font-size: 25px;
     text-align: center;
     height: 40px; /* Ajustar la altura automáticamente */
+    padding: 10px;
   }
   
   .plan-ingredients {
@@ -129,42 +145,58 @@
     left: -100px;
     grid-area: ingredients;
     margin: 10px;
-    text-align: right; /* Alineación a la derecha */
-    align-self: center; /* Centrar verticalmente */
-    padding: 10px; /* Añadir padding para espaciar mejor los elementos */
+    text-align: right; 
+    align-self: center; 
+    padding: 10px; 
     border-radius: 8px; /* Bordes redondeados */
-    list-style-position: inside; /* Para que las viñetas estén dentro del contenedor y alineadas con el texto */
+    list-style-position: inside; 
 }
 
-  /* Miniaturas */
-  .plan-thumbnails {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: -40px; /* Para distancia con desayunos */
-  }
-  
-  .thumbnail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .thumbnail img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    border: 2px solid #ccc;
-  }
-  
-  .thumbnail:hover {
-    transform: scale(1.3);
-  }
-  
-  .thumbnail-name {
-    margin-top: 5px;
-    font-size: 14px;
-    text-align: center;
-  }
+/* Miniaturas */
+.plan-thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: -40px; /* Para distancia con desayunos */
+  margin-left: 5px;
+}
+
+.thumbnail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  border: 1px solid #d9dcdb;
+  border-radius: 10px; /* Borde curvo */
+  margin: 10px;
+  padding: 10px;
+}
+
+.thumbnail img {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  border: 2px solid #ffffffd5;
+  transition: transform 0.2s ease;
+}
+
+.thumbnail:hover {
+  transform: scale(1.3);
+  box-shadow: 0 2px 20px rgb(170, 172, 170); /* Sombra verde */
+  background-color: rgba(238, 239, 239, 0.849);	
+}
+
+
+.thumbnail.selected {
+  border: 2px solid gray; 
+  transform: scale(1.3);
+  box-shadow: 0 2px 20px rgb(170, 172, 170);
+  background-color: rgba(238, 239, 239, 0.849);
+}
+
+.thumbnail-name {
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: center;
+}

@@ -1,0 +1,232 @@
+.configs {
+    display: flex;
+    flex-direction: column;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    color: #333;
+    padding-left: 2%;
+    gap: 10px;
+    background-color: #FAFAFA;
+    justify-content: left;
+    text-align: left;
+}
+
+
+.headercontent {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.profile-handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #555;
+}
+
+.profile-name-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el nombre y el botón */
+}
+
+.edit-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Redondeado */
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Efecto hover */
+}
+
+.edit-icon {
+    width: 20px; /* Ajusta el tamaño del ícono */
+    height: 20px;
+}
+
+.statistics {
+    margin: 5px 10%; /* Ajusta el margen utilizando porcentajes */
+    padding: 20px;
+    background-color: #FAFAFA;
+}
+
+.statistics-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Define dos columnas por defecto */
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .statistics-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.stat-number {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    z-index: -1;
+    width: 80%;
+    max-width: 500px;
+    transition: opacity 0.2s ease, z-index 0.2s ease;
+}
+
+.modal.open {
+    opacity: 1;
+    z-index: 1000;
+}
+
+.mod_desc {
+    color: #71717A;
+    margin: 10px 5px;
+}
+
+.close-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Redondeado */
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Efecto hover */
+}
+
+.close-icon {
+    width: 20px; /* Ajusta el tamaño del ícono */
+    height: 20px;
+}
+
+label {
+    margin-bottom: 8px; /* Espacio entre el label y el input */
+    color: #333;
+}
+
+.input-box {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    width: 300px;
+    outline: none;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 16px;
+}
+
+.input-box:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+}
+
+.update-button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    margin-left: auto; /* Alinea el botón a la derecha */
+    margin-top: 10px;
+}
+
+.update-button:hover {
+    background-color: #27ae60;
+}
