@@ -38,6 +38,7 @@ db.init_app(app)
 def generation():
     return render_template("generation.html")
 
+
 @app.route("/base.html")
 def base():
     return render_template("base.html")
