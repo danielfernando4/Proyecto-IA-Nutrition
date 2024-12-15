@@ -1,7 +1,73 @@
 {% extends "base.html"%}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/config.css"> {% endblock %}
+
 {% block content %}
 <div class="configs">
+    <div class="header">
+        <h1 class="headercontent">Cuenta</h1>
+    </div>
+
+    <div class="profile-container">
+        <!-- Imagen del perfil -->
+        <img src="https://dus6dayednven.cloudfront.net/app/uploads/2022/05/1-DSC00855-Editar_baja.jpg"
+            alt="Foto de perfil" class="profile-image" />
+
+        <!-- Información del usuario -->
+        <div class="profile-info">
+            <div class="profile-name-container">
+                <div class="profile-name">Cesar Pantoja</div>
+                <button class="edit-button" aria-label="Editar perfil">
+                    <img src="/static/icons/editar.png" alt="Editar" class="edit-icon">
+                </button>
+            </div>
+            <div class="profile-handle">@cesar.pantoja</div>
+        </div>
+    </div>
+
+    <div class="statistics">
+        <h2 class="statistics-title">Datos personales
+            <button class="edit-button" aria-label="Editar perfil">
+                <img src="/static/icons/editar.png" alt="Editar" class="edit-icon">
+            </button>
+        </h2>
+        
+
+
+        <div class="statistics-grid">
+            <div class="stat-card">
+                <img src="/static/icons/pastel.png" alt="Icono" class="stat-icon">
+                <div>
+                    <div class="stat-number">21 años</div>
+                    <div class="stat-label">Edad</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <img src="/static/icons/peso.png" alt="Icono" class="stat-icon">
+                <div>
+                    <div class="stat-number">57 kg</div>
+                    <div class="stat-label">Peso</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <img src="/static/icons/estatura.png" alt="Icono" class="stat-icon">
+                <div>
+                    <div class="stat-number">171 cm</div>
+                    <div class="stat-label">Estatura</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <img src="/static/icons/actividad.png" alt="Icono" class="stat-icon">
+                <div>
+                    <div class="stat-number">Moderada</div>
+                    <div class="stat-label">Nivel de actividad física</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
 
 </div>
 {% endblock%}

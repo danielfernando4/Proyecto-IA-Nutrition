@@ -1,0 +1,135 @@
+.configs {
+    display: flex;
+    flex-direction: column;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    color: #333;
+    padding-left: 2%;
+    gap: 10px;
+    background-color: #FAFAFA;
+    justify-content: left;
+    text-align: left;
+}
+
+
+.headercontent {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.profile-handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #555;
+}
+
+.profile-name-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el nombre y el botón */
+}
+
+.edit-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Redondeado */
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Efecto hover */
+}
+
+.edit-icon {
+    width: 20px; /* Ajusta el tamaño del ícono */
+    height: 20px;
+}
+
+.statistics {
+    margin: 5px 10%; /* Ajusta el margen utilizando porcentajes */
+    padding: 20px;
+    background-color: #FAFAFA;
+}
+
+.statistics-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Define dos columnas por defecto */
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .statistics-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.stat-number {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+}
