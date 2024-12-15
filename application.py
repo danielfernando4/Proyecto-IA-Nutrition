@@ -1,5 +1,5 @@
 #app main
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
 from basemodels import Comida, PlanNutricional, Usuario, db
 
@@ -8,6 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from foodseparator import separatebreakfast
 from modelfunction import kmeans_generator_diet
+from sqlalchemy.sql.expression import func
 
 app = Flask(__name__, template_folder="templates")
 
@@ -77,9 +78,12 @@ def generation():
 
             cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, 3)
 
-            diets = kmeans_generator_diet(cal, prot, carb, grasas)
+            diets = int(kmeans_generator_diet(cal, prot, carb, grasas))
 
-            return str(diets) 
+            comidas = Comida.query.filter(Comida.grupo == diets).order_by(func.random()).limit(7).all()
+
+            comidas_json = [comida.to_dict() for comida in comidas]
+            return jsonify(comidas_json)
 
 
 
