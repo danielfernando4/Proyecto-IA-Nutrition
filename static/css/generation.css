@@ -7,8 +7,9 @@
   overflow: auto;
 }
 .image {
-  width: 20;
-  height: 40;
+  width: 30;
+  height: 70;
+  object-fit: contain;
 }
 .card-container {
   gap: 5px;
@@ -485,4 +486,10 @@ input:valid ~ label {
 
 .btn-ready:hover:before {
   transform: translateX(15em);
+}
+.recipe-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: left;
 }
