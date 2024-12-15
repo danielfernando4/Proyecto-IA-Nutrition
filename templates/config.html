@@ -17,12 +17,12 @@
         <!-- Información del usuario -->
         <div class="profile-info">
             <div class="profile-name-container">
-                <div class="profile-name">Cesar Pantoja</div>
+                <div class="profile-name">{{nombre_config}}</div>
                 <button class="edit-button" aria-label="Editar perfil" id="edit_profile">
                     <img src="/static/icons/editar.png" alt="Editar" class="edit-icon" id="edit_profile">
                 </button>
             </div>
-            <div class="profile-handle">@cesar.pantoja</div>
+            <div class="profile-handle">{{correo_config}}</div>
         </div>
     </div>
 
@@ -37,28 +37,28 @@
             <div class="stat-card">
                 <img src="/static/icons/pastel.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">21 años</div>
+                    <div class="stat-number">{{edad}} años</div>
                     <div class="stat-label">Edad</div>
                 </div>
             </div>
             <div class="stat-card">
                 <img src="/static/icons/peso.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">57 kg</div>
+                    <div class="stat-number">{{peso}} kg</div>
                     <div class="stat-label">Peso</div>
                 </div>
             </div>
             <div class="stat-card">
                 <img src="/static/icons/estatura.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">171 cm</div>
+                    <div class="stat-number">{{estatura}} cm</div>
                     <div class="stat-label">Estatura</div>
                 </div>
             </div>
             <div class="stat-card">
                 <img src="/static/icons/actividad.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">Moderada</div>
+                    <div class="stat-number">{{actividad}}</div>
                     <div class="stat-label">Nivel de actividad física</div>
                 </div>
             </div>
