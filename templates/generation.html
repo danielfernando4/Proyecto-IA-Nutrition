@@ -6,6 +6,8 @@
     {% endblock %}
 </head>
 <body>
+  {% block content %}
+<div class="generarIA">
 <form  action="#" methods = ["POST", "GET"]>
   <fieldset>  
   <div class="formulario">
@@ -122,7 +124,16 @@
   <span class="text_button">Genera tu plan nutricional</span>
 </button>
 
-<!-- Targeteros--> 
+<!-- Targeteros-->
+ <div class = "card-container">
+    <div class="card">
+        <h3>TITULO</h3>
+        <p>descriptiom</p>
+    </div>
+ </div> 
+ <script src="generation.js"></script>
+</div>
+{% endblock %} 
 </body>
-<script src="generation.js"></script>
+
 </html>
