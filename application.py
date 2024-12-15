@@ -1,12 +1,13 @@
 #app main
-
-
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from configdb import Configdb
 from basemodels import Comida, PlanNutricional, Usuario, db
 
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from foodseparator import separatebreakfast
+from modelfunction import kmeans_generator_diet
 
 app = Flask(__name__, template_folder="templates")
 
@@ -16,12 +17,15 @@ db.init_app(app)
 app.secret_key = "Nutritionkey12345session"
 app.permanent_session_lifetime = timedelta(minutes=120)
 
+
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
         return render_template("index.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
+
+
 
 @app.route("/loginRegister", methods=["GET", "POST"])
 def loginRegister():
@@ -59,9 +63,26 @@ def loginRegister():
 
 
 
-@app.route("/generation") #& Decorador para mi puerto
+
+@app.route("/generation", methods=["GET", "POST"]) #& Decorador para mi puerto
 def generation():
     if "correo" in session and "id_usuario" in session:
+        if request.method == "POST":
+            edad = int(request.form.get("edad"))
+            altura = int(request.form.get("altura"))
+            sexo = request.form.get("sexo")
+            peso = float(request.form.get("peso"))
+
+            sexo_num = 0 if sexo == "masculino" else 1
+
+            cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, 3)
+
+            diets = kmeans_generator_diet(cal, prot, carb, grasas)
+
+            return str(diets) 
+
+
+
         return render_template("generation.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
@@ -111,12 +132,19 @@ def config():
 
 
 
+
+
 @app.route("/descubre")
 def descubre():
     if "correo" in session and "id_usuario" in session:
         return render_template("descubre.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
+
+
+
+
+
 
 
 @app.route("/homepage")
