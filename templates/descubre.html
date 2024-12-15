@@ -1,0 +1,67 @@
+{% extends "base.html"%}
+{% block css %}
+<link rel="stylesheet" href="static/css/descubre.css">
+{% endblock %}
+{% block content %}
+<div class="descubre">
+    <div class="header">
+        <h1 class="headercontent">Mis recetas</h1>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Busca por título, ingredientes o contenido..." class="search-input">
+        <button class="filter-button">
+            <img src="/static/icons/filtrar.png" alt="Filtros"> Filtros
+        </button>
+    </div>
+
+    <div class="recipe-cards">
+        <div class="recipe-card">
+            <img src="/static/images/comida112.jpg" alt="Recipe Image">
+            <div class="recipe-card-content">
+                <h3 class="recipe-card-title">Pastel de carne</h3>
+                <p class="recipe-card-description">Aqui iba la descripcion XD.</p>
+                <div class="recipe-card-footer">
+                    <span>Más información</span>
+                    <button class="btn">Ver receta</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="recipe-card">
+            <img src="/static/images/comida118.jpg" alt="Recipe Image">
+            <div class="recipe-card-content">
+                <h3 class="recipe-card-title">Lasaña Italiana</h3>
+                <p class="recipe-card-description">Aqui iba la descripcion XD.</p>
+                <div class="recipe-card-footer">
+                    <span>Más información</span>
+                    <button class="btn">Ver receta</button>
+                </div>
+            </div>
+        </div>
+        <div class="recipe-card">
+            <img src="/static/images/comida104.jpg" alt="Recipe Image">
+            <div class="recipe-card-content">
+                <h3 class="recipe-card-title">Arroz zucini</h3>
+                <p class="recipe-card-description">Aqui iba la descripcion XD.</p>
+                <div class="recipe-card-footer">
+                    <span>Más información</span>
+                    <button class="btn">Ver receta</button>
+                </div>
+            </div>
+        </div>
+        <div class="recipe-card">
+            <img src="/static/images/comida103.jpg" alt="Recipe Image">
+            <div class="recipe-card-content">
+                <h3 class="recipe-card-title">Mocatto de vainilla</h3>
+                <p class="recipe-card-description">Aqui iba la descripcion XD.</p>
+                <div class="recipe-card-footer">
+                    <span>Más información</span>
+                    <button class="btn">Ver receta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

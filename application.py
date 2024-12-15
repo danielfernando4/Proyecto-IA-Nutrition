@@ -37,13 +37,17 @@ def datos():
     comidas = Comida.query.all()
     return '<br>'.join([f'ID: {comida.id_comida}, Nombre: {comida.nombre_comida}' for comida in comidas])
 
+@app.route("/descubre.html")
+def descubre():
+    return render_template("descubre.html")
 
 @app.route("/homepage.html")
 def homepage():
     return render_template("homepage.html")
 
-
-
+@app.route("/loginRegister.html")
+def loginRegister():
+    return render_template("loginRegister.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5111, debug=True)
