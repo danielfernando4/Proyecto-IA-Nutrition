@@ -14,7 +14,7 @@ app.config.from_object(Configdb)
 db.init_app(app)
 
 app.secret_key = "Nutritionkey12345session"
-app.permanent_session_lifetime = timedelta(minutes=3)
+app.permanent_session_lifetime = timedelta(minutes=120)
 
 @app.route("/")
 def index():
