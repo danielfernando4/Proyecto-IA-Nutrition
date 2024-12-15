@@ -19,7 +19,7 @@ app.permanent_session_lifetime = timedelta(minutes=120)
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
-        return render_template("index.html")
+        return render_template("index.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
@@ -44,7 +44,12 @@ def loginRegister():
             usuario = Usuario.query.filter(Usuario.correo == correo).first()  
             if usuario and check_password_hash(usuario.password_usuario, password):  
                 session["correo"] = usuario.correo
-                session["id_usuario"] = usuario.id_usuario     
+                session["id_usuario"] = usuario.id_usuario
+                session["nombre"] = usuario.nombre
+                session["edad"] = usuario.edad
+                session["estatura"] = usuario.estatura
+                session["peso"] = usuario.peso
+                session["nivel_actividad"] = usuario.nivel_actividad
                 flash("Login exitoso", "success")
                 return redirect(url_for("index"))  
             else:
@@ -57,7 +62,7 @@ def loginRegister():
 @app.route("/generation") #& Decorador para mi puerto
 def generation():
     if "correo" in session and "id_usuario" in session:
-        return render_template("generation.html")
+        return render_template("generation.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
@@ -83,7 +88,8 @@ def config():
                 password_nueva = request.form.get("password")
                 if password_nueva:
                     usuario.password_usuario = generate_password_hash(password_nueva)
-
+                session["nombre"] = usuario.nombre
+                session["correo"] = usuario.correo
                 db.session.commit()  
 
             elif tipo_conf == "datos":
@@ -94,9 +100,12 @@ def config():
 
                 if not usuario.edad or not usuario.estatura or not usuario.peso:
                     return redirect(url_for("index"))
-                db.session.commit()  
+                session["edad"] = usuario.edad
+                session["estatura"] = usuario.estatura
+                session["peso"] = usuario.peso  
+                db.session.commit()
             pass 
-        return render_template("config.html")
+        return render_template("config.html", edad=session["edad"], estatura=session['estatura'],  peso=session['peso'], actividad=session['nivel_actividad'], nombre=session["nombre"], correo=session["correo"], nombre_config=session["nombre"], correo_config=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
@@ -105,7 +114,7 @@ def config():
 @app.route("/descubre")
 def descubre():
     if "correo" in session and "id_usuario" in session:
-        return render_template("descubre.html")
+        return render_template("descubre.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
@@ -128,6 +137,10 @@ def base():
 def cerrarsesion():
     session.pop("correo", None)  
     session.pop("id_usuario", None)  
+    session.pop("peso", None)
+    session.pop("estatura", None)
+    session.pop("edad", None)
+    session.pop("nivel_actividad", None)
 
     flash("Has cerrado sesión exitosamente", "success")
     return redirect(url_for("homepage"))
