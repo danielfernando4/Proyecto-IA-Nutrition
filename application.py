@@ -132,6 +132,10 @@ def cerrarsesion():
     flash("Has cerrado sesión exitosamente", "success")
     return redirect(url_for("homepage"))
 
+@app.route("/kmeans.html")
+def kmeans():
+    return render_template("kmeans.html")
+
 
 
 @app.route("/datos")
