@@ -12,7 +12,7 @@ app = Flask(__name__, template_folder="templates")
 app.config.from_object(Configdb)
 db.init_app(app)
 
-@app.route("/generation") #& Decorador para mi puerto
+@app.route("/generation.html") #& Decorador para mi puerto
 def generation():
     return render_template("generation.html")
 
