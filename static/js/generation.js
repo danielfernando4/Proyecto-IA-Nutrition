@@ -78,9 +78,7 @@ const postMethods = () => {
       <div class = "recipe-cards">
           <div>
           <h3>${postData.title}</h3>
-          <img src="${postData.image}" alt="${
-      postData.title
-    }"  class = "recipe-card">
+          <img src="${postData.image}" alt="${postData.title}"  class = "recipe-card">
           </div> 
 
           <div>
@@ -94,9 +92,7 @@ const postMethods = () => {
          </div>
        
         <div >
-        <button class="btn-ready"  onclick="window.location.href='https://example.com/${postData.title
-          .replace(/ /g, "-")
-          .toLowerCase()}'">Agregar a plan</button>
+        <button class="btn-ready"  onclick="openModal()">Agregar a plan</button>
          </div>
       </div>
   `;
