@@ -42,5 +42,9 @@ def descubre():
 def homepage():
     return render_template("homepage.html")
 
+@app.route("/loginRegister.html")
+def loginRegister():
+    return render_template("loginRegister.html")
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5111, debug=True)
