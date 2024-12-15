@@ -14,7 +14,7 @@ app.config.from_object(Configdb)
 db.init_app(app)
 
 app.secret_key = "Nutritionkey12345session"
-app.permanent_session_lifetime = timedelta(minutes=3)
+app.permanent_session_lifetime = timedelta(minutes=80)
 
 @app.route("/")
 def index():
@@ -32,6 +32,8 @@ def loginRegister():
             usuario.nombre = request.form.get("nombre")
             usuario.correo = request.form.get("correo")
             usuario.password_usuario = generate_password_hash(request.form.get("password"))
+            if not usuario.nombre or not usuario.correo or not usuario.password_usuario:
+                return redirect(url_for("loginRegister"))
             db.session.add(usuario)  
             db.session.commit()      
             flash("Usuario registrado correctamente", "success")
@@ -62,12 +64,42 @@ def generation():
 
 
 
-@app.route("/config")
+@app.route("/config", methods=["GET", "POST"])
 def config():
     if "correo" in session and "id_usuario" in session:
+        if request.method == "POST":
+            tipo_conf = request.form.get("type_config")
+
+            if tipo_conf == "perfil":
+                usuario = Usuario.query.get(session["id_usuario"])  
+                #if not usuario:
+                 #   return redirect(url_for("loginRegister"))
+                usuario.nombre = request.form.get("nombre")
+                usuario.correo = request.form.get("correo")
+
+                if not usuario.nombre or not usuario.correo or not request.form.get("password"):
+                    return redirect(url_for("index"))
+
+                password_nueva = request.form.get("password")
+                if password_nueva:
+                    usuario.password_usuario = generate_password_hash(password_nueva)
+
+                db.session.commit()  
+
+            elif tipo_conf == "datos":
+                usuario = Usuario.query.get(session["id_usuario"])
+                usuario.edad = request.form.get("edad")
+                usuario.estatura = request.form.get("estatura")
+                usuario.peso = request.form.get("peso")
+
+                if not usuario.edad or not usuario.estatura or not usuario.peso:
+                    return redirect(url_for("index"))
+                db.session.commit()  
+            pass 
         return render_template("config.html")
     else:
         return redirect(url_for("homepage"))
+
 
 
 @app.route("/descubre")
@@ -99,7 +131,6 @@ def cerrarsesion():
 
     flash("Has cerrado sesión exitosamente", "success")
     return redirect(url_for("homepage"))
-    pass
 
 
 

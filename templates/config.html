@@ -66,21 +66,26 @@
     </div>
 
     <div class="modal" id="profile_conf">
-        <button class="close-button" aria-label="Cerrar" id = "close_profile">
+        <button class="close-button" aria-label="Cerrar" id="close_profile">
             <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
         </button>
         <h2>Perfil</h2>
         <p class="mod_desc">Actualiza tus datos personales. Configura tu perfil a tu conveniencia, nadie tendrá acceso a tus datos.</p>
-        <label for="input-box">Nombres</label>
-        <input type="text" id="input-box" class="input-box" />
-
-        <label for="input-box">Correo</label>
-        <input type="text" id="input-box" class="input-box" />
-
-        <label for="input-box">Contraseña</label>
-        <input type="text" id="input-box" class="input-box" />
         
-        <button class="update-button">Actualizar perfil</button>
+        <form method="POST" action="{{ url_for('config') }}">
+            <label for="nombre">Nombres</label>
+            <input type="text" id="nombre" name="nombre" class="input-box" required>
+
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" class="input-box" required>
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" class="input-box" required>
+
+            <input type="hidden" name="type_config" value="perfil">
+
+            <button type="submit" class="update-button">Actualizar perfil</button>
+        </form>
     </div>
 
 
@@ -92,20 +97,23 @@
         <h2>Datos personales</h2>
         <p class="mod_desc">Actualiza tus datos personales. Ayudará a nuestra IA a darte recomendaciones actualizadas y precisas.</p>
        
+        <form method="post" action="{{url_for('config')}}">
+            <label for="input-box">Edad</label>
+            <input type="text" id="input-box" class="input-box" name="edad"/>
 
-        <label for="input-box">Edad</label>
-        <input type="text" id="input-box" class="input-box"/>
+            <label for="input-box">Peso</label>
+            <input type="text" id="input-box" class="input-box" name="peso"/>
 
-        <label for="input-box">Peso</label>
-        <input type="text" id="input-box" class="input-box" />
+            <label for="input-box">Estatura</label>
+            <input type="text" id="input-box" class="input-box" name="estatura"/>
 
-        <label for="input-box">Estatura</label>
-        <input type="text" id="input-box" class="input-box" />
+            <label for="input-box">Actividad Física</label>
+            <input type="text" id="input-box" class="input-box" name="actividad"/>
 
-        <label for="input-box">Actividad Física</label>
-        <input type="text" id="input-box" class="input-box" />
-        <button class="update-button">Actualizar datos</button>
+            <input type="hidden" name="type_config" value="datos">
 
+            <button type="submit" class="update-button">Actualizar datos</button>
+        </form>
     </div>
 </div>
 {% endblock%}

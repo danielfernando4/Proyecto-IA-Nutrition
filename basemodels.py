@@ -5,14 +5,14 @@ db = SQLAlchemy()
 class Usuario(db.Model):
     __tablename__ = 'usuario'
 
-    id_usuario = db.Column(db.BigInteger, primary_key=True)
+    id_usuario = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(50))
-    correo = db.Column(db.String(50))
+    correo = db.Column(db.String(50), unique=True, nullable=False)  # Correo único y no nulo
     peso = db.Column(db.Float)
     edad = db.Column(db.Integer)
     estatura = db.Column(db.Integer)
     sexo = db.Column(db.String(1))
-    password_usuario = db.Column(db.String(200))
+    password_usuario = db.Column(db.String(200), nullable=False)  # Contraseña no nula
     nivel_actividad = db.Column(db.String(20))
 
     planes_nutricionales = db.relationship('PlanNutricional', backref='usuario', lazy=True)
