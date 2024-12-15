@@ -9,3 +9,16 @@ registerBtn.addEventListener('click', () => {
 loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const loginFormBtn = document.getElementById('login-btn');
+    const registerFormBtn = document.getElementById('register-btn');
+
+    loginFormBtn.addEventListener('click', function() {
+        window.location.href = '/';
+    });
+
+    registerFormBtn.addEventListener('click', function() {
+        window.location.href = '/';
+    });
+});
