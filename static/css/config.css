@@ -133,3 +133,100 @@
     font-size: 14px;
     color: #666;
 }
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    z-index: -1;
+    width: 80%;
+    max-width: 500px;
+    transition: opacity 0.2s ease, z-index 0.2s ease;
+}
+
+.modal.open {
+    opacity: 1;
+    z-index: 1000;
+}
+
+.mod_desc {
+    color: #71717A;
+    margin: 10px 5px;
+}
+
+.close-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Redondeado */
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Efecto hover */
+}
+
+.close-icon {
+    width: 20px; /* Ajusta el tamaño del ícono */
+    height: 20px;
+}
+
+label {
+    margin-bottom: 8px; /* Espacio entre el label y el input */
+    color: #333;
+}
+
+.input-box {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    width: 300px;
+    outline: none;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 16px;
+}
+
+.input-box:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+}
+
+.update-button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    margin-left: auto; /* Alinea el botón a la derecha */
+    margin-top: 10px;
+}
+
+.update-button:hover {
+    background-color: #27ae60;
+}

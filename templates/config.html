@@ -18,8 +18,8 @@
         <div class="profile-info">
             <div class="profile-name-container">
                 <div class="profile-name">Cesar Pantoja</div>
-                <button class="edit-button" aria-label="Editar perfil">
-                    <img src="/static/icons/editar.png" alt="Editar" class="edit-icon">
+                <button class="edit-button" aria-label="Editar perfil" id="edit_profile">
+                    <img src="/static/icons/editar.png" alt="Editar" class="edit-icon" id="edit_profile">
                 </button>
             </div>
             <div class="profile-handle">@cesar.pantoja</div>
@@ -28,12 +28,10 @@
 
     <div class="statistics">
         <h2 class="statistics-title">Datos personales
-            <button class="edit-button" aria-label="Editar perfil">
-                <img src="/static/icons/editar.png" alt="Editar" class="edit-icon">
+            <button class="edit-button" aria-label="Editar datos" id="edit_stats">
+                <img src="/static/icons/editar.png" alt="Editar-datos" class="edit-icon">
             </button>
         </h2>
-        
-
 
         <div class="statistics-grid">
             <div class="stat-card">
@@ -66,8 +64,51 @@
             </div>
         </div>
     </div>
-    
+
+    <div class="modal" id="profile_conf">
+        <button class="close-button" aria-label="Cerrar" id = "close_profile">
+            <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
+        </button>
+        <h2>Perfil</h2>
+        <p class="mod_desc">Actualiza tus datos personales. Configura tu perfil a tu conveniencia, nadie tendrá acceso a tus datos.</p>
+        <label for="input-box">Nombres</label>
+        <input type="text" id="input-box" class="input-box" />
+
+        <label for="input-box">Correo</label>
+        <input type="text" id="input-box" class="input-box" />
+
+        <label for="input-box">Contraseña</label>
+        <input type="text" id="input-box" class="input-box" />
+        
+        <button class="update-button">Actualizar perfil</button>
+    </div>
 
 
+    <div class="modal" id="stats_conf">
+        <button class="close-button" aria-label="Cerrar" id = "close_stats">
+            <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon">
+        </button>
+
+        <h2>Datos personales</h2>
+        <p class="mod_desc">Actualiza tus datos personales. Ayudará a nuestra IA a darte recomendaciones actualizadas y precisas.</p>
+       
+
+        <label for="input-box">Edad</label>
+        <input type="text" id="input-box" class="input-box"/>
+
+        <label for="input-box">Peso</label>
+        <input type="text" id="input-box" class="input-box" />
+
+        <label for="input-box">Estatura</label>
+        <input type="text" id="input-box" class="input-box" />
+
+        <label for="input-box">Actividad Física</label>
+        <input type="text" id="input-box" class="input-box" />
+        <button class="update-button">Actualizar datos</button>
+
+    </div>
 </div>
 {% endblock%}
+
+{% block scriptjs %}
+<script src="/static/js/config.js"></script> {% endblock %}
