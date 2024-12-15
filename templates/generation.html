@@ -5,78 +5,44 @@
 {% block content %}
 <div class="generarIA">
   <img class="image" src="/static/icons/brocoli.png"/> <h1> <strong>Ingresa tus datos !!</strong></h1>
-  <form action="#" methods=["POST", "GET" ]>
+  <form action="{{ url_for('generation') }}" method="POST">
     <fieldset>
       <div class="formulario">
-
-
-
         <div>
-        <div class="input-group">
-          <input required="" type="number" name="number" autocomplete="off" class="input">
-          <label class="user-label">Peso kg</label>
+          <div class="input-group">
+            <input required type="number" name="peso" autocomplete="off" class="input">
+            <label class="user-label">Peso kg</label>
+          </div>
+          <div class="input-group">
+            <input required type="number" name="edad" autocomplete="off" class="input">
+            <label class="user-label">Edad</label>
+          </div>
         </div>
-        <div class="input-group">
-          <input required="" type="number" name="number" autocomplete="off" class="input">
-          <label class="user-label">Edad</label>
+        <div>
+          <div class="input-group">
+            <input required type="number" name="altura" autocomplete="off" class="input">
+            <label class="user-label">Altura</label>
+          </div>
+  
+          <!-- Selección con radios para género -->
+          <div class="select">
+            <label>
+              <input type="radio" name="sexo" value="masculino" required>
+              Masculino
+            </label>
+            <label>
+              <input type="radio" name="sexo" value="femenino" required>
+              Femenino
+            </label>
+          </div>
         </div>
       </div>
-      <div>
-        <div class="input-group">
-          <input required="" type="number" name="number" autocomplete="off" class="input">
-          <label class="user-label">Altura</label>
-        </div>
-
-
-        <!-- Seleccion con checkbox-->
-        <div class="select">
-          <div class="checkbox-wrapper-12">
-            <div class="cbx">
-              <input id="12" type="checkbox" checked="" />
-              <label for="12"> </label>
-              <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
-                <path d="M2 8.36364L6.23077 12L13 2"></path>
-              </svg>
-            </div>
-
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <defs>
-                <filter id="goo-12">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"></feGaussianBlur>
-                  <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
-                    result="goo-12"></feColorMatrix>
-                  <feBlend in="SourceGraphic" in2="goo-12"></feBlend>
-                </filter>
-              </defs>
-            </svg>
-          </div>
-          <label>Masculino </label>
-          <div class="checkbox-wrapper-12">
-            <div class="cbx">
-              <input id="13" type="checkbox" checked="" />
-              <label for="13"> </label>
-              <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
-                <path d="M2 8.36364L6.23077 12L13 2"></path>
-              </svg>
-            </div>
-
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <defs>
-                <filter id="goo-13">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"></feGaussianBlur>
-                  <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
-                    result="goo-13"></feColorMatrix>
-                  <feBlend in="SourceGraphic" in2="goo-12"></feBlend>
-                </filter>
-              </defs>
-            </svg>
-          </div>
-          <label>Femenino </label>
-        </div>
-      </div>
-    </div>
     </fieldset>
+    <button class="button" type="submit">
+      <span class="text_button">Genera tu plan nutricional</span>
+    </button>
   </form>
+  
   <button class="button" onclick="postMethods()">
     <div class="dots_border"></div>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="sparkle">
