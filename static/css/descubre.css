@@ -148,3 +148,6 @@
     transform: scale(0.98);
 }
 
+.modal{
+    background-color: #ffffff;
+}
