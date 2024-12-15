@@ -1,15 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const abrirInfo = document.getElementById("edit_profile");
-    const cerrarInfo = document.getElementById("close_info");
-    const panelInfo = document.getElementById("profile_conf");
+    const abrirInfo = document.getElementById("ver_filtro");
+    const panelInfo = document.getElementById("filters_content");
 
-    if (abrirProfile && cerrarProfile && panelProfile) {
-        abrirProfile.addEventListener("click", () => {
-            panelInfo.classList.add("open");
-        });
-
-        cerrarProfile.addEventListener("click", () => {
-            panelInfo.classList.remove("open");
+    if (abrirInfo && panelInfo) {
+        abrirInfo.addEventListener("click", () => {
+            panelInfo.classList.toggle("open");
         });
     }
 });

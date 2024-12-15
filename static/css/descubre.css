@@ -150,4 +150,51 @@
 
 .modal{
     background-color: #ffffff;
+    width: 500px;
+    height: 500px;
 }
+
+.filters_content {
+    display: none;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    z-index: 1;
+    opacity: 1;
+}
+
+.filters_content.open {
+    display: flex;
+    opacity: 1;
+    z-index: 1;
+}
+
+.icon-button img.icon-image {
+    width: 20px;
+    height: 20px;
+}
+.icon-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.icon-button:hover {
+    background-color: #27ae60;
+    transform: scale(1.05);
+}
+
+.icon-button span {
+    font-size: 16px;
+}
+
+
