@@ -1,166 +1,186 @@
-
-.plan-continer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    font-family: "Segoe UI";
-  }
-  
-  .plan-continer::before {
-    content: "";
-    position: absolute;
-    top: -18px; 
-    left: -600px; 
-    background-image: linear-gradient(78deg, #ffffffd3 0%, #ffffffcc 100%), url(../icons/fruitsPlan.jpg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    clip-path: polygon(100% 0, 100% 17%, 61% 14%, 14.7% 17%, 14.7% 0);
-    z-index: -1;
-    width: 1900px; 
-    height: 800px; 
-  }
-  
-  .plan-title {
-    font-size: 40px;
-    color: #14b56f;
-    font-family: "Segoe UI";
-    margin-top: -60px;
-    text-align: center; /* Centra el texto horizontalmente */
-    margin-left: auto;
-    margin-right: auto;
+body {
+  font-family: "Segoe UI", sans-serif;
 }
 
+/* Plan contenedor */
+.plan-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.plan-container::before {
+  content: "";
+  position: absolute;
+  top: -18px; 
+  left: -600px; 
+  background-image: linear-gradient(78deg, #ffffffd3 0%, #ffffffcc 100%), url(../icons/fruitsPlan.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  clip-path: polygon(100% 0, 100% 17%, 61% 14%, 14.7% 17%, 14.7% 0);
+  z-index: -1;
+  width: 1900px; 
+  height: 800px; 
+}
+
+.plan-title {
+  font-size: 40px;
+  color: #14b56f;
+  margin-top: -60px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .plan-title2 {
-    font-size: 25px;
-    color: #333;
-    font-family: "Segoe UI";
-    margin-top: -25px;
-    padding-bottom: 30px;
-    display: flex;
-    align-items: center;
+  font-size: 25px;
+  color: #333;
+  margin-top: -25px;
+  padding-bottom: 30px;
+  display: flex;
+  align-items: center;
 }
 
 .title-icon {
-    width: 30px; /* Ajusta el tamaño del ícono */
-    height: 30px;
-    margin-right: 10px; /* Espacio entre el ícono y el texto */
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }
 
-  /* ---Estilo de los platos---------- */
-  /* Detalles del Plato */
-
-  .plan-details {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-areas: 
-      "day-box day-box day-box"
-      "properties image ingredients";
-    gap: 550px;
-    position: relative;
-    margin-top: 40px;
-    font-family: "Segoe UI";
-    font-size: 25px;
-    background-color: #8cf3ca68;
-    border: 5px solid #6ac577e1;
-    width: 100%; /* Ajustar el ancho */
-    max-width: 1200px; 
-    height: 450px; 
-    box-sizing: border-box; 
-    padding-left: 80px; 
-    top: -10px;
-    border-radius: 10px;
+/* Detalles del Plato */
+.plan-details {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-areas: 
+    "day-box day-box day-box"
+    "properties image ingredients";
+  gap: 20px;
+  position: relative;
+  margin-top: 40px;
+  background-color: #8cf3ca68;
+  border: 5px solid #6ac577e1;
+  width: 100%;
+  max-width: 1200px; 
+  height: 500px; 
+  box-sizing: border-box; 
+  padding: 20px; 
+  border-radius: 10px;
 }
 
 .title-icon2 {
-  width: 32px; /* Ajusta el tamaño del ícono */
+  width: 32px;
   height: 32px;
-  margin-right: 5px; /* Espacio entre el ícono y el texto */
+  margin-right: 5px;
 }
 
 .plan-day {
-    position: absolute;
-    top: 25px;
-    right: 10px;	    
-    display: flex;
-    justify-content: flex-end;
-    font-family: "ui-sans-serif";
-    align-items: center; /* Para centrar verticalmente el contenido */
-
+  position: absolute;
+  top: 25px;
+  right: 10px;      
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .day-box {
-    padding: 15px; 
-    background-color: #e0f7fa; 
-    border: 2px solid #00796b; 
-    border-radius: 8px; 
-    font-weight: bold;
-    font-size: 25px; /* Tamanio de la letra */
-    color: #004d40; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  padding: 15px; 
+  background-color: #e0f7fa; 
+  border: 2px solid #00796b; 
+  border-radius: 8px; 
+  font-weight: bold;
+  font-size: 25px; 
+  color: #004d40; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
-  
-  .plan-properties {
-    grid-area: properties;
-    margin: 10px;
-    text-align: left;
-    position: relative;
-    left: 20px;
-  }
-  
-  .plan-image {
-    grid-area: image;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  
-  .plan-image img {
-    max-width: 80%;
-    height: auto; /* Tamanio de la imagen */
-    border-radius: 8px;
-    position: relative;
-    top: -180px;
-    left: -20px;
-  }
-  
-  .image-description {
-    position: absolute;
-    bottom: -30px;
-    top: 55px;
-    left: 48%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 5px 0px;
-    border-radius: 5px;
-    font-size: 25px;
-    text-align: center;
-    height: 40px; /* Ajustar la altura automáticamente */
-    padding: 10px;
-  }
-  
-  .plan-ingredients {
-    position: relative;
-    top: -480px;
-    left: -100px;
-    grid-area: ingredients;
-    margin: 10px;
-    text-align: right; 
-    align-self: center; 
-    padding: 10px; 
-    border-radius: 8px; /* Bordes redondeados */
-    list-style-position: inside; 
+.plan-properties {
+  grid-area: properties;
+  margin: 10px;
+  text-align: left;
+  position: relative;
+  left: 20px;
 }
+
+/* Propiedades - Ajuste de estilo de lista */
+.plan-properties ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;  /* Eliminar viñetas */
+}
+
+.plan-properties li {
+  margin-bottom: 10px;  /* Ajustar el espaciado inferior */
+  color: #555;
+}
+
+.plan-description {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.plan-image {
+  grid-area: image;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.plan-image img {
+  max-width: 80%;
+  height: auto; 
+  border-radius: 8px;
+}
+
+.image-description {
+  position: absolute;
+  bottom: -30px;
+  top: 55px;
+  left: 48%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.plan-ingredients {
+  position: relative;
+  grid-area: ingredients;
+  margin: 10px;
+  text-align: right; 
+  align-self: center; 
+  padding: 10px; 
+  border-radius: 8px;
+  list-style-position: inside;
+}
+
+.plan-ingredients ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;  /* Eliminar viñetas */
+}
+
+.plan-ingredients li {
+  margin-bottom: 10px;  /* Ajustar el espaciado inferior */
+  color: #555;
+}
+
 /* Miniaturas */
 .plan-thumbnails {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: left;
-  margin-top: -40px; /* Para distancia con desayunos */
+  margin-top: -40px;
   margin-left: 5px;
 }
 
@@ -174,18 +194,18 @@
   transition: transform 0.2s;
   width: 270px;
   cursor: pointer;
-  background-color: #ffffff; /* Fondo por defecto */
+  background-color: #ffffff;
 }
 
 .thumbnail:hover {
   transform: scale(1.03);
   border-color: #2ecc71;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el mouse */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .thumbnail img {
-  height: 200px; /* Ajustar la altura de la miniatura */
-  object-fit: cover; /* Para que la imagen se recorte y adapte bien */
+  height: 200px; 
+  object-fit: cover;
 }
 
 .thumbnail-content {
@@ -199,7 +219,7 @@
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333; /* Color del texto */
+  color: #333;
 }
 
 .thumbnail-description {
@@ -235,12 +255,11 @@
   transform: scale(0.98);
 }
 
-
 /* From Uiverse.io by BiliBC034 */ 
 .rating {
   display: flex;
   justify-content: center;
-  gap: 5px; /* Ajusta el espacio entre las estrellas */
+  gap: 5px;
 }
 
 .rating:not(:checked) > input {
@@ -274,4 +293,181 @@
 
 .rating > input:checked ~ label {
   color: #ffa723;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Pop-up */
+.recipe_info {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column; /* Coloca elementos en columna */
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  z-index: -1;
+  width: 90%; 
+  max-width: 750px;  
+  max-height: 90%;  
+  height: 550px;
+  overflow-y: auto; 
+  transition: opacity 0.2s ease, z-index 0.2s ease;
+  border: 0.1px solid #2ecc71;
+}
+
+.recipe_info.open {
+  opacity: 1;
+  z-index: 1000;
+}
+
+/* Botón de cerrar */
+.close-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.close-icon {
+  width: 20px;
+  height: 20px;
+  padding: 6px;
+}
+
+/* Detalles del Pop-up */
+.recipe_info h2 {
+  position: absolute;
+  font-size: 35px;  
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+  white-space: nowrap;  
+top: 0;
+  left: 35%;
+  transform: translateX(-50%);
+}
+
+.title-icon2 {
+  width: 28px;  
+  height: 28px;
+  margin-right: 5px;
+}
+
+.plan-day {
+  position: absolute;
+  top: 15px;
+  right: 10px;      
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.day-box {
+  padding: 10px; 
+  background-color: #e0f7fa; 
+  border: 2px solid #00796b; 
+  border-radius: 8px; 
+  font-weight: bold;
+  font-size: 25px; 
+  color: #004d40; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.plan-properties {
+  position: relative;
+  left: 10px ;
+  top: 85px;
+  margin: 10px;
+  /* Añade esto para cambiar posición horizontalmente */
+  order: 2; /* Cambia el número para reordenar */
+  width: 150px;
+}
+
+.plan-image {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Añade esto para cambiar posición horizontalmente */
+  order: 2; /* Cambia el número para reordenar */
+  top: 60px;
+}
+
+.plan-image img {
+  max-width: 100%;
+  height: auto; 
+  border-radius: 8px;
+}
+
+.image-description {
+  position: relative; /* Cambia a relative si estaba absolute */
+  margin-top: 10px; /* Añade un pequeño margen superior */
+  background-color: transparent; /* Quita el fondo */
+  padding: 0; /* Elimina el padding */
+  font-size: 20px;
+  text-align: center;
+  top: -5px;
+  left: 35%;
+  font-weight: bold;
+}
+
+.plan-ingredients {
+  position: relative;
+  margin: 10px;
+  text-align: right; 
+  align-self: center; 
+  padding: 10px; 
+  border-radius: 8px;
+  list-style-position: inside;
+  /* Añade esto para cambiar posición horizontalmente */
+  order: 3; /* Cambia el número para reordenar */
+  left: -20px; 
+}
+
+.plan-ingredients ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.plan-ingredients li {
+  margin-bottom: 10px;
+  color: #0b0e0d;
+}
+
+.plan-description {
+  
+  margin-top: 10px;
+  font-size: 16px;
+  color: #0b0e0d;
+  background-color: transparent; /* Quita el fondo */
+  border-color: transparent;
+  padding: 0; /* Elimina el padding */
+  /* Añade esto para cambiar posición horizontalmente */
+  order: 4; /* Cambia el número para reordenar */
+  position: absolute;
+  left: 50px;
+  top: 70px;
+  width: 620px;
+  padding-left: 15px;
 }
