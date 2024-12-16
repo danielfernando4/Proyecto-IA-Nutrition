@@ -18,15 +18,12 @@ db.init_app(app)
 app.secret_key = "Nutritionkey12345session"
 app.permanent_session_lifetime = timedelta(minutes=120)
 
-
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
         return render_template("index.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
-
-
 
 @app.route("/loginRegister", methods=["GET", "POST"])
 def loginRegister():
@@ -62,9 +59,6 @@ def loginRegister():
                 return render_template("loginRegister.html")
     return render_template("loginRegister.html")
 
-
-
-
 @app.route("/generation", methods=["GET", "POST"]) #& Decorador para mi puerto
 def generation():
     if "correo" in session and "id_usuario" in session:
@@ -88,8 +82,6 @@ def generation():
         return render_template("generation.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
-
-
 
 
 @app.route("/config", methods=["GET", "POST"])
