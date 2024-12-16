@@ -1,73 +1,23 @@
-const recetas = [
-  {
-    title: "Arroz relleno",
+/*async function getInformation() {
+  try {
+    const response = await fetch("/generation");
 
-    proteinas: 5, // Gramos de proteína
-    grasas: 20, // Gramos de grasa
-    image: "/static/images/comida112.jpg",
-    carbohidratos: 15, // Gramos de carbohidratos
-    calorias: 240, // Calorías totales
-  },
-  {
-    title: "Arroz Marinero",
-
-    proteinas: 25,
-    image: "/static/images/comida112.jpg",
-    grasas: 10,
-    carbohidratos: 40,
-    calorias: 400,
-  },
-  {
-    title: "Pollo Aguacate",
-
-    proteinas: 30,
-    image: "/static/images/comida112.jpg",
-    grasas: 18,
-    carbohidratos: 5,
-    calorias: 350,
-  },
-  {
-    title: "Pollo Aguacate",
-
-    proteinas: 30,
-    image: "/static/images/comida112.jpg",
-    grasas: 18,
-    carbohidratos: 5,
-    calorias: 350,
-  },
-  {
-    title: "Pollo Aguacate",
-
-    proteinas: 30,
-    image: "/static/images/comida112.jpg",
-    grasas: 18,
-    carbohidratos: 5,
-    calorias: 350,
-  },
-  {
-    title: "Pollo Aguacate",
-
-    proteinas: 30,
-    image: "/static/images/comida112.jpg",
-    grasas: 18,
-    carbohidratos: 5,
-    calorias: 350,
-  },
-  {
-    title: "Pollo Aguacate",
-
-    proteinas: 30,
-    image: "/static/images/comida112.jpg",
-    grasas: 18,
-    carbohidratos: 5,
-    calorias: 350,
-  },
-];
-
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      console.error("Error en el POST:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+  }
+}
+const recetasfinal = getInformation();
 const postContainer = document.querySelector(".recipe-cards");
 
-const postMethods = () => {
-  recetas.map((postData) => {
+const postMethods = (recetas) => {
+  postContainer.innerHTML = "";
+  recetasfinal.map((postData) => {
     // Crear un elemento HTML para cada receta
 
     const card = document.createElement("div");
@@ -81,7 +31,55 @@ const postMethods = () => {
         <h3 class="recipe-card-title">${postData.title}</h3>
         
         <div class="recipe-card-footer">
-          <button class="btn-ready" >Agregar a plan</button>
+          <button class="btn-ready" onclick = desvanecer() >Agregar a plan</button>
+      </div>
+    </div>
+  `;
+    // Añadir la tarjeta al contenedor
+
+    postContainer.appendChild(card);
+  });
+};
+*/
+async function getInformation() {
+  try {
+    const response = await fetch("/generation");
+
+    if (response.ok) {
+      const data = await response.json();
+      return data; // Devolver los datos directamente
+    } else {
+      console.error("Error en el POST:", response.statusText);
+      return []; // Devolver un array vacío si falla
+    }
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+    return []; // Devolver un array vacío en caso de error
+  }
+}
+const postContainer = document.querySelector(".recipe-cards");
+
+// Función para renderizar las tarjetas
+const postMethods = (recetas) => {
+  postContainer.innerHTML = ""; // Limpiar contenedor
+
+  // Iterar sobre las recetas
+  recetas.map((postData) => {
+    // Crear un elemento HTML para cada receta
+    const card = document.createElement("div");
+    card.classList.add("recipe-card", "bounce-in-top");
+
+    card.innerHTML = `
+    <div class="recipe-card-content">
+      <img src="${postData.url_imagen}" alt="${
+      postData.nombre_comida
+    }" class="recipe-card-image" />
+      <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
+      <p class="recipe-card-description">Calorías: ${postData.calorias.toFixed(
+        2
+      )} | Proteínas: ${postData.proteinas}</p>
+      <div class="recipe-card-footer">
+        <button class="btn-ready" onclick="desvanecer()">Agregar a plan</button>
       </div>
     </div>
   `;
@@ -89,18 +87,7 @@ const postMethods = () => {
     postContainer.appendChild(card);
   });
 };
-/*<h3>${postData.title}</h3>
-<img src="${postData.image}" alt="${postData.title}"  class = "recipe-card">
-</div> 
-
-<div>
-<p><strong>Proteínas:</strong> ${postData.proteinas}g</p>
-<div class="separator"></div>
-<p><strong>Grasas:</strong> ${postData.grasas}g</p>
-<div class="separator"></div>
-<p><strong>Carbohidratos:</strong> ${postData.carbohidratos}g</p>
-<div class="separator"></div>
-<p><strong>Calorías:</strong> ${postData.calorias}kcal</p>
-</div>
-
-<button class="btn-ready"  onclick="openModal()">Agregar a plan</button> */
+const main = async () => {
+  const recetasfinal = await getInformation(); // Esperar los datos
+  postMethods(recetasfinal); // Pasar los datos a la función de renderizado
+};
