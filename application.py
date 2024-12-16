@@ -144,37 +144,40 @@ def descubre():
     if "correo" in session and "id_usuario" in session:
 
         if request.method == "POST":
-
             filtro = request.get_json()
-            prot = filtro.get("proteinas")
+            prot = filtro.get("proteínas")
             cal = filtro.get("calorias")
             carb = filtro.get("carbohidratos")
             grasas = filtro.get("grasas")
             tipo = filtro.get("tipo")
+            print(filtro)
 
             query = Comida.query
+            if cal == 1:
+                query = query.order_by(Comida.calorias.asc())
+            elif cal == 2:
+                query = query.order_by(Comida.calorias.desc())
+                
             if prot == 1:
                 query = query.order_by(Comida.proteinas.asc())
             elif prot == 2:
                 query = query.order_by(Comida.proteinas.desc())
 
-            if cal == 1:
-                query = query.order_by(Comida.calorias.asc())
-            elif cal == 2:
-                query = query.order_by(Comida.calorias.desc())
 
             if carb == 1:
                 query = query.order_by(Comida.carbohidratos.asc())
             elif carb == 2:
                 query = query.order_by(Comida.carbohidratos.desc())
 
-            if grasas == 1:
+            if grasas == 2:
                 query = query.order_by(Comida.grasas.asc())
-            elif grasas == 2:
+            elif grasas == 1:
                 query = query.order_by(Comida.grasas.desc())
 
-            if tipo:
-                query = query.filter_by(tipo_comida=tipo)
+            if tipo==1:
+                query = query.filter_by("Gluten Free")
+            elif tipo==2:
+                query = query.filter_by("Vegetarian")
 
             comidas = query.all()
 

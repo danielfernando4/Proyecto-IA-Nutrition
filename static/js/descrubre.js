@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
     const filterButton = document.getElementById('ver_filtro');
     const panelInfo = document.getElementById("filters_content");
-    const allFilters = document.querySelectorAll('.icon-button, .diet-select'); 
+    const allFilters = document.querySelectorAll('.icon-button, .diet-select');
 
     if (filterButton && panelInfo) {
         filterButton.addEventListener("click", () => {
             panelInfo.classList.toggle("open");
-            filterButton.classList.toggle("open"); 
+            filterButton.classList.toggle("open");
         });
     }
 
-    const filterButtons = document.querySelectorAll('.icon-button:not(.diet-select)'); 
+    const filterButtons = document.querySelectorAll('.icon-button:not(.diet-select)');
 
     filterButtons.forEach((button) => {
-        let clickState = 0; 
+        let clickState = 0;
 
         button.addEventListener('click', () => {
             clickState = (clickState + 1) % 3;
@@ -38,16 +38,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 button.classList.remove('active');
             }
 
-            updateFilterButton(); 
+            updateFilterButton();
+            updateFilterStates();
         });
     });
 
-   
     const dietSelect = document.getElementById('diet-filter');
 
     dietSelect.addEventListener('change', () => {
         const selectedOption = dietSelect.options[dietSelect.selectedIndex];
-        const icon = selectedOption.getAttribute('data-icon'); 
+        const icon = selectedOption.getAttribute('data-icon');
 
         dietSelect.style.backgroundImage = `url('${icon}')`;
 
@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
             dietSelect.classList.remove('active');
         }
 
-        updateFilterButton(); 
+        updateFilterButton();
+        updateFilterStates();
     });
 
     dietSelect.addEventListener('focus', () => {
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dietSelect.addEventListener('blur', () => {
-        dietSelect.classList.remove('open'); 
+        dietSelect.classList.remove('open');
     });
 
     function updateFilterButton() {
@@ -73,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const filterImg = filterButton.querySelector('img');
         if (hasActiveFilters) {
-            filterImg.src = '/static/icons/filtroActivo.png'; 
+            filterImg.src = '/static/icons/filtroActivo.png';
         } else {
-            filterImg.src = '/static/icons/filtrar.png'; 
+            filterImg.src = '/static/icons/filtrar.png';
         }
     }
 
@@ -87,75 +88,85 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    updateFilterButton();
+    const display = document.getElementById('filter-states-display');
 
-    const abrirReceta = document.getElementById("ver_infoRec");
-    const cerrarReceta = document.getElementById("close_recipeinf");
-    const panelReceta = document.getElementById("recipe_info");
-    const overlay = document.getElementById("modal_overlay");
+    
+    function getFilterStates() {
+        const states = {};
 
-    if (abrirReceta && panelReceta) {
-        abrirReceta.addEventListener("click", () => {
-            panelReceta.classList.add("open");
-            overlay.classList.add("open"); 
+        
+        filterButtons.forEach(button => {
+            const label = button.textContent.trim(); 
+            const icon = button.querySelector('.sort-icon');
+            let state = 0; 
+
+            if (icon) {
+                if (icon.classList.contains('asc')) {
+                    state = 1; 
+                } else if (icon.classList.contains('desc')) {
+                    state = 2; 
+                }
+            }
+
+            states[label.toLowerCase()] = state; 
         });
 
-        cerrarReceta.addEventListener("click", () => {
-            panelReceta.classList.remove("open");
-            overlay.classList.remove("open"); 
-        });
+        const dietLabel = 'tipo';
+        const selectedOption = dietSelect.options[dietSelect.selectedIndex].value;
+        let dietState = 0; 
+
+        if (selectedOption === 'vegetarian') {
+            dietState = 1; 
+        } else if (selectedOption === 'gluten_free') {
+            dietState = 2; 
+        }
+
+        states[dietLabel] = dietState;
+
+        return states;
     }
 
-    if (overlay) {
-        overlay.addEventListener("click", () => {
-            panelReceta.classList.remove("open");
-            overlay.classList.remove("open");
-        });
+
+    async function sendFilterStates(states) {
+        console.log("Enviando JSON al servidor:", states);
+
+        try {
+            const response = await fetch('/descubre', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(states)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                recetas = data;
+            } else {
+                console.error('Error en el POST:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
     }
+
+
+    function updateFilterStates() {
+        const currentStates = getFilterStates();
+
+        console.log(currentStates);
+
+        if (display) {
+            display.textContent = JSON.stringify(currentStates, null, 4); 
+        }
+
+        sendFilterStates(currentStates);
+    }
+
+    updateFilterStates();
 });
 
 
-const recetas = [
-    {
-        url_imagen: "/static/images/comida112.jpg",
-        nombre_comida: "Arroz relleno",
-        tipo_comida: "Vegetariano",
-        descripcion: "Un delicioso arroz relleno de vegetales y especias.",
-        ingredientes: ["Arroz", "Zanahoria", "Guisantes", "Cebolla", "Especias"],
-        informacion_nutricional: {
-            calorias: "250 kcal",
-            proteinas: "5 g",
-            carbohidratos: "45 g",
-            grasas: "3 g"
-        }
-    },
-    {
-        url_imagen: "/static/images/comida113.jpg",
-        nombre_comida: "Arroz Marinero",
-        tipo_comida: "Libre de gluten",
-        descripcion: "Arroz con frutos del mar, ideal para dietas libres de gluten.",
-        ingredientes: ["Arroz", "Camarones", "Almejas", "Ajo", "Perejil"],
-        informacion_nutricional: {
-            calorias: "320 kcal",
-            proteinas: "15 g",
-            carbohidratos: "40 g",
-            grasas: "8 g"
-        }
-    },
-    {
-        url_imagen: "/static/images/comida114.jpg",
-        nombre_comida: "Pollo Aguacate",
-        tipo_comida: "Libre de gluten",
-        descripcion: "Pollo con guacamole fresco, ideal para comidas ligeras.",
-        ingredientes: ["Pollo", "Aguacate", "Limón", "Cilantro"],
-        informacion_nutricional: {
-            calorias: "400 kcal",
-            proteinas: "25 g",
-            carbohidratos: "10 g",
-            grasas: "20 g"
-        }
-    }
-];
 
 const postContainer = document.querySelector(".recipe-cards");
 const modalOverlay = document.getElementById("modal_overlay");
@@ -170,10 +181,10 @@ const getMethods = () => {
         card.classList.add("recipe-card");
 
         card.innerHTML = `
-            <img src="${postData.url_imagen}" alt="${postData.nombre_comida}" class="recipe-image">
+            <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="recipe-image">
             <div class="recipe-card-content">
                 <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
-                <p class="recipe-card-description">${postData.descripcion}</p>
+                <p class="recipe-card-description">${postData.ingredientes}</p>
                 <div class="recipe-card-footer">
                     <button class="btn view-recipe" data-index="${index}">Ver receta</button>
                 </div>
@@ -195,24 +206,34 @@ const addModalEventListeners = () => {
             const recipeData = recetas[recipeIndex];
 
             document.querySelector(".recipe-title").innerText = recipeData.nombre_comida;
-            document.querySelector(".mod_desc").innerText = recipeData.descripcion;
+            document.querySelector(".mod_desc").innerText = "Conoce la información nutricional de esta recera. Junto con sus ingredientes y valores calóricos. ¡Disfruta!";
 
             const modalImage = document.querySelector(".modal-recipe-image");
-            modalImage.src = recipeData.url_imagen;
+            modalImage.src = recipeData.url_imagen + ".jpg";
             modalImage.alt = recipeData.nombre_comida;
 
             const description = document.querySelector(".recipe-description");
-            description.innerText = recipeData.descripcion;
+            description.innerText = recipeData.ingredientes;
 
             const ingredientsList = document.querySelector(".ingredients-list");
-            ingredientsList.innerHTML = recipeData.ingredientes.map(ingr => `<li>${ingr}</li>`).join("");
+            // Verificar si los ingredientes están en formato de cadena
+            let ingredientsArray = [];
+            if (typeof recipeData.ingredientes === "string") {
+                ingredientsArray = recipeData.ingredientes.split(',').map(ingr => ingr.trim());
+            } else if (Array.isArray(recipeData.ingredientes)) {
+                ingredientsArray = recipeData.ingredientes;
+            }
+
+            // Generar la lista de ingredientes
+            ingredientsList.innerHTML = ingredientsArray.map(ingr => `<li>${ingr}</li>`).join("");
+
 
             const nutritionList = document.querySelector(".nutrition-list");
             nutritionList.innerHTML = `
-                <li>Calorías: ${recipeData.informacion_nutricional.calorias}</li>
-                <li>Proteínas: ${recipeData.informacion_nutricional.proteinas}</li>
-                <li>Carbohidratos: ${recipeData.informacion_nutricional.carbohidratos}</li>
-                <li>Grasas: ${recipeData.informacion_nutricional.grasas}</li>
+                <li>Calorías: ${recipeData.calorias}</li>
+                <li>Proteínas: ${recipeData.proteinas}</li>
+                <li>Carbohidratos: ${recipeData.carbohidratos}</li>
+                <li>Grasas: ${recipeData.grasas}</li>
             `;
 
             modalPanel.classList.add("open");

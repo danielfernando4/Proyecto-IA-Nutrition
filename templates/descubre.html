@@ -16,20 +16,20 @@
     </div>
 
     <div class="filters_content" id="filters_content">
-        <button class="icon-button" onclick="getMethods()" type="submit">
+        <button class="icon-button" type="submit">
             <img src="/static/icons/calorias.png" alt="Calorías" class="icon-image"> Calorías
         </button>
 
-        <button class="icon-button">
-            <img src="/static/icons/carne.png" alt="Proteínas" class="icon-image"> Proteínas
+        <button class="icon-button" >
+            <img src="/static/icons/carne.png"  alt="Proteínas" class="icon-image"> Proteínas
         </button>
-        <button class="icon-button">
-            <img src="/static/icons/pan.png" alt="Carbohidratos" class="icon-image"> Carbohidratos
+        <button class="icon-button" >
+            <img src="/static/icons/pan.png"  alt="Carbohidratos" class="icon-image"> Carbohidratos
         </button>
-        <button class="icon-button">
-            <img src="/static/icons/aguacate.png" alt="Grasas" class="icon-image"> Grasas
+        <button class="icon-button" >
+            <img src="/static/icons/aguacate.png"  alt="Grasas" class="icon-image"> Grasas
         </button>
-
+        
         <div class="icon-button-wrapper">
             <select id="diet-filter" class="diet-select">
                 <option value="sin_filtro" data-icon="/static/icons/dieta.png" selected>Tipo de dieta</option>
@@ -37,7 +37,7 @@
                 <option value="vegetarian" data-icon="/static/icons/lechuga.png">Vegetariana</option>
             </select>
         </div>
-        <button onclick="getMethods()" type="submit">Buscar</button>
+        <button class="buscar" onclick="getMethods()">Buscar</button>
     </div>
 
     <div class="recipe-cards">
