@@ -71,7 +71,7 @@ const postMethods = () => {
     // Crear un elemento HTML para cada receta
 
     const card = document.createElement("div");
-    card.classList.add("recipe-card");
+    card.classList.add("recipe-card", "bounce-in-top");
 
     // Agregar contenido a la tarjeta
     card.innerHTML = `
