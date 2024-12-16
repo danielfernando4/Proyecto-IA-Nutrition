@@ -173,8 +173,13 @@ def descubre():
             elif grasas == 2:
                 query = query.order_by(Comida.grasas.desc())
 
+            if tipo==1:
+                tipo_text = "Gluten Free"
+            else:
+                tipo_text = "Vegetarian"
+                pass
             if tipo:
-                query = query.filter_by(tipo_comida=tipo)
+                query = query.filter_by(tipo_comida=tipo_text)
 
             comidas = query.all()
 
