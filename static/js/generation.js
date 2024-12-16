@@ -63,10 +63,12 @@ const recetas = [
     calorias: 350,
   },
 ];
+// Limpia el contenedor de recetas antes de agregar nuevas tarjetas
 const recetas2 = null;
 const postContainer = document.querySelector(".recipe-cards");
 
 const postMethods = () => {
+  postContainer.innerHTML = "";
   recetas.map((postData) => {
     // Crear un elemento HTML para cada receta
 
@@ -81,26 +83,13 @@ const postMethods = () => {
         <h3 class="recipe-card-title">${postData.title}</h3>
         
         <div class="recipe-card-footer">
-          <button class="btn-ready" >Agregar a plan</button>
+          <button class="btn-ready" onclick = desvanecer() >Agregar a plan</button>
       </div>
     </div>
   `;
     // Añadir la tarjeta al contenedor
+
     postContainer.appendChild(card);
   });
 };
-/*<h3>${postData.title}</h3>
-<img src="${postData.image}" alt="${postData.title}"  class = "recipe-card">
-</div> 
-
-<div>
-<p><strong>Proteínas:</strong> ${postData.proteinas}g</p>
-<div class="separator"></div>
-<p><strong>Grasas:</strong> ${postData.grasas}g</p>
-<div class="separator"></div>
-<p><strong>Carbohidratos:</strong> ${postData.carbohidratos}g</p>
-<div class="separator"></div>
-<p><strong>Calorías:</strong> ${postData.calorias}kcal</p>
-</div>
-
-<button class="btn-ready"  onclick="openModal()">Agregar a plan</button> */
+const desvanecer = () => {};
