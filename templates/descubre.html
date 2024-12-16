@@ -16,18 +16,18 @@
     </div>
 
     <div class="filters_content" id="filters_content">
-        <button class="icon-button" type="submit">
+        <button class="icon-button" onclick="getMethods()" type="submit">
             <img src="/static/icons/calorias.png" alt="Calorías" class="icon-image"> Calorías
         </button>
 
         <button class="icon-button">
-            <img src="/static/icons/carne.png" alt="Proteínas" class="icon-image"> Proteínas
+            <img src="/static/icons/carne.png" onclick="getMethods()" alt="Proteínas" class="icon-image"> Proteínas
         </button>
         <button class="icon-button">
-            <img src="/static/icons/pan.png" alt="Carbohidratos" class="icon-image"> Carbohidratos
+            <img src="/static/icons/pan.png" onclick="getMethods()" alt="Carbohidratos" class="icon-image"> Carbohidratos
         </button>
         <button class="icon-button">
-            <img src="/static/icons/aguacate.png" alt="Grasas" class="icon-image"> Grasas
+            <img src="/static/icons/aguacate.png" onclick="getMethods()" alt="Grasas" class="icon-image"> Grasas
         </button>
 
         <div class="icon-button-wrapper">
@@ -38,10 +38,6 @@
             </select>
         </div>
     </div>
-    
-    <button onclick="getMethods()" type="submit">Buscar</button>
-    
-    <div id="filter-states-display" style="margin-top: 20px; font-family: monospace; white-space: pre-wrap;"></div>
 
     <div class="recipe-cards">
     </div>

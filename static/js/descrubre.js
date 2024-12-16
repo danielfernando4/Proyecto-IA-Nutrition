@@ -128,6 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     async function sendFilterStates(states) {
+        console.log("Enviando JSON al servidor:", states);
+
         try {
             const response = await fetch('/descubre', {
                 method: 'POST',
@@ -140,8 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (response.ok) {
                 const data = await response.json();
 
-                
-                updateComidaResults(data);
             } else {
                 console.error('Error en el POST:', response.statusText);
             }
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(currentStates);
 
         if (display) {
-            display.textContent = JSON.stringify(currentStates, null, 4); // Formatear el JSON para que sea legible
+            display.textContent = JSON.stringify(currentStates, null, 4); 
         }
 
         sendFilterStates(currentStates);
