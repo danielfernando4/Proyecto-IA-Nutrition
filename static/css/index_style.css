@@ -3,7 +3,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
     font-family: "Segoe UI";
   }
   
@@ -151,12 +150,12 @@
     border-radius: 8px; /* Bordes redondeados */
     list-style-position: inside; 
 }
-
 /* Miniaturas */
 .plan-thumbnails {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
   gap: 20px;
+  justify-content: left;
   margin-top: -40px; /* Para distancia con desayunos */
   margin-left: 5px;
 }
@@ -164,39 +163,70 @@
 .thumbnail {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  width: 270px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  border: 1px solid #d9dcdb;
-  border-radius: 10px; /* Borde curvo */
-  margin: 10px;
-  padding: 10px;
-}
-
-.thumbnail img {
-  width: 100px;
-  height: 100px;
-  border-radius: 5px;
-  border: 2px solid #ffffffd5;
-  transition: transform 0.2s ease;
+  background-color: #ffffff; /* Fondo por defecto */
 }
 
 .thumbnail:hover {
-  transform: scale(1.3);
-  box-shadow: 0 2px 20px rgb(170, 172, 170); /* Sombra verde */
-  background-color: rgba(238, 239, 239, 0.849);	
+  transform: scale(1.03);
+  border-color: #2ecc71;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el mouse */
 }
 
-
-.thumbnail.selected {
-  border: 2px solid gray; 
-  transform: scale(1.3);
-  box-shadow: 0 2px 20px rgb(170, 172, 170);
-  background-color: rgba(238, 239, 239, 0.849);
+.thumbnail img {
+  height: 200px; /* Ajustar la altura de la miniatura */
+  object-fit: cover; /* Para que la imagen se recorte y adapte bien */
 }
 
-.thumbnail-name {
-  margin-top: 5px;
+.thumbnail-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.thumbnail-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333; /* Color del texto */
+}
+
+.thumbnail-description {
   font-size: 14px;
-  text-align: center;
+  color: #666;
+}
+
+.thumbnail-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.thumbnail-footer .btn {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.thumbnail-footer .btn:hover {
+  background-color: #27ae60;
+  transform: scale(0.98);
 }
