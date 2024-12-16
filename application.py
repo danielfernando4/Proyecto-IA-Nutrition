@@ -68,29 +68,39 @@ def loginRegister():
 
 
 
-@app.route("/generation", methods=["GET", "POST"]) #& Decorador para mi puerto
+
+
+@app.route("/generation", methods=["GET", "POST"])
 def generation():
     if "correo" in session and "id_usuario" in session:
         if request.method == "POST":
-            edad = int(request.form.get("edad"))
-            altura = int(request.form.get("altura"))
-            sexo = request.form.get("sexo")
-            peso = float(request.form.get("peso"))
+            # Obtener datos en formato JSON
+            data = request.json
+            edad = int(data.get("edad"))
+            altura = int(data.get("altura"))
+            sexo = data.get("sexo")
+            peso = float(data.get("peso"))
+            print(request.json)
 
+            # Procesar los datos
             sexo_num = 0 if sexo == "masculino" else 1
-
             cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, 3)
-
             diets = int(kmeans_generator_diet(cal, prot, carb, grasas))
-
+            print(diets)
+            # Consultar la base de datos para obtener las comidas
             comidas = Comida.query.filter(Comida.grupo == diets).order_by(func.random()).limit(7).all()
 
+            # Convertir las comidas a JSON
             comidas_json = [comida.to_dict() for comida in comidas]
-            return jsonify(comidas_json)
-        
+            return jsonify(comidas_json)  # Devolver el JSON al cliente
+
+        # Manejar solicitudes GET
         return render_template("generation.html", nombre=session["nombre"], correo=session["correo"])
+
     else:
+        # Redirigir si el usuario no está autenticado
         return redirect(url_for("homepage"))
+
 
 
 
