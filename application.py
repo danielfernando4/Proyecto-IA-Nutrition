@@ -18,12 +18,18 @@ db.init_app(app)
 app.secret_key = "Nutritionkey12345session"
 app.permanent_session_lifetime = timedelta(minutes=120)
 
+
+
+
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
         return render_template("index.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
+
+
+
 
 @app.route("/loginRegister", methods=["GET", "POST"])
 def loginRegister():
@@ -59,6 +65,9 @@ def loginRegister():
                 return render_template("loginRegister.html")
     return render_template("loginRegister.html")
 
+
+
+
 @app.route("/generation", methods=["GET", "POST"]) #& Decorador para mi puerto
 def generation():
     if "correo" in session and "id_usuario" in session:
@@ -82,6 +91,8 @@ def generation():
         return render_template("generation.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
+
+
 
 
 @app.route("/config", methods=["GET", "POST"])
@@ -128,10 +139,65 @@ def config():
 
 
 
-@app.route("/descubre")
+@app.route("/descubre", methods=["GET", "POST"])
 def descubre():
     if "correo" in session and "id_usuario" in session:
+
+        if request.method == "POST":
+
+            filtro = request.get_json()
+            prot = filtro.get("proteinas")
+            cal = filtro.get("calorias")
+            carb = filtro.get("carbohidratos")
+            grasas = filtro.get("grasas")
+            tipo = filtro.get("tipo")
+
+            query = Comida.query
+            if prot == 1:
+                query = query.order_by(Comida.proteinas.asc())
+            elif prot == 2:
+                query = query.order_by(Comida.proteinas.desc())
+
+            if cal == 1:
+                query = query.order_by(Comida.calorias.asc())
+            elif cal == 2:
+                query = query.order_by(Comida.calorias.desc())
+
+            if carb == 1:
+                query = query.order_by(Comida.carbohidratos.asc())
+            elif carb == 2:
+                query = query.order_by(Comida.carbohidratos.desc())
+
+            if grasas == 1:
+                query = query.order_by(Comida.grasas.asc())
+            elif grasas == 2:
+                query = query.order_by(Comida.grasas.desc())
+
+            if tipo:
+                query = query.filter_by(tipo_comida=tipo)
+
+            comidas = query.all()
+
+            comidas_json = [
+                {
+                    "id_comida": comida.id_comida,
+                    "nombre_comida": comida.nombre_comida,
+                    "calorias": comida.calorias,
+                    "proteinas": comida.proteinas,
+                    "carbohidratos": comida.carbohidratos,
+                    "grasas": comida.grasas,
+                    "ingredientes": comida.ingredientes,
+                    "tipo_comida": comida.tipo_comida,
+                    "grupo": comida.grupo,
+                    "url_imagen": comida.url_imagen
+                }
+                for comida in comidas
+            ]
+
+            return jsonify(comidas_json)
+
         return render_template("descubre.html", nombre=session["nombre"], correo=session["correo"])
+    
     else:
         return redirect(url_for("homepage"))
 
@@ -170,6 +236,21 @@ def cerrarsesion():
 @app.route("/kmeans.html")
 def kmeans():
     if "correo" in session and "id_usuario" in session:
+        """
+        if request.method == "POST":
+
+            datos = request.get_json()
+            edad = datos.get("edad")
+            altura = datos.get("altura")
+            sexo = datos.get("sexo")
+            peso = datos.get("peso")
+            sexo_num = 0 if sexo == "masculino" else 1
+            cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, 3)
+            diets = int(kmeans_generator_diet(cal, prot, carb, grasas))
+            comidas = Comida.query.filter(Comida.grupo == diets).all()
+            comidas_json = [comida.to_dict() for comida in comidas]
+            return jsonify(comidas_json)
+        """
         return render_template("kmeans.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
