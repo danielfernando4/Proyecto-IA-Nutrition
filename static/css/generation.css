@@ -9,6 +9,9 @@
 .section {
   display: flex;
   flex-direction: column;
+  position: relative;
+  left: -300px;
+  top: -70px;
 }
 .card-container {
   margin-top: 20px;
@@ -55,6 +58,8 @@ fieldset {
   font-family: "Arial", sans-serif; /* Fuente moderna */
   color: #333; /* Color de texto */
   transition: all 0.3s ease; /* Transición suave para interacciones */
+  display: flex;
+  flex-direction: row;
 }
 
 fieldset:hover {
@@ -155,6 +160,7 @@ input:valid ~ label {
   transform: scale(calc(1 + (var(--active, 0) * 0.1)));
 
   transition: transform var(--transtion);
+  width: 280px;
 }
 .pilas {
   display: flex;
@@ -322,7 +328,7 @@ input:valid ~ label {
   background-clip: text;
 
   font-size: 1rem;
-  color: transparent;
+  color: #000000;
 }
 
 .btn-ready {

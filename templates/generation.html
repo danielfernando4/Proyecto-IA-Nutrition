@@ -3,7 +3,11 @@
 block content %}
 <div class="generarIA">
   <section class="section">
-    <form action="{{ url_for('generation') }}" method="POST">
+    <form
+      id="generationForm"
+      action="{{ url_for('generation') }}"
+      method="POST"
+    >
       <div class="pilas">
         <fieldset>
           <legend>
@@ -66,7 +70,7 @@ block content %}
         </fieldset>
         <!-- Generar IA-->
 
-        <button class="button" onclick="postMethods()" type="submit">
+        <button class="button" onclick="main()" type="submit">
           <div class="dots_border"></div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +110,6 @@ block content %}
   </section>
   <!-- Targeteros-->
   <div class="recipe-cards bounce-in-top"></div>
-
   {% block js %}
   <script src="../static/js/generation.js"></script>
   {% endblock %}
