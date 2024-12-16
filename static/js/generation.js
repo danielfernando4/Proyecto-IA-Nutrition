@@ -63,7 +63,7 @@ const recetas = [
     calorias: 350,
   },
 ];
-const recetas2 = null;
+
 const postContainer = document.querySelector(".recipe-cards");
 
 const postMethods = () => {
