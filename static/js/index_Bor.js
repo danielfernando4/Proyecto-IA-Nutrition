@@ -61,6 +61,18 @@ platos.forEach(plato => {
           <span>Más información</span>
           <button class="btn" data-recipe-id="${plato.nombre}">Ver receta</button>
       </div>
+      <div class="rating">
+          <input type="radio" id="star5-${plato.nombre}" name="rate-${plato.nombre}" value="5" />
+          <label for="star5-${plato.nombre}" title="text"></label>
+          <input type="radio" id="star4-${plato.nombre}" name="rate-${plato.nombre}" value="4" />
+          <label for="star4-${plato.nombre}" title="text"></label>
+          <input type="radio" id="star3-${plato.nombre}" name="rate-${plato.nombre}" value="3" />
+          <label for="star3-${plato.nombre}" title="text"></label>
+          <input type="radio" id="star2-${plato.nombre}" name="rate-${plato.nombre}" value="2" />
+          <label for="star2-${plato.nombre}" title="text"></label>
+          <input checked type="radio" id="star1-${plato.nombre}" name="rate-${plato.nombre}" value="1" />
+          <label for="star1-${plato.nombre}" title="text"></label>
+      </div>
     </div>
   `;
   thumbnail.querySelector('.btn').addEventListener('click', () => mostrarDetalles(plato));
