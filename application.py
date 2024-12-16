@@ -84,9 +84,7 @@ def generation():
 
             comidas_json = [comida.to_dict() for comida in comidas]
             return jsonify(comidas_json)
-
-
-
+        
         return render_template("generation.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
@@ -179,7 +177,10 @@ def cerrarsesion():
 
 @app.route("/kmeans.html")
 def kmeans():
-    return render_template("kmeans.html")
+    if "correo" in session and "id_usuario" in session:
+        return render_template("kmeans.html", nombre=session["nombre"], correo=session["correo"])
+    else:
+        return redirect(url_for("homepage"))
 
 
 
