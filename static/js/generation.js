@@ -64,14 +64,14 @@ const recetas = [
   },
 ];
 const recetas2 = null;
-const postContainer = document.querySelector(".recipe-cards", ".bounce-in-top");
+const postContainer = document.querySelector(".recipe-cards");
 
 const postMethods = () => {
   recetas.map((postData) => {
     // Crear un elemento HTML para cada receta
 
     const card = document.createElement("div");
-    card.classList.add("recipe-card");
+    card.classList.add("recipe-card", "bounce-in-top");
 
     // Agregar contenido a la tarjeta
     card.innerHTML = `
