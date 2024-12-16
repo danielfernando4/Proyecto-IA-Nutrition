@@ -64,7 +64,7 @@ const recetas = [
   },
 ];
 const recetas2 = null;
-const postContainer = document.querySelector(".recipe-cards");
+const postContainer = document.querySelector(".recipe-cards", ".bounce-in-top");
 
 const postMethods = () => {
   recetas.map((postData) => {
