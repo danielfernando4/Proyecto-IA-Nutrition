@@ -144,11 +144,10 @@ def descubre():
     if "correo" in session and "id_usuario" in session:
 
         if request.method == "POST":
-<<<<<<< HEAD
+
             print("POST recibido:", request.get_json())
 
-=======
->>>>>>> c6bd16b5b05ed69bf0935171c614f85b28986b5e
+
             filtro = request.get_json()
             prot = filtro.get("proteínas")
             cal = filtro.get("calorias")
