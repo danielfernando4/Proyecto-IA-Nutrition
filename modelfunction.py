@@ -10,7 +10,7 @@ def kmeans_generator_diet(calories, protein, carbs, fat):
         
         km = joblib.load('models/kmeans_model2.pkl')
 
-        new_data = np.array([[200, 11, 2, 5]])
+        new_data = np.array([[calories, protein, carbs, fat]])
         predicted_cluster = km.predict(new_data)
     return predicted_cluster[0]
 
