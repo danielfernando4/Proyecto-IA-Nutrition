@@ -1,15 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const abrirInfo = document.getElementById("edit_profile");
-    const cerrarInfo = document.getElementById("close_info");
-    const panelInfo = document.getElementById("profile_conf");
+    const abrirInfo = document.getElementById("ver_filtro");
+    const panelInfo = document.getElementById("filters_content");
 
-    if (abrirProfile && cerrarProfile && panelProfile) {
-        abrirProfile.addEventListener("click", () => {
-            panelInfo.classList.add("open");
+    if (abrirInfo && panelInfo) {
+        abrirInfo.addEventListener("click", () => {
+            panelInfo.classList.toggle("open");
+        });
+    }
+
+    const abrirReceta = document.getElementById("ver_infoRec");
+    const cerrarReceta = document.getElementById("close_recipeinf");
+    const panelReceta = document.getElementById("recipe_info");
+    const overlay = document.getElementById("modal_overlay"); // Referencia al overlay
+
+    if (abrirReceta && panelReceta) {
+        abrirReceta.addEventListener("click", () => {
+            panelReceta.classList.add("open");
+            overlay.classList.add("open"); // Hacer visible el overlay
         });
 
-        cerrarProfile.addEventListener("click", () => {
-            panelInfo.classList.remove("open");
+        cerrarReceta.addEventListener("click", () => {
+            panelReceta.classList.remove("open");
+            overlay.classList.remove("open"); // Ocultar el overlay
+        });
+    }
+
+    // Cerrar modal si se hace clic en el overlay
+    if (overlay) {
+        overlay.addEventListener("click", () => {
+            panelReceta.classList.remove("open");
+            overlay.classList.remove("open");
         });
     }
 });
