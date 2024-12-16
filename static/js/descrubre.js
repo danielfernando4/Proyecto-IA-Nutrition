@@ -186,9 +186,9 @@ const getMethods = () => {
                 <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
                 <p class="recipe-card-description">${postData.ingredientes}</p>
                 <div class="recipe-card-footer">
-                    <button class="btn view-recipe" data-index="${index}">Ver receta</button>
                 </div>
             </div>
+                <button class="btn view-recipe" data-index="${index}">Ver receta</button>
         `;
 
         postContainer.appendChild(card);
