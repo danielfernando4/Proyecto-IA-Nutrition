@@ -16,7 +16,7 @@
     </div>
 
     <div class="filters_content" id="filters_content">
-        <button class="icon-button" onclick="getMethods()" type="submit">
+        <button class="icon-button" type="submit">
             <img src="/static/icons/calorias.png" alt="Calorías" class="icon-image"> Calorías
         </button>
 
@@ -37,8 +37,11 @@
                 <option value="vegetarian" data-icon="/static/icons/lechuga.png">Vegetariana</option>
             </select>
         </div>
-        <button onclick="getMethods()" type="submit">Buscar</button>
     </div>
+    
+    <button onclick="getMethods()" type="submit">Buscar</button>
+    
+    <div id="filter-states-display" style="margin-top: 20px; font-family: monospace; white-space: pre-wrap;"></div>
 
     <div class="recipe-cards">
     </div>

@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
     const filterButton = document.getElementById('ver_filtro');
     const panelInfo = document.getElementById("filters_content");
-    const allFilters = document.querySelectorAll('.icon-button, .diet-select'); 
+    const allFilters = document.querySelectorAll('.icon-button, .diet-select');
 
     if (filterButton && panelInfo) {
         filterButton.addEventListener("click", () => {
             panelInfo.classList.toggle("open");
-            filterButton.classList.toggle("open"); 
+            filterButton.classList.toggle("open");
         });
     }
 
-    const filterButtons = document.querySelectorAll('.icon-button:not(.diet-select)'); 
+    const filterButtons = document.querySelectorAll('.icon-button:not(.diet-select)');
 
     filterButtons.forEach((button) => {
-        let clickState = 0; 
+        let clickState = 0;
 
         button.addEventListener('click', () => {
             clickState = (clickState + 1) % 3;
@@ -38,16 +38,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 button.classList.remove('active');
             }
 
-            updateFilterButton(); 
+            updateFilterButton();
+            updateFilterStates();
         });
     });
 
-   
     const dietSelect = document.getElementById('diet-filter');
 
     dietSelect.addEventListener('change', () => {
         const selectedOption = dietSelect.options[dietSelect.selectedIndex];
-        const icon = selectedOption.getAttribute('data-icon'); 
+        const icon = selectedOption.getAttribute('data-icon');
 
         dietSelect.style.backgroundImage = `url('${icon}')`;
 
@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
             dietSelect.classList.remove('active');
         }
 
-        updateFilterButton(); 
+        updateFilterButton();
+        updateFilterStates();
     });
 
     dietSelect.addEventListener('focus', () => {
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dietSelect.addEventListener('blur', () => {
-        dietSelect.classList.remove('open'); 
+        dietSelect.classList.remove('open');
     });
 
     function updateFilterButton() {
@@ -73,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const filterImg = filterButton.querySelector('img');
         if (hasActiveFilters) {
-            filterImg.src = '/static/icons/filtroActivo.png'; 
+            filterImg.src = '/static/icons/filtroActivo.png';
         } else {
-            filterImg.src = '/static/icons/filtrar.png'; 
+            filterImg.src = '/static/icons/filtrar.png';
         }
     }
 
@@ -87,31 +88,82 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    updateFilterButton();
+    const display = document.getElementById('filter-states-display');
 
-    const abrirReceta = document.getElementById("ver_infoRec");
-    const cerrarReceta = document.getElementById("close_recipeinf");
-    const panelReceta = document.getElementById("recipe_info");
-    const overlay = document.getElementById("modal_overlay");
+    
+    function getFilterStates() {
+        const states = {};
 
-    if (abrirReceta && panelReceta) {
-        abrirReceta.addEventListener("click", () => {
-            panelReceta.classList.add("open");
-            overlay.classList.add("open"); 
+        
+        filterButtons.forEach(button => {
+            const label = button.textContent.trim(); 
+            const icon = button.querySelector('.sort-icon');
+            let state = 0; 
+
+            if (icon) {
+                if (icon.classList.contains('asc')) {
+                    state = 1; 
+                } else if (icon.classList.contains('desc')) {
+                    state = 2; 
+                }
+            }
+
+            states[label.toLowerCase()] = state; 
         });
 
-        cerrarReceta.addEventListener("click", () => {
-            panelReceta.classList.remove("open");
-            overlay.classList.remove("open"); 
-        });
+        const dietLabel = 'tipo';
+        const selectedOption = dietSelect.options[dietSelect.selectedIndex].value;
+        let dietState = 0; 
+
+        if (selectedOption === 'vegetarian') {
+            dietState = 1; 
+        } else if (selectedOption === 'gluten_free') {
+            dietState = 2; 
+        }
+
+        states[dietLabel] = dietState;
+
+        return states;
     }
 
-    if (overlay) {
-        overlay.addEventListener("click", () => {
-            panelReceta.classList.remove("open");
-            overlay.classList.remove("open");
-        });
+
+    async function sendFilterStates(states) {
+        try {
+            const response = await fetch('/descubre', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(states)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                
+                updateComidaResults(data);
+            } else {
+                console.error('Error en el POST:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
     }
+
+
+    function updateFilterStates() {
+        const currentStates = getFilterStates();
+
+        console.log(currentStates);
+
+        if (display) {
+            display.textContent = JSON.stringify(currentStates, null, 4); // Formatear el JSON para que sea legible
+        }
+
+        sendFilterStates(currentStates);
+    }
+
+    updateFilterStates();
 });
 
 
