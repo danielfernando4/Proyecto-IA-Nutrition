@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (response.ok) {
                 const data = await response.json();
-
+                recetas = data;
             } else {
                 console.error('Error en el POST:', response.statusText);
             }
@@ -167,47 +167,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-const recetas = [
-    {
-        url_imagen: "/static/images/comida112.jpg",
-        nombre_comida: "Arroz relleno",
-        tipo_comida: "Vegetariano",
-        descripcion: "Un delicioso arroz relleno de vegetales y especias.",
-        ingredientes: ["Arroz", "Zanahoria", "Guisantes", "Cebolla", "Especias"],
-        informacion_nutricional: {
-            calorias: "250 kcal",
-            proteinas: "5 g",
-            carbohidratos: "45 g",
-            grasas: "3 g"
-        }
-    },
-    {
-        url_imagen: "/static/images/comida113.jpg",
-        nombre_comida: "Arroz Marinero",
-        tipo_comida: "Libre de gluten",
-        descripcion: "Arroz con frutos del mar, ideal para dietas libres de gluten.",
-        ingredientes: ["Arroz", "Camarones", "Almejas", "Ajo", "Perejil"],
-        informacion_nutricional: {
-            calorias: "320 kcal",
-            proteinas: "15 g",
-            carbohidratos: "40 g",
-            grasas: "8 g"
-        }
-    },
-    {
-        url_imagen: "/static/images/comida114.jpg",
-        nombre_comida: "Pollo Aguacate",
-        tipo_comida: "Libre de gluten",
-        descripcion: "Pollo con guacamole fresco, ideal para comidas ligeras.",
-        ingredientes: ["Pollo", "Aguacate", "Limón", "Cilantro"],
-        informacion_nutricional: {
-            calorias: "400 kcal",
-            proteinas: "25 g",
-            carbohidratos: "10 g",
-            grasas: "20 g"
-        }
-    }
-];
 
 const postContainer = document.querySelector(".recipe-cards");
 const modalOverlay = document.getElementById("modal_overlay");
@@ -222,10 +181,10 @@ const getMethods = () => {
         card.classList.add("recipe-card");
 
         card.innerHTML = `
-            <img src="${postData.url_imagen}" alt="${postData.nombre_comida}" class="recipe-image">
+            <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="recipe-image">
             <div class="recipe-card-content">
                 <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
-                <p class="recipe-card-description">${postData.descripcion}</p>
+                <p class="recipe-card-description">${postData.ingredientes}</p>
                 <div class="recipe-card-footer">
                     <button class="btn view-recipe" data-index="${index}">Ver receta</button>
                 </div>
@@ -247,24 +206,34 @@ const addModalEventListeners = () => {
             const recipeData = recetas[recipeIndex];
 
             document.querySelector(".recipe-title").innerText = recipeData.nombre_comida;
-            document.querySelector(".mod_desc").innerText = recipeData.descripcion;
+            document.querySelector(".mod_desc").innerText = "Conoce la información nutricional de esta recera. Junto con sus ingredientes y valores calóricos. ¡Disfruta!";
 
             const modalImage = document.querySelector(".modal-recipe-image");
-            modalImage.src = recipeData.url_imagen;
+            modalImage.src = recipeData.url_imagen + ".jpg";
             modalImage.alt = recipeData.nombre_comida;
 
             const description = document.querySelector(".recipe-description");
-            description.innerText = recipeData.descripcion;
+            description.innerText = recipeData.ingredientes;
 
             const ingredientsList = document.querySelector(".ingredients-list");
-            ingredientsList.innerHTML = recipeData.ingredientes.map(ingr => `<li>${ingr}</li>`).join("");
+            // Verificar si los ingredientes están en formato de cadena
+            let ingredientsArray = [];
+            if (typeof recipeData.ingredientes === "string") {
+                ingredientsArray = recipeData.ingredientes.split(',').map(ingr => ingr.trim());
+            } else if (Array.isArray(recipeData.ingredientes)) {
+                ingredientsArray = recipeData.ingredientes;
+            }
+
+            // Generar la lista de ingredientes
+            ingredientsList.innerHTML = ingredientsArray.map(ingr => `<li>${ingr}</li>`).join("");
+
 
             const nutritionList = document.querySelector(".nutrition-list");
             nutritionList.innerHTML = `
-                <li>Calorías: ${recipeData.informacion_nutricional.calorias}</li>
-                <li>Proteínas: ${recipeData.informacion_nutricional.proteinas}</li>
-                <li>Carbohidratos: ${recipeData.informacion_nutricional.carbohidratos}</li>
-                <li>Grasas: ${recipeData.informacion_nutricional.grasas}</li>
+                <li>Calorías: ${recipeData.calorias}</li>
+                <li>Proteínas: ${recipeData.proteinas}</li>
+                <li>Carbohidratos: ${recipeData.carbohidratos}</li>
+                <li>Grasas: ${recipeData.grasas}</li>
             `;
 
             modalPanel.classList.add("open");
