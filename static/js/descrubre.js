@@ -25,13 +25,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (clickState === 1) {
                 button.classList.add('active');
                 const sortIcon = document.createElement('img');
-                sortIcon.src = '/static/icons/up-arrow.png';
+                sortIcon.src = '/static/icons/arriba.png';
                 sortIcon.classList.add('sort-icon', 'asc');
                 button.appendChild(sortIcon);
             } else if (clickState === 2) {
                 button.classList.add('active');
                 const sortIcon = document.createElement('img');
-                sortIcon.src = '/static/icons/down-arrow.png';
+                sortIcon.src = '/static/icons/abajo.png';
                 sortIcon.classList.add('sort-icon', 'desc');
                 button.appendChild(sortIcon);
             } else {
