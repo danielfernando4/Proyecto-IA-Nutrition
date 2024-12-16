@@ -113,3 +113,123 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+
+const recetas = [
+    {
+        url_imagen: "/static/images/comida112.jpg",
+        nombre_comida: "Arroz relleno",
+        tipo_comida: "Vegetariano",
+        descripcion: "Un delicioso arroz relleno de vegetales y especias.",
+        ingredientes: ["Arroz", "Zanahoria", "Guisantes", "Cebolla", "Especias"],
+        informacion_nutricional: {
+            calorias: "250 kcal",
+            proteinas: "5 g",
+            carbohidratos: "45 g",
+            grasas: "3 g"
+        }
+    },
+    {
+        url_imagen: "/static/images/comida113.jpg",
+        nombre_comida: "Arroz Marinero",
+        tipo_comida: "Libre de gluten",
+        descripcion: "Arroz con frutos del mar, ideal para dietas libres de gluten.",
+        ingredientes: ["Arroz", "Camarones", "Almejas", "Ajo", "Perejil"],
+        informacion_nutricional: {
+            calorias: "320 kcal",
+            proteinas: "15 g",
+            carbohidratos: "40 g",
+            grasas: "8 g"
+        }
+    },
+    {
+        url_imagen: "/static/images/comida114.jpg",
+        nombre_comida: "Pollo Aguacate",
+        tipo_comida: "Libre de gluten",
+        descripcion: "Pollo con guacamole fresco, ideal para comidas ligeras.",
+        ingredientes: ["Pollo", "Aguacate", "Limón", "Cilantro"],
+        informacion_nutricional: {
+            calorias: "400 kcal",
+            proteinas: "25 g",
+            carbohidratos: "10 g",
+            grasas: "20 g"
+        }
+    }
+];
+
+const postContainer = document.querySelector(".recipe-cards");
+const modalOverlay = document.getElementById("modal_overlay");
+const modalPanel = document.getElementById("recipe_info");
+const closeModalButton = document.getElementById("close_recipeinf");
+
+const getMethods = () => {
+    postContainer.innerHTML = "";
+
+    recetas.forEach((postData, index) => {
+        const card = document.createElement("div");
+        card.classList.add("recipe-card");
+
+        card.innerHTML = `
+            <img src="${postData.url_imagen}" alt="${postData.nombre_comida}" class="recipe-image">
+            <div class="recipe-card-content">
+                <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
+                <p class="recipe-card-description">${postData.descripcion}</p>
+                <div class="recipe-card-footer">
+                    <button class="btn view-recipe" data-index="${index}">Ver receta</button>
+                </div>
+            </div>
+        `;
+
+        postContainer.appendChild(card);
+    });
+
+    addModalEventListeners();
+};
+
+const addModalEventListeners = () => {
+    const recipeButtons = document.querySelectorAll(".view-recipe");
+
+    recipeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const recipeIndex = button.getAttribute("data-index");
+            const recipeData = recetas[recipeIndex];
+
+            document.querySelector(".recipe-title").innerText = recipeData.nombre_comida;
+            document.querySelector(".mod_desc").innerText = recipeData.descripcion;
+
+            const modalImage = document.querySelector(".modal-recipe-image");
+            modalImage.src = recipeData.url_imagen;
+            modalImage.alt = recipeData.nombre_comida;
+
+            const description = document.querySelector(".recipe-description");
+            description.innerText = recipeData.descripcion;
+
+            const ingredientsList = document.querySelector(".ingredients-list");
+            ingredientsList.innerHTML = recipeData.ingredientes.map(ingr => `<li>${ingr}</li>`).join("");
+
+            const nutritionList = document.querySelector(".nutrition-list");
+            nutritionList.innerHTML = `
+                <li>Calorías: ${recipeData.informacion_nutricional.calorias}</li>
+                <li>Proteínas: ${recipeData.informacion_nutricional.proteinas}</li>
+                <li>Carbohidratos: ${recipeData.informacion_nutricional.carbohidratos}</li>
+                <li>Grasas: ${recipeData.informacion_nutricional.grasas}</li>
+            `;
+
+            modalPanel.classList.add("open");
+            modalOverlay.classList.add("open");
+        });
+    });
+};
+
+if (closeModalButton && modalOverlay) {
+    closeModalButton.addEventListener("click", () => {
+        modalPanel.classList.remove("open");
+        modalOverlay.classList.remove("open");
+    });
+
+    modalOverlay.addEventListener("click", () => {
+        modalPanel.classList.remove("open");
+        modalOverlay.classList.remove("open");
+    });
+}
+
