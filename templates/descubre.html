@@ -30,9 +30,15 @@
             <img src="/static/icons/aguacate.png" alt="Grasas" class="icon-image"> Grasas
         </button>
 
-        <button class="icon-button">
-            <img src="/static/icons/dieta.png" alt="Tipo de dieta" class="icon-image"> Tipo de dieta
-        </button>
+        <div class="icon-button-wrapper">
+            <select id="diet-filter" class="diet-select">
+                <option value="sin_filtro" data-icon="/static/icons/dieta.png" selected>Tipo de dieta</option>
+                <option value="gluten_free" data-icon="/static/icons/trigo.png">Libre de gluten</option>
+                <option value="vegetarian" data-icon="/static/icons/lechuga.png">Vegetariana</option>
+            </select>
+        </div>        
+        
+        
     </div>
 
     <div class="recipe-cards">

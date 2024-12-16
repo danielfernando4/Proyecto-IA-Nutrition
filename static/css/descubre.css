@@ -564,3 +564,42 @@
 .icon-button.active .sort-icon.desc {
     content: url('/static/icons/abajo.png'); /* Ruta al icono de flecha hacia abajo */
 }
+.diet-select {
+    appearance: none;
+    background: url('/static/icons/dieta.png') no-repeat left center, #fff;
+    background-size: 20px 20px;
+    background-position: 10px center;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 15px 8px 40px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.diet-select:hover {
+    background-color: #27ae60;
+    color: #fff;
+    border: 1px solid #2ecc71;
+}
+
+.diet-select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+}
+
+
+.diet-select.active {
+    background-color: #27ae60; 
+    color: #fff;
+    border: 1px solid #2ecc71; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.diet-select.active::before {
+    filter: brightness(0) invert(1); /* Icono en blanco */
+}
+
