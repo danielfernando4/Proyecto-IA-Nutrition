@@ -1,7 +1,7 @@
 const recetas = [
   {
-    title: "Receta 1",
-    description: "COCONUT",
+    title: "Arroz relleno",
+
     proteinas: 5, // Gramos de proteína
     grasas: 20, // Gramos de grasa
     image: "/static/images/comida112.jpg",
@@ -9,8 +9,8 @@ const recetas = [
     calorias: 240, // Calorías totales
   },
   {
-    title: "Receta 2",
-    description: "ARROZ con Pescado",
+    title: "Arroz Marinero",
+
     proteinas: 25,
     image: "/static/images/comida112.jpg",
     grasas: 10,
@@ -18,8 +18,44 @@ const recetas = [
     calorias: 400,
   },
   {
-    title: "Receta 3",
-    description: "Pollo Aguacate",
+    title: "Pollo Aguacate",
+
+    proteinas: 30,
+    image: "/static/images/comida112.jpg",
+    grasas: 18,
+    carbohidratos: 5,
+    calorias: 350,
+  },
+  {
+    title: "Pollo Aguacate",
+
+    proteinas: 30,
+    image: "/static/images/comida112.jpg",
+    grasas: 18,
+    carbohidratos: 5,
+    calorias: 350,
+  },
+  {
+    title: "Pollo Aguacate",
+
+    proteinas: 30,
+    image: "/static/images/comida112.jpg",
+    grasas: 18,
+    carbohidratos: 5,
+    calorias: 350,
+  },
+  {
+    title: "Pollo Aguacate",
+
+    proteinas: 30,
+    image: "/static/images/comida112.jpg",
+    grasas: 18,
+    carbohidratos: 5,
+    calorias: 350,
+  },
+  {
+    title: "Pollo Aguacate",
+
     proteinas: 30,
     image: "/static/images/comida112.jpg",
     grasas: 18,
@@ -42,7 +78,7 @@ const postMethods = () => {
       <div class = "recipe-cards">
           <div>
           <h3>${postData.title}</h3>
-          <img src="${postData.image}" alt="${postData.title}" class=".image">
+          <img src="${postData.image}" alt="${postData.title}"  class = "recipe-card">
           </div> 
 
           <div>
@@ -56,9 +92,7 @@ const postMethods = () => {
          </div>
        
         <div >
-        <button class="btn-ready"  onclick="window.location.href='https://example.com/${postData.title
-          .replace(/ /g, "-")
-          .toLowerCase()}'">Agregar a plan</button>
+        <button class="btn-ready"  onclick="openModal()">Agregar a plan</button>
          </div>
       </div>
   `;
@@ -67,5 +101,3 @@ const postMethods = () => {
     postContainer.appendChild(card);
   });
 };
-
-postMethods();

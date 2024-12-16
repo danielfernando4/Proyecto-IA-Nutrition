@@ -38,6 +38,20 @@ class Comida(db.Model):
 
     def __repr__(self):
         return f'<Comida {self.nombre_comida}>'
+    
+    def to_dict(self):
+        return {
+            "id_comida": self.id_comida,
+            "nombre_comida": self.nombre_comida,
+            "calorias": self.calorias,
+            "proteinas": self.proteinas,
+            "carbohidratos": self.carbohidratos,
+            "grasas": self.grasas,
+            "ingredientes": self.ingredientes,
+            "tipo_comida": self.tipo_comida,
+            "grupo": self.grupo,
+            "url_imagen": self.url_imagen
+        }
 
 
 class PlanNutricional(db.Model):
