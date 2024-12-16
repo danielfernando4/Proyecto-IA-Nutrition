@@ -4,50 +4,19 @@ const platos = [
     imagen: '/static/images/comida1.jpg',
     dia: 'Lunes',
     propiedades: ['Proteínas: 20g', 'Grasas: 10g', 'Calorías: 350'],
-    ingredientes: ['Ingrediente 1', 'Ingrediente 2', 'Ingrediente 3']
+    ingredientes: ['Ingrediente 1', 'Ingrediente 2', 'Ingrediente 3'],
+    descripcion: 'Deliciosos panqueques hechos con plátanos frescos y otros ingredientes naturales.'
   },
   {
     nombre: 'Avena con Frutas y Miel',
     imagen: '/static/images/comida10.jpg',
     dia: 'Martes',
     propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
-    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
+    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C'],
+    descripcion: 'Avena nutritiva acompañada con una mezcla de frutas frescas y miel.'
   },
-  {
-    nombre: 'Avena con Frutas y Miel',
-    imagen: '/static/images/comida11.jpg',
-    dia: 'Miercoles',
-    propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
-    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
-  },
-  {
-    nombre: 'Avena con Frutas y Miel',
-    imagen: '/static/images/comida14.jpg',
-    dia: 'Jueves',
-    propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
-    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
-  },
-  {
-    nombre: 'Avena con Frutas y Miel',
-    imagen: '/static/images/comida18.jpg',
-    dia: 'Viernes',
-    propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
-    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
-  },
-  {
-    nombre: 'Avena con Frutas y Miel',
-    imagen: '/static/images/comida20.jpg',
-    dia: 'Sábado',
-    propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
-    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
-  },
-  {
-    nombre: 'Avena con Frutas y Miel',
-    imagen: '/static/images/comida21.jpg',
-    dia: 'Domingo',
-    propiedades: ['Proteínas: 25g', 'Grasas: 15g', 'Calorías: 400'],
-    ingredientes: ['Ingrediente A', 'Ingrediente B', 'Ingrediente C']
-  },
+  // Agrega más recetas aquí
+  // ...
 ];
 
 function mostrarDetalles(plato) {
@@ -84,11 +53,16 @@ platos.forEach(plato => {
   const thumbnail = document.createElement('div');
   thumbnail.classList.add('thumbnail');
   thumbnail.innerHTML = `
-    <img src="${plato.imagen}" alt="${plato.nombre}" style="width:100px; height:100px;">
-    <div class="thumbnail-name">${plato.nombre}</div>
+    <img src="${plato.imagen}" alt="${plato.nombre}" class="thumbnail-img">
+    <div class="thumbnail-content">
+      <h3 class="thumbnail-title">${plato.nombre}</h3>
+      <p class="thumbnail-description">${plato.descripcion}</p>
+      <div class="thumbnail-footer">
+          <span>Más información</span>
+          <button class="btn" data-recipe-id="${plato.nombre}">Ver receta</button>
+      </div>
+    </div>
   `;
-  thumbnail.addEventListener('click', () => mostrarDetalles(plato));
+  thumbnail.querySelector('.btn').addEventListener('click', () => mostrarDetalles(plato));
   thumbnailsContainer.appendChild(thumbnail);
 });
-
-
