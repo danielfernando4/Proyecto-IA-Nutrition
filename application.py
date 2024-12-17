@@ -313,6 +313,8 @@ def cerrarsesion():
     flash("Has cerrado sesión exitosamente", "success")
     return redirect(url_for("homepage"))
 
+
+
 @app.route("/kmeans", methods=["POST", "GET"])
 def kmeans():
     if "correo" in session and "id_usuario" in session:
