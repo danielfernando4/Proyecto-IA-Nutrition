@@ -7,10 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalPanel = document.getElementById("recipe_info");
     const closeModalButton = document.getElementById("close_recipeinf");
     const allFilters = document.querySelectorAll('.icon-button, .diet-select');
-
-    // Modal "Agregar al plan"
     const panelAgregar = document.getElementById("modal_agregar");
     const cerrarAgregar = document.getElementById("cerrar_plan");
+    const botonAgregar = document.querySelector(".boton-agregar");
 
     let recetas = [];
     let debounceTimer;
@@ -161,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 document.querySelector(".recipe-title").innerText = recipeData.nombre_comida;
                 document.querySelector(".mod_desc").innerText = "Conoce la información nutricional de esta receta.";
-                document.querySelector(".recipe-description").innerText = recipeData.ingredientes;
+                document.querySelector(".recipe-description").innerText = recipeData.descripcion;
 
                 const modalImage = document.querySelector(".modal-recipe-image");
                 modalImage.src = `${recipeData.url_imagen}.jpg`;
@@ -205,6 +204,22 @@ document.addEventListener('DOMContentLoaded', function () {
     function debounce(func, delay) {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(func, delay);
+    }
+
+    if (botonAgregar)
+        botonAgregar.addEventListener("click", cerrarModalesYConfetti);
+    function cerrarModalesYConfetti() {
+        modalPanel.classList.remove("open");
+        modalOverlay.classList.remove("open");
+        
+        panelAgregar.classList.remove("open");
+    
+     
+        confetti({
+            particleCount: 400, 
+            spread: 180,       
+            origin: { y: 0.6 }  
+        });
     }
 
     // Inicializar estados

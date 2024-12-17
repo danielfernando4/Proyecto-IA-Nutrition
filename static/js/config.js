@@ -1,29 +1,35 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const abrirProfile = document.getElementById("edit_profile");
-    const cerrarProfile = document.getElementById("close_profile");
-    const panelProfile = document.getElementById("profile_conf");
+document.addEventListener('DOMContentLoaded', () => {
+    const modalOverlay = document.getElementById('modal_overlay');
+    const modalProfile = document.getElementById('profile_conf');
+    const modalStats = document.getElementById('stats_conf');
+    const openProfileButton = document.getElementById('edit_profile');
+    const openStatsButton = document.getElementById('edit_stats');
+    const closeProfileButton = document.getElementById('close_profile');
+    const closeStatsButton = document.getElementById('close_stats');
 
-    if (abrirProfile && cerrarProfile && panelProfile) {
-        abrirProfile.addEventListener("click", () => {
-            panelProfile.classList.add("open");
-        });
-
-        cerrarProfile.addEventListener("click", () => {
-            panelProfile.classList.remove("open");
-        });
+    // Función para abrir modal
+    function openModal(modal) {
+        modal.classList.add('open');
+        modalOverlay.classList.add('open');
     }
 
-    const abrirDatos = document.getElementById("edit_stats");
-    const cerrarDatos = document.getElementById("close_stats");
-    const panelDatos = document.getElementById("stats_conf");
-
-    if (abrirDatos && cerrarDatos && panelDatos) {
-        abrirDatos.addEventListener("click", () => {
-            panelDatos.classList.add("open");
-        });
-
-        cerrarDatos.addEventListener("click", () => {
-            panelDatos.classList.remove("open");
-        });
+    // Función para cerrar modal
+    function closeModal(modal) {
+        modal.classList.remove('open');
+        modalOverlay.classList.remove('open');
     }
+
+    // Eventos para abrir modales
+    openProfileButton.addEventListener('click', () => openModal(modalProfile));
+    openStatsButton.addEventListener('click', () => openModal(modalStats));
+
+    // Eventos para cerrar modales
+    closeProfileButton.addEventListener('click', () => closeModal(modalProfile));
+    closeStatsButton.addEventListener('click', () => closeModal(modalStats));
+
+    // Cerrar modal al hacer clic en el overlay
+    modalOverlay.addEventListener('click', () => {
+        closeModal(modalProfile);
+        closeModal(modalStats);
+    });
 });
