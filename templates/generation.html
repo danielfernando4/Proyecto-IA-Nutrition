@@ -17,18 +17,13 @@ block content %}
           <div class="formulario">
             <div class="data">
               <div class="input-group">
-                <input
-                  required
-                  type="number"
-                  name="peso"
-                  autocomplete="peso"
-                  class="input"
-                />
+                <input value = "{{peso}}"" required type="number" name="peso"
+                autocomplete="peso" class="input" />
                 <label class="user-label">Peso kg</label>
               </div>
               <div class="input-group">
                 <input
-                  data-edad="{{edad}}"
+                  value="{{edad}}"
                   required
                   type="number"
                   name="edad"
@@ -42,7 +37,7 @@ block content %}
             <div class="data">
               <div class="input-group">
                 <input
-                  value
+                  value="{{estatura}}"
                   required
                   type="number"
                   name="altura"
@@ -106,10 +101,7 @@ block content %}
   </section>
   <!-- Targeteros-->
   <div class="recipe-cards bounce-in-top"></div>
-  {% block js %}
-  <script src="static/js/generation.js"></script>
-
-  {% endblock %}
 </div>
-
-{% endblock %}
+{% block js %}
+<script src="static/js/generation.js"></script>
+{% endblock %} {% endblock %}

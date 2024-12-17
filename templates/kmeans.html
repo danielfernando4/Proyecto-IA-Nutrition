@@ -10,15 +10,16 @@
     </div>
 
     <div class="contenidokmeans">
-        <span>En este apartado encontrarás recetas según el grupo alimenticio al que te hemos asignado. ¡Esperamos que te gusten! Lo mejor de todo es que se acoplan a tus necesidades nutricionales.</span>
+        <span>En este apartado encontrarás recetas según el grupo alimenticio al que te hemos asignado. ¡Esperamos que
+            te gusten! Lo mejor de todo es que se acoplan a tus necesidades nutricionales.</span>
         <span>¡Buen provecho!</span>
     </div>
 
     <div class="header2">
         <h1 class="headercontent2">Recetas según tu grupo</h1>
         <span>Su grupo es <span id="grupo" data-grupo="{{grupo}}">{{grupo}}</span>
-    
-    </span>
+
+        </span>
     </div>
 
     <div class="recipe-cards">
@@ -27,12 +28,69 @@
 
     <div class="overlay" id="modal_overlay"></div>
 
+    <div class="recipe_info" id="recipe_info">
+        <button class="close-button" aria-label="Cerrar" id="close_recipe_info">
+            <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon" id="close_recipeinf" />
+        </button>
+        <h2 class="recipe-title"></h2>
+        <p class="mod_desc"></p>
 
+        <div class="recipe_content">
+            <img class="modal-recipe-image" alt="Imagen de la receta" />
+            <div class="recipe_description">
+                <h3>Descripción</h3>
+                <p class="recipe-description"></p>
+            </div>
+        </div>
+        <div class="recipe_spec">
+            <div class="recipe_ingr">
+                <h3>Ingredientes</h3>
+                <ul class="ingredients-list"></ul>
+            </div>
+            <div class="recipe_nutri">
+                <h3>Información nutricional</h3>
+                <ul class="nutrition-list"></ul>
+            </div>
+        </div>
+        <button class="update-button" id="abrir_agregar">Agregar al plan</button>
+    </div>
+
+    <div class="contenedor-modal" id="modal_agregar">
+        <div class="tarjeta-modal">
+            <div class="encabezado">
+                <h2>Agregar al plan</h2>
+                <span class="cerrar-modal" id="cerrar_plan">&times;</span>
+            </div>
     
+            <div class="contenido">
+                <p>Seleccione el día al que desea agregar esta receta</p>
+                <div class="seleccion-dia">
+                    <label for="dia">Día:</label>
+                    <select id="dia">
+                        <option value="lunes">Lunes</option>
+                        <option value="martes">Martes</option>
+                        <option value="miercoles">Miércoles</option>
+                        <option value="jueves">Jueves</option>
+                        <option value="viernes">Viernes</option>
+                        <option value="sabado">Sábado</option>
+                        <option value="domingo">Domingo</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div class="pie">
+                <button class="boton-agregar" id="confirmar_agregar">Agregar</button>
+            </div>
+        </div>
+    </div>
+    
+
+
 
 </div>
 {% endblock %}
 
 {% block scriptjs %}
 <script src="/static/js/kmeans.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 {% endblock %}
