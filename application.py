@@ -149,7 +149,6 @@ def config():
         return redirect(url_for("homepage"))
 
 
-#---------calificacion de comidas---------------
 @app.route('/rate', methods=['POST'])
 def rate_comida():
     data = request.get_json()
@@ -199,7 +198,7 @@ def descubre():
     if "correo" in session and "id_usuario" in session:
         if request.method == "POST":
             filtro = request.get_json()
-            nombre_busqueda = filtro.get("nombre", "").lower()  # Obtener nombre
+            nombre_busqueda = filtro.get("nombre", "").lower()  
 
             # Otros filtros
             prot = filtro.get("proteínas")
@@ -277,24 +276,18 @@ def cerrarsesion():
     flash("Has cerrado sesión exitosamente", "success")
     return redirect(url_for("homepage"))
 
-@app.route("/kmeans.html")
+@app.route("/kmeans", methods=["POST", "GET"])
 def kmeans():
     if "correo" in session and "id_usuario" in session:
-        """
         if request.method == "POST":
-
             datos = request.get_json()
-            edad = datos.get("edad")
-            altura = datos.get("altura")
-            sexo = datos.get("sexo")
-            peso = datos.get("peso")
-            sexo_num = 0 if sexo == "masculino" else 1
-            cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, 3)
-            diets = int(kmeans_generator_diet(cal, prot, carb, grasas))
-            comidas = Comida.query.filter(Comida.grupo == diets).all()
+            grupo = datos.get("label")  
+            comidas = Comida.query.filter(Comida.grupo == grupo)
+
             comidas_json = [comida.to_dict() for comida in comidas]
+
             return jsonify(comidas_json)
-        """
+        
         return render_template("kmeans.html", nombre=session["nombre"], correo=session["correo"], grupo=session["grupo"])
     else:
         return redirect(url_for("homepage"))
