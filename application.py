@@ -298,6 +298,16 @@ def kmeans():
 
 
 
+
+@app.route("/para_ti")
+def para_ti():
+    if "correo" in session and "id_usuario" in session:
+        return render_template("para_ti.html")
+    else:
+        return redirect(url_for("homepage"))
+
+
+
 @app.route("/datos")
 def datos():
     comidas = Comida.query.all()
