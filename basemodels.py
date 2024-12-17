@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+# Tabla Usuario
 class Usuario(db.Model):
     __tablename__ = 'usuario'
 
@@ -16,13 +17,30 @@ class Usuario(db.Model):
     nivel_actividad = db.Column(db.String(20))
     grupo = db.Column(db.Integer)
 
-    planes_nutricionales = db.relationship('PlanNutricional', backref='usuario', lazy=True)
+    # Relaciones con otras tablas
+    planes_nutricionales = db.relationship('Plan_nutricional_user', backref='usuario', lazy=True, cascade="all, delete-orphan")
+    calificaciones = db.relationship('Calificaciones', backref='usuario', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<Usuario {self.nombre}>'
 
+    def to_dict(self):
+        return {
+            "id_usuario": self.id_usuario,
+            "nombre": self.nombre,
+            "correo": self.correo,
+            "peso": self.peso,
+            "edad": self.edad,
+            "estatura": self.estatura,
+            "sexo": self.sexo,
+            "password_usuario": self.password_usuario,
+            "nivel_actividad": self.nivel_actividad,
+            "grupo": self.grupo
+        }
+
+# Tabla Comida
 class Comida(db.Model):
-    __tablename__ = 'comida'  
+    __tablename__ = 'comida'
 
     id_comida = db.Column(db.BigInteger, primary_key=True)
     nombre_comida = db.Column(db.String(100), unique=True, nullable=False)
@@ -34,13 +52,14 @@ class Comida(db.Model):
     tipo_comida = db.Column(db.String(30))
     grupo = db.Column(db.Integer)
     url_imagen = db.Column(db.String(255))
-    descripcion = db.Column(db.Text)  
+    descripcion = db.Column(db.Text)
 
-    planes_nutricionales = db.relationship('PlanNutricional', backref='comida', lazy=True)
+    # Relaciones con otras tablas
+    calificaciones = db.relationship('Calificaciones', backref='comida', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<Comida {self.nombre_comida}>'
-    
+
     def to_dict(self):
         return {
             "id_comida": self.id_comida,
@@ -56,15 +75,53 @@ class Comida(db.Model):
             "descripcion": self.descripcion
         }
 
+# Tabla Plan Nutricional del Usuario
+class Plan_nutricional_user(db.Model):
+    __tablename__ = 'plan_nutricional_user'
 
-class PlanNutricional(db.Model):
-    __tablename__ = 'plan_nutricional'  
-
-    id_plan = db.Column(db.BigInteger, primary_key=True)
-    calificacion = db.Column(db.Integer)
-    dia_comida = db.Column(db.String(10))
+    id_plan = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    comida_lunes = db.Column(db.BigInteger)
+    comida_martes = db.Column(db.BigInteger)
+    comida_miercoles = db.Column(db.BigInteger)
+    comida_jueves = db.Column(db.BigInteger)
+    comida_viernes = db.Column(db.BigInteger)
+    comida_sabado = db.Column(db.BigInteger)
+    comida_domingo = db.Column(db.BigInteger)
     id_usuario = db.Column(db.BigInteger, db.ForeignKey('usuario.id_usuario'), nullable=False)
-    id_comida = db.Column(db.BigInteger, db.ForeignKey('comida.id_comida'), nullable=False)
 
     def __repr__(self):
-        return f'<PlanNutricional {self.dia_comida} - {self.calificacion}>'
+        return f'<PlanNutricionalUser id_plan={self.id_plan}, id_usuario={self.id_usuario}>'
+
+    def to_dict(self):
+        return {
+            "id_plan": self.id_plan,
+            "comida_lunes": self.comida_lunes,
+            "comida_martes": self.comida_martes,
+            "comida_miercoles": self.comida_miercoles,
+            "comida_jueves": self.comida_jueves,
+            "comida_viernes": self.comida_viernes,
+            "comida_sabado": self.comida_sabado,
+            "comida_domingo": self.comida_domingo,
+            "id_usuario": self.id_usuario
+        }
+
+# Tabla Calificaciones
+class Calificaciones(db.Model):
+    __tablename__ = 'calificaciones'
+
+    id_calificacion = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id_usuario = db.Column(db.BigInteger, db.ForeignKey('usuario.id_usuario'), nullable=False)
+    id_comida = db.Column(db.BigInteger, db.ForeignKey('comida.id_comida'), nullable=False)
+    calificacion = db.Column(db.Integer)
+
+    def __repr__(self):
+        return (f'<Calificaciones id_calificacion={self.id_calificacion}, '
+                f'id_usuario={self.id_usuario}, id_comida={self.id_comida}, calificacion={self.calificacion}>')
+
+    def to_dict(self):
+        return {
+            "id_calificacion": self.id_calificacion,
+            "id_usuario": self.id_usuario,
+            "id_comida": self.id_comida,
+            "calificacion": self.calificacion
+        }
