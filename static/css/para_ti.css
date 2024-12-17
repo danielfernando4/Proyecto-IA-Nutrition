@@ -1,0 +1,18 @@
+.para_ti {
+    display: flex;
+    flex-direction: column;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    color: #333;
+    padding-left: 2%;
+    gap: 10px;
+    background-color: #FAFAFA;
+    justify-content: left;
+    text-align: left;
+}
+
+
+.headercontent {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
