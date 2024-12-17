@@ -76,15 +76,15 @@ document.addEventListener("DOMContentLoaded", function() {
           card.classList.add("thumbnail"); // Asegúrate de usar las clases CSS correctas
           card.innerHTML = `
             <div class="thumbnail-content">
-              <img src="${postData.imagen}" alt="${postData.nombre}" class="thumbnail-img" />
-              <h3 class="thumbnail-title">${postData.nombre}</h3>
+              <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="thumbnail-img" />
+              <h3 class="thumbnail-title">${postData.nombre_comida}</h3>
               <p class="thumbnail-description">${postData.descripcion}</p>
               <div class="thumbnail-footer">
                 <span>Más información</span>
                 <button class="btn" data-recipe-id="${postData.id_comida}">Ver receta</button>
               </div>
               <div class="rating">
-                ${[1, 2, 3, 4, 5].map(star => `
+                ${[5,4,3,2,1].map(star => `
                   <input type="radio" id="star${star}-${postData.id_comida}" name="rate-${postData.id_comida}" value="${star}" ${star == postData.calificacion ? 'checked' : ''} />
                   <label for="star${star}-${postData.id_comida}" title="${star} estrellas"></label>
                 `).join('')}
