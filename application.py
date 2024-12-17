@@ -125,7 +125,49 @@ def config():
         return redirect(url_for("homepage"))
 
 
+#---------calificacion de comidas---------------
+@app.route('/rate', methods=['POST'])
+def rate_comida():
+    data = request.get_json()
+    id_comida = data.get('id_comida')
+    calificacion = data.get('calificacion')
 
+    app.logger.info(f'Recibida calificación: Comida ID {id_comida}, Calificación: {calificacion}')
+
+    if not id_comida or not calificacion:
+        return jsonify({'message': 'Datos incompletos'}), 400
+    
+    plan_nutricional = PlanNutricional.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
+    if plan_nutricional:
+        plan_nutricional.calificacion = calificacion
+    else:
+        nueva_calificacion = PlanNutricional(
+            id_comida=id_comida,
+            calificacion=calificacion,
+            id_usuario=session.get("id_usuario"),
+            dia_comida="algún_día"
+        )
+        db.session.add(nueva_calificacion)
+    db.session.commit()
+    
+    return jsonify({'message': 'Calificación guardada correctamente'}), 200
+
+@app.route("/get_recipes", methods=["GET"])
+def get_recipes():
+    if "correo" in session and "id_usuario" in session:
+        comidas = Comida.query.order_by(func.random()).limit(7).all()
+
+        dias_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+        recetas = []
+
+        for idx, comida in enumerate(comidas):
+            receta = comida.to_dict()
+            receta["dia"] = dias_semana[idx]
+            recetas.append(receta)
+
+        return jsonify(recetas)
+    else:
+        return redirect(url_for("homepage"))
 
 
 @app.route("/descubre")

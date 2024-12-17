@@ -255,7 +255,7 @@ body {
   transform: scale(0.98);
 }
 
-/* From Uiverse.io by BiliBC034 */ 
+/* ---------------Calificaciones--------------------*/
 .rating {
   display: flex;
   justify-content: center;
@@ -292,6 +292,10 @@ body {
 }
 
 .rating > input:checked ~ label {
+  color: #ffa723;
+}
+
+.star.selected {
   color: #ffa723;
 }
 

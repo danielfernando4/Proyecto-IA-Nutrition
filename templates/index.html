@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block css %}
-    <link rel="stylesheet" href="static/css/index_style.css">
-{% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="static/css/index_style.css">
+    {% endblock %}
 
-{% block scriptjs %}
-    <script src="static/js/index_Bor.js"></script>
-{% endblock %}
+    {% block scriptjs %}
+        <script src="static/js/index_Bor.js"></script>
+    {% endblock %}
 
 {% block content %}
 <section class="plan-container">
@@ -21,9 +21,8 @@
 </section>
 
 <section class="plan-thumbnails">
-    <!-- Las miniaturas se agregarán dinámicamente con JavaScript -->
+    
 </section>
-
 
 <div id="modal_overlay" class="overlay"></div>
 
@@ -49,7 +48,6 @@
             <h3>Ingredientes:</h3>
             <ul id="plato-ingredientes"></ul>
         </div>
-        <!-- Aquí añadimos el contenedor para la descripción del plato -->
         <div class="plan-description">
             <h3>Descripción:</h3>
             <p id="plato-descripcion"></p>
