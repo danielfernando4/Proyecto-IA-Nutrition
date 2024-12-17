@@ -42,17 +42,6 @@ const postMethods = (recetas) => {
 };
 */
 
-
-
-
-
-
-
-
-
-
-
-
 /*
 // Esperar a que el DOM cargue completamente
 document.addEventListener('DOMContentLoaded', () => {
@@ -82,26 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //ESTA SI ME EJECUTA EL POST TODO BIEN
 /*
@@ -155,23 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 //ESTE RETORNA EL JSON
@@ -228,17 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 */
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 // Esperar a que el DOM cargue completamente
@@ -302,78 +243,62 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Suponiendo que el servidor te retorna un array de objetos con 'nombre_comida' y 'url_imagen'
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Seleccionar el formulario y el botón
-  const form = document.getElementById('generationForm');
-  const submitButton = document.getElementById('submitButton');
+  const form = document.getElementById("generationForm");
+  const submitButton = document.getElementById("submitButton");
 
   // Contenedor donde se mostrarán las tarjetas
   const postContainer = document.querySelector(".recipe-cards");
 
   // Escuchar el evento de clic del botón
-  submitButton.addEventListener('click', () => {
-      // Crear un objeto para almacenar los datos del formulario
-      const formData = {};
+  submitButton.addEventListener("click", () => {
+    // Crear un objeto para almacenar los datos del formulario
+    const formData = {};
 
-      // Leer los valores de los campos de entrada
-      const peso = form.elements['peso'].value;
-      const edad = form.elements['edad'].value;
-      const altura = form.elements['altura'].value;
-      const sexo = form.elements['sexo'].value;
+    // Leer los valores de los campos de entrada
+    const peso = form.elements["peso"].value;
+    const edad = form.elements["edad"].value;
+    const altura = form.elements["altura"].value;
+    const sexo = form.elements["sexo"].value;
 
-      // Guardar los valores en el objeto
-      formData.peso = peso;
-      formData.edad = edad;
-      formData.altura = altura;
-      formData.sexo = sexo;
+    // Guardar los valores en el objeto
+    formData.peso = peso;
+    formData.edad = edad;
+    formData.altura = altura;
+    formData.sexo = sexo;
 
-      // Enviar los datos al endpoint /generation
-      fetch('/generation', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
+    // Enviar los datos al endpoint /generation
+    fetch("/generation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error en la solicitud");
+        }
+        return response.json();
       })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Error en la solicitud');
-          }
-          return response.json();
-      })
-      .then(data => {
-          console.log('Respuesta del servidor:', data);
+      .then((data) => {
+        console.log("Respuesta del servidor:", data);
 
-          // Aquí obtenemos las comidas que nos retorna el servidor
-          const recetas = data.map(comida => ({
-            nombre_comida: comida.nombre_comida || 'No disponible',
-            url_imagen: comida.url_imagen || 'No disponible',
-            calorias: comida.calorias || 0,
-            proteinas: comida.proteinas || 0
-          }));
+        // Aquí obtenemos las comidas que nos retorna el servidor
+        const recetas = data.map((comida) => ({
+          nombre_comida: comida.nombre_comida || "No disponible",
+          url_imagen: comida.url_imagen || "No disponible",
+          calorias: comida.calorias || 0,
+          proteinas: comida.proteinas || 0,
+        }));
 
-          // Llamar a la función para renderizar las tarjetas
-          postMethods(recetas);
+        // Llamar a la función para renderizar las tarjetas
+        postMethods(recetas);
       })
-      .catch(error => {
-          console.error('Error:', error);
+      .catch((error) => {
+        console.error("Error:", error);
       });
   });
 
@@ -389,11 +314,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       card.innerHTML = `
       <div class="recipe-card-content">
-        <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="recipe-card-image" />
+        <img src="${postData.url_imagen}.jpg" alt="${
+        postData.nombre_comida
+      }" class="recipe-card-image" />
         <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
-        <p class="recipe-card-description">Calorías: ${postData.calorias.toFixed(2)} | Proteínas: ${postData.proteinas}</p>
+        <p class="recipe-card-description">Calorías: ${postData.calorias.toFixed(
+          2
+        )} | Proteínas: ${postData.proteinas}</p>
         <div class="recipe-card-footer">
-          <button class="btn-ready" onclick="desvanecer()">Agregar a plan</button>
         </div>
       </div>
     `;
@@ -402,4 +330,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 });
-
