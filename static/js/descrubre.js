@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="recipe-image">
                 <div class="recipe-card-content">
                     <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
-                    <p class="recipe-card-description">${postData.ingredientes}</p>
+                    <p class="recipe-card-description">${postData.descripcion}</p>
                 </div>
                 <button class="btn view-recipe" data-index="${index}">Ver receta</button>
             `;
@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 document.querySelector(".recipe-title").innerText = recipeData.nombre_comida;
                 document.querySelector(".mod_desc").innerText = "Conoce la información nutricional de esta receta.";
+                document.querySelector(".recipe-description").innerText = recipeData.ingredientes;
 
                 const modalImage = document.querySelector(".modal-recipe-image");
                 modalImage.src = `${recipeData.url_imagen}.jpg`;
