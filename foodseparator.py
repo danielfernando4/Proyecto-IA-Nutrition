@@ -1,46 +1,47 @@
 def separatebreakfast(altura, peso, edad, genero, nivel_actividad):
     """
-    altura = 194
-    peso = 96
-    edad = 21
-    genero = 0
-    """
-    valorCalorico = 0
+    Calcula las calorías, proteínas, carbohidratos y grasas necesarias
+    solo para el desayuno de acuerdo a edad, altura, peso, nivel de actividad y género.
 
-    if genero == 0:
+    Parámetros:
+        altura (cm): Altura de la persona.
+        peso (kg): Peso de la persona.
+        edad (años): Edad de la persona.
+        genero (0: Hombre, 1: Mujer)
+        nivel_actividad (0-4): Nivel de actividad física.
+
+    Retorna:
+        calorías (float): Calorías para el desayuno.
+        proteínas (float): Gramos de proteína.
+        carbohidratos (float): Gramos de carbohidratos.
+        grasas (float): Gramos de grasas.
+    """
+    # Cálculo del metabolismo basal
+    if genero == 0:  # Hombre
         valorCalorico = 66 + (13.7 * peso) + (5 * altura) - (6.8 * edad)
-    elif genero == 1:
+    elif genero == 1:  # Mujer
         valorCalorico = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad)
 
-    #nivelActividadFisica = 1
+    # Factor de actividad física
+    factores_actividad = [1.2, 1.375, 1.55, 1.7, 1.9]
+    valorCalorico *= factores_actividad[nivel_actividad]
 
-    match nivel_actividad:
-        case 0:
-            valorCalorico *= 1.2
-        case 1:
-            valorCalorico *= 1.375
-        case 2:
-            valorCalorico *= 1.55
-        case 3:
-            valorCalorico *= 1.7
-        case 4:
-            valorCalorico *= 1.9
+    # Calorías asignadas al desayuno (30% del total)
+    caloriasDesayuno = valorCalorico * 0.3
 
-    caloriasDesignadasAlDesayuno = valorCalorico * 0.3
-    caloriasDesignadasAlAlmuerzo = valorCalorico * 0.5
-    caloriasDesignadasAlCena = valorCalorico * 0.2
-    # Distribución de macronutrientes para el desayuno
-    porcentajeProteinas = 0.30 * 0.3  # 20% para proteínas
-    porcentajeCarbohidratos = 0.05 * 0.3 # 55% para carbohidratos
-    porcentajeGrasas = 0.19 * 0.3 # 25% para grasas
-    # Calorías asignadas a cada macronutriente
-    caloriasProteinas = caloriasDesignadasAlDesayuno * porcentajeProteinas
-    caloriasCarbohidratos = caloriasDesignadasAlDesayuno * porcentajeCarbohidratos
-    caloriasGrasas = caloriasDesignadasAlDesayuno * porcentajeGrasas
+    # Distribución de macronutrientes
+    porcentaje_proteinas = 0.20  # 20%
+    porcentaje_carbohidratos = 0.55  # 55%
+    porcentaje_grasas = 0.25  # 25%
+
+    # Calorías de cada macronutriente
+    calorias_proteinas = caloriasDesayuno * porcentaje_proteinas
+    calorias_carbohidratos = caloriasDesayuno * porcentaje_carbohidratos
+    calorias_grasas = caloriasDesayuno * porcentaje_grasas
+
     # Conversión de calorías a gramos
-    calories = caloriasDesignadasAlDesayuno
-    protein = caloriasProteinas / 4  
-    carbs = caloriasCarbohidratos / 4  
-    fat = caloriasGrasas / 9  
+    proteinas = calorias_proteinas / 4  # 1g proteína = 4 calorías
+    carbohidratos = calorias_carbohidratos / 4  # 1g carbohidrato = 4 calorías
+    grasas = calorias_grasas / 9  # 1g grasa = 9 calorías
 
-    return calories, protein, carbs, fat 
+    return caloriasDesayuno, proteinas, carbohidratos, grasas
