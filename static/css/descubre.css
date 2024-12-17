@@ -739,4 +739,8 @@
   .boton-agregar:hover {
     background-color: #76c176;
   }
+
+  #filt{
+    font-weight: 900;
+  }
   

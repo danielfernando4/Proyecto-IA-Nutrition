@@ -58,6 +58,7 @@ def loginRegister():
                 session["estatura"] = usuario.estatura
                 session["peso"] = usuario.peso
                 session["nivel_actividad"] = usuario.nivel_actividad
+                session["grupo"] = usuario.grupo
                 flash("Login exitoso", "success")
                 return redirect(url_for("index"))  
             else:
@@ -95,7 +96,9 @@ def generation():
             return jsonify(comidas_json)  # Devolver el JSON al cliente
 
         # Manejar solicitudes GET
-        return render_template("generation.html", nombre=session["nombre"], correo=session["correo"])
+        return render_template("generation.html", nombre=session["nombre"], correo=session["correo"], 
+                               edad=session["edad"], estatura=session["estatura"], 
+                               peso=session["peso"], nivel_actividad=session["nivel_actividad"])
 
     else:
         # Redirigir si el usuario no está autenticado
@@ -292,7 +295,7 @@ def kmeans():
             comidas_json = [comida.to_dict() for comida in comidas]
             return jsonify(comidas_json)
         """
-        return render_template("kmeans.html", nombre=session["nombre"], correo=session["correo"])
+        return render_template("kmeans.html", nombre=session["nombre"], correo=session["correo"], grupo=session["grupo"])
     else:
         return redirect(url_for("homepage"))
 
