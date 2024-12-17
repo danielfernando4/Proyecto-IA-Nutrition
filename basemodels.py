@@ -33,6 +33,7 @@ class Comida(db.Model):
     tipo_comida = db.Column(db.String(30))
     grupo = db.Column(db.Integer)
     url_imagen = db.Column(db.String(255))
+    descripcion = db.Column(db.Text)  # Nueva columna 'descripcion'
 
     planes_nutricionales = db.relationship('PlanNutricional', backref='comida', lazy=True)
 
