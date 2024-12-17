@@ -321,12 +321,71 @@ document.addEventListener("DOMContentLoaded", () => {
         <p class="recipe-card-description">Calorías: ${postData.calorias.toFixed(
           2
         )} | Proteínas: ${postData.proteinas}</p>
-        <div class="recipe-card-footer">
-        </div>
       </div>
     `;
+
+    <div class="recipe-card-footer">
+     <button class="btn-ready"  id="agregarAPlan">Agregar a plan</button>
+    </div>
       // Añadir la tarjeta al contenedor
       postContainer.appendChild(card);
     });
   };
 });
+const enviarDatos = () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar el formulario y el botón
+    const plan = document.getElementById("agregarAPlan");
+  
+    // Contenedor donde se mostrarán las tarjetas
+    const postContainer = document.querySelector(".recipe-cards");
+  
+    // Escuchar el evento de clic del botón
+    plan.addEventListener("click", () => {
+      // Crear un objeto para almacenar los datos del formulario
+      const planNutricional = {};
+  
+      // Leer los valores de los campos de entrada
+      const pesop = form.elements["peso"].value;
+      const edad = form.elements["edad"].value;
+      const altura = form.elements["altura"].value;
+      const sexo = form.elements["sexo"].value;
+  
+      // Guardar los valores en el objeto
+      formData.peso = peso;
+      formData.edad = edad;
+      formData.altura = altura;
+      formData.sexo = sexo;
+  
+      // Enviar los datos al endpoint /generation
+      fetch("/generation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(planNutricional),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error en la solicitud");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Respuesta del servidor:", data);
+  
+          // Aquí obtenemos las comidas que nos retorna el servidor
+          const recetas = data.map((comida) => ({
+            nombre_comida: comida.nombre_comida || "No disponible",
+            url_imagen: comida.url_imagen || "No disponible",
+            calorias: comida.calorias || 0,
+            proteinas: comida.proteinas || 0,
+          }));
+
+          postContainer.innerHTML = ""; // Limpiar contenedor
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+}
