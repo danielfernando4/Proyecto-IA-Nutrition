@@ -161,15 +161,17 @@ def rate_comida():
     if not id_comida or not calificacion:
         return jsonify({'message': 'Datos incompletos'}), 400
     
-    plan_nutricional = PlanNutricional.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
-    if plan_nutricional:
-        plan_nutricional.calificacion = calificacion
+    # Verificar si ya existe una calificación para el usuario y la comida especificada
+    calificacion_existente = Calificaciones.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
+    
+    if calificacion_existente:
+        calificacion_existente.calificacion = calificacion
     else:
-        nueva_calificacion = PlanNutricional(
+        # Crear una nueva calificación
+        nueva_calificacion = Calificaciones(
             id_comida=id_comida,
             calificacion=calificacion,
-            id_usuario=session.get("id_usuario"),
-            dia_comida="algún_día"
+            id_usuario=session.get("id_usuario")
         )
         db.session.add(nueva_calificacion)
     db.session.commit()
@@ -185,7 +187,7 @@ def get_recipes():
         id_usuario = session["id_usuario"]
 
         # Consultar el plan nutricional del usuario
-        plan = Plan_nutricional_user.query.filter_by(id_usuario=id_usuario).first()
+        plan = PlanNutricional.query.filter_by(id_usuario=id_usuario).first()
 
         if plan:
             comidas_ids = [
@@ -220,8 +222,7 @@ def get_recipes():
                         recetas.append(receta)
 
             return jsonify(recetas)
-
-    return redirect(url_for("homepage"))
+        return redirect(url_for("homepage"))
 
 
 
