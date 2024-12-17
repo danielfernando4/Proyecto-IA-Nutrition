@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const enviarTarjetasABaseDeDatos = () => {
     console.log("Tarjetas a enviar:", tarjetasRenderizadas);
-    fetch("/guardar-tarjetas", {
+    fetch("/guardar_tarjetas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(tarjetasRenderizadas),

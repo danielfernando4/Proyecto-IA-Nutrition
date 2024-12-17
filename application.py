@@ -103,25 +103,27 @@ def generation():
 
 
 
-@app.route("/guardar_tarjetas", metho=["POST"])
+@app.route("/guardar_tarjetas", methods=["POST"])
 def guardar_tarjetas():
     if "correo" in session and "id_usuario" in session:
-        data = request.json()
+        if request.method == "POST": 
+            print("LLEGANDO")
+            data = request.get_json()
 
-        print(data)
+            lunes = data["Lunes"],
+            martes = data["Martes"],
+            miercoles = data["Miércoles"],
+            jueves = data["Jueves"],
+            viernes = data["Viernes"],
+            sabado = data["Sábado"],
+            domingo = data["Domingo"]
 
-        lunes = data["Lunes"],
-        martes = data["Martes"],
-        miercoles = data["Miércoles"],
-        jueves = data["Jueves"],
-        viernes = data["Viernes"],
-        sabado = data["Sábado"],
-        domingo = data["Domingo"]
+            comidas = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
 
-        comidas = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
+            for comida in comidas:
+                pass
 
-        for comida in comidas:
-            pass
+            return jsonify({"status": "ok"})
 
         pass
     return redirect(url_for("/homepage"))
