@@ -18,12 +18,18 @@ db.init_app(app)
 app.secret_key = "Nutritionkey12345session"
 app.permanent_session_lifetime = timedelta(minutes=120)
 
+
+
+
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
         return render_template("index.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
+
+
+
 
 @app.route("/loginRegister", methods=["GET", "POST"])
 def loginRegister():
@@ -59,29 +65,44 @@ def loginRegister():
                 return render_template("loginRegister.html")
     return render_template("loginRegister.html")
 
-@app.route("/generation", methods=["GET", "POST"]) #& Decorador para mi puerto
+
+
+
+
+
+@app.route("/generation", methods=["GET", "POST"])
 def generation():
     if "correo" in session and "id_usuario" in session:
         if request.method == "POST":
-            edad = int(request.form.get("edad"))
-            altura = int(request.form.get("altura"))
-            sexo = request.form.get("sexo")
-            peso = float(request.form.get("peso"))
+            # Obtener datos en formato JSON
+            data = request.json
+            edad = int(data.get("edad"))
+            altura = int(data.get("altura"))
+            sexo = data.get("sexo")
+            peso = float(data.get("peso"))
+            print(request.json)
 
+            # Procesar los datos
             sexo_num = 0 if sexo == "masculino" else 1
-
             cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, 3)
-
             diets = int(kmeans_generator_diet(cal, prot, carb, grasas))
-
+            print(diets)
+            # Consultar la base de datos para obtener las comidas
             comidas = Comida.query.filter(Comida.grupo == diets).order_by(func.random()).limit(7).all()
 
+            # Convertir las comidas a JSON
             comidas_json = [comida.to_dict() for comida in comidas]
-            return jsonify(comidas_json)
-        
+            return jsonify(comidas_json)  # Devolver el JSON al cliente
+
+        # Manejar solicitudes GET
         return render_template("generation.html", nombre=session["nombre"], correo=session["correo"])
+
     else:
+        # Redirigir si el usuario no está autenticado
         return redirect(url_for("homepage"))
+
+
+
 
 
 @app.route("/config", methods=["GET", "POST"])
@@ -170,13 +191,57 @@ def get_recipes():
         return redirect(url_for("homepage"))
 
 
-@app.route("/descubre")
+@app.route("/descubre", methods=["GET", "POST"])
 def descubre():
     if "correo" in session and "id_usuario" in session:
+        if request.method == "POST":
+            filtro = request.get_json()
+            nombre_busqueda = filtro.get("nombre", "").lower()  # Obtener nombre
+
+            # Otros filtros
+            prot = filtro.get("proteínas")
+            cal = filtro.get("calorias")
+            carb = filtro.get("carbohidratos")
+            grasas = filtro.get("grasas")
+            tipo = filtro.get("tipo")
+
+            query = Comida.query
+
+            # Búsqueda por nombre si hay un término
+            if nombre_busqueda:
+                query = query.filter(Comida.nombre_comida.ilike(f"%{nombre_busqueda}%"))
+
+            # Aplicar otros filtros (calorías, proteínas, etc.)
+            if cal == 1:
+                query = query.order_by(Comida.calorias.asc())
+            elif cal == 2:
+                query = query.order_by(Comida.calorias.desc())
+            if prot == 1:
+                query = query.order_by(Comida.proteinas.asc())
+            elif prot == 2:
+                query = query.order_by(Comida.proteinas.desc())
+            if carb == 1:
+                query = query.order_by(Comida.carbohidratos.asc())
+            elif carb == 2:
+                query = query.order_by(Comida.carbohidratos.desc())
+            if grasas == 2:
+                query = query.order_by(Comida.grasas.asc())
+            elif grasas == 1:
+                query = query.order_by(Comida.grasas.desc())
+            if tipo == 1:
+                query = query.filter_by(tipo_comida="Gluten Free")
+            elif tipo == 2:
+                query = query.filter_by(tipo_comida="Vegetarian")
+
+            comidas = query.all()
+            comidas_json = [comida.to_dict() for comida in comidas]
+
+            return jsonify(comidas_json)
+
         return render_template("descubre.html", nombre=session["nombre"], correo=session["correo"])
+
     else:
         return redirect(url_for("homepage"))
-
 
 
 
@@ -212,6 +277,21 @@ def cerrarsesion():
 @app.route("/kmeans.html")
 def kmeans():
     if "correo" in session and "id_usuario" in session:
+        """
+        if request.method == "POST":
+
+            datos = request.get_json()
+            edad = datos.get("edad")
+            altura = datos.get("altura")
+            sexo = datos.get("sexo")
+            peso = datos.get("peso")
+            sexo_num = 0 if sexo == "masculino" else 1
+            cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, 3)
+            diets = int(kmeans_generator_diet(cal, prot, carb, grasas))
+            comidas = Comida.query.filter(Comida.grupo == diets).all()
+            comidas_json = [comida.to_dict() for comida in comidas]
+            return jsonify(comidas_json)
+        """
         return render_template("kmeans.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))

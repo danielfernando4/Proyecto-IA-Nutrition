@@ -35,21 +35,34 @@
             <div class="stat-card">
                 <img src="/static/icons/pastel.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">{{edad}} años</div>
+                    {% if edad is None %}
+                    <div class="stat-number">_________ años</div>
+                    {% else %}
+                    <div class="stat-number">{{ edad }} años</div>
+                    {% endif %}
+
                     <div class="stat-label">Edad</div>
                 </div>
             </div>
             <div class="stat-card">
                 <img src="/static/icons/peso.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">{{peso}} kg</div>
+                    {% if peso is None %}
+                    <div class="stat-number">_________ kg</div>
+                    {% else %}
+                    <div class="stat-number">{{ peso }} kg</div>
+                    {% endif %}
                     <div class="stat-label">Peso</div>
                 </div>
             </div>
             <div class="stat-card">
                 <img src="/static/icons/estatura.png" alt="Icono" class="stat-icon">
                 <div>
-                    <div class="stat-number">{{estatura}} cm</div>
+                    {% if estatura is None %}
+                    <div class="stat-number">_________ cm</div>
+                    {% else %}
+                    <div class="stat-number">{{ estatura }} cm</div>
+                    {% endif %}
                     <div class="stat-label">Estatura</div>
                 </div>
             </div>
