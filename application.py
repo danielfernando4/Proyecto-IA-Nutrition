@@ -146,78 +146,102 @@ def config():
         return redirect(url_for("homepage"))
 
 
+#---------calificacion de comidas---------------
+@app.route('/rate', methods=['POST'])
+def rate_comida():
+    data = request.get_json()
+    id_comida = data.get('id_comida')
+    calificacion = data.get('calificacion')
 
+    app.logger.info(f'Recibida calificación: Comida ID {id_comida}, Calificación: {calificacion}')
+
+    if not id_comida or not calificacion:
+        return jsonify({'message': 'Datos incompletos'}), 400
+    
+    plan_nutricional = PlanNutricional.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
+    if plan_nutricional:
+        plan_nutricional.calificacion = calificacion
+    else:
+        nueva_calificacion = PlanNutricional(
+            id_comida=id_comida,
+            calificacion=calificacion,
+            id_usuario=session.get("id_usuario"),
+            dia_comida="algún_día"
+        )
+        db.session.add(nueva_calificacion)
+    db.session.commit()
+    
+    return jsonify({'message': 'Calificación guardada correctamente'}), 200
+
+@app.route("/get_recipes", methods=["GET"])
+def get_recipes():
+    if "correo" in session and "id_usuario" in session:
+        comidas = Comida.query.order_by(func.random()).limit(7).all()
+
+        dias_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+        recetas = []
+
+        for idx, comida in enumerate(comidas):
+            receta = comida.to_dict()
+            receta["dia"] = dias_semana[idx]
+            recetas.append(receta)
+
+        return jsonify(recetas)
+    else:
+        return redirect(url_for("homepage"))
 
 
 @app.route("/descubre", methods=["GET", "POST"])
 def descubre():
     if "correo" in session and "id_usuario" in session:
-
         if request.method == "POST":
-
-            print("POST recibido:", request.get_json())
-
-
             filtro = request.get_json()
+            nombre_busqueda = filtro.get("nombre", "").lower()  # Obtener nombre
+
+            # Otros filtros
             prot = filtro.get("proteínas")
             cal = filtro.get("calorias")
             carb = filtro.get("carbohidratos")
             grasas = filtro.get("grasas")
             tipo = filtro.get("tipo")
-            print(filtro)
 
             query = Comida.query
+
+            # Búsqueda por nombre si hay un término
+            if nombre_busqueda:
+                query = query.filter(Comida.nombre_comida.ilike(f"%{nombre_busqueda}%"))
+
+            # Aplicar otros filtros (calorías, proteínas, etc.)
             if cal == 1:
                 query = query.order_by(Comida.calorias.asc())
             elif cal == 2:
                 query = query.order_by(Comida.calorias.desc())
-                
             if prot == 1:
                 query = query.order_by(Comida.proteinas.asc())
             elif prot == 2:
                 query = query.order_by(Comida.proteinas.desc())
-
-
             if carb == 1:
                 query = query.order_by(Comida.carbohidratos.asc())
             elif carb == 2:
                 query = query.order_by(Comida.carbohidratos.desc())
-
             if grasas == 2:
                 query = query.order_by(Comida.grasas.asc())
             elif grasas == 1:
                 query = query.order_by(Comida.grasas.desc())
-
-            if tipo==1:
-                query = query.filter_by("Gluten Free")
-            elif tipo==2:
-                query = query.filter_by("Vegetarian")
+            if tipo == 1:
+                query = query.filter_by(tipo_comida="Gluten Free")
+            elif tipo == 2:
+                query = query.filter_by(tipo_comida="Vegetarian")
 
             comidas = query.all()
-
-            comidas_json = [
-                {
-                    "id_comida": comida.id_comida,
-                    "nombre_comida": comida.nombre_comida,
-                    "calorias": comida.calorias,
-                    "proteinas": comida.proteinas,
-                    "carbohidratos": comida.carbohidratos,
-                    "grasas": comida.grasas,
-                    "ingredientes": comida.ingredientes,
-                    "tipo_comida": comida.tipo_comida,
-                    "grupo": comida.grupo,
-                    "url_imagen": comida.url_imagen
-                }
-                for comida in comidas
-            ]
+            comidas_json = [comida.to_dict() for comida in comidas]
 
             return jsonify(comidas_json)
 
         return render_template("descubre.html", nombre=session["nombre"], correo=session["correo"])
-    
+
     else:
         return redirect(url_for("homepage"))
-
 
 
 
@@ -269,6 +293,16 @@ def kmeans():
             return jsonify(comidas_json)
         """
         return render_template("kmeans.html", nombre=session["nombre"], correo=session["correo"])
+    else:
+        return redirect(url_for("homepage"))
+
+
+
+
+@app.route("/para_ti")
+def para_ti():
+    if "correo" in session and "id_usuario" in session:
+        return render_template("para_ti.html")
     else:
         return redirect(url_for("homepage"))
 

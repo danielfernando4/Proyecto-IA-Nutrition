@@ -1,8 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('search_input');
     const filterButton = document.getElementById('ver_filtro');
     const panelInfo = document.getElementById("filters_content");
+    const postContainer = document.querySelector(".recipe-cards");
+    const modalOverlay = document.getElementById("modal_overlay");
+    const modalPanel = document.getElementById("recipe_info");
+    const closeModalButton = document.getElementById("close_recipeinf");
     const allFilters = document.querySelectorAll('.icon-button, .diet-select');
+    const panelAgregar = document.getElementById("modal_agregar");
+    const cerrarAgregar = document.getElementById("cerrar_plan");
+    const botonAgregar = document.querySelector(".boton-agregar");
 
+    let recetas = [];
+    let debounceTimer;
+
+    /** Mostrar/Ocultar el panel de filtros */
     if (filterButton && panelInfo) {
         filterButton.addEventListener("click", () => {
             panelInfo.classList.toggle("open");
@@ -10,15 +22,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const filterButtons = document.querySelectorAll('.icon-button:not(.diet-select)');
-    let debounceTimer;
+    /** Evento para la búsqueda por nombre */
+    searchInput.addEventListener('input', () => {
+        debounce(sendFilterStates, 500);
+    });
 
+    /** Configuración de los filtros interactivos */
+    const filterButtons = document.querySelectorAll('.icon-button:not(.diet-select)');
     filterButtons.forEach((button) => {
         let clickState = 0;
 
         button.addEventListener('click', () => {
             clickState = (clickState + 1) % 3;
-
             button.classList.remove('active');
             const existingIcon = button.querySelector('.sort-icon');
             if (existingIcon) existingIcon.remove();
@@ -35,18 +50,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 sortIcon.src = '/static/icons/abajo.png';
                 sortIcon.classList.add('sort-icon', 'desc');
                 button.appendChild(sortIcon);
-            } else {
-                button.classList.remove('active');
             }
 
-            debounce(() => {
-                updateFilterStates();
-            }, 300); // Evita múltiples solicitudes rápidas
+            updateFilterButton();
+            debounce(sendFilterStates, 500);
         });
     });
 
     const dietSelect = document.getElementById('diet-filter');
-
     dietSelect.addEventListener('change', () => {
         const selectedOption = dietSelect.options[dietSelect.selectedIndex];
         const icon = selectedOption.getAttribute('data-icon');
@@ -58,19 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
             dietSelect.classList.remove('active');
         }
 
-        debounce(() => {
-            updateFilterStates();
-        }, 300);
+        updateFilterButton();
+        debounce(sendFilterStates, 500);
     });
 
-    function debounce(func, delay) {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(func, delay);
-    }
-
+    /** Función para actualizar el ícono del botón de filtro */
     function updateFilterButton() {
-        const hasActiveFilters = Array.from(allFilters).some(filter => filter.classList.contains('active'));
+        const hasActiveFilters = Array.from(allFilters).some(filter => filter.classList.contains('active') || searchInput.value.trim());
         const filterImg = filterButton.querySelector('img');
+
         if (hasActiveFilters) {
             filterImg.src = '/static/icons/filtroActivo.png';
         } else {
@@ -78,34 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    allFilters.forEach(filter => {
-        filter.addEventListener('change', () => debounce(updateFilterButton, 300));
-    });
-
-    async function sendFilterStates(states) {
-        console.log("Enviando JSON al servidor:", states);
-        try {
-            const response = await fetch('/descubre', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(states)
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                recetas = data;
-                getMethods(); // Actualizar tarjetas con nuevas recetas
-            } else {
-                console.error('Error en el POST:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
-        }
-    }
-
+    /** Función para obtener estados de filtros */
     function getFilterStates() {
         const states = {};
-
         filterButtons.forEach(button => {
             const label = button.textContent.trim();
             const icon = button.querySelector('.sort-icon');
@@ -119,48 +101,56 @@ document.addEventListener('DOMContentLoaded', function () {
             states[label.toLowerCase()] = state;
         });
 
-        const dietLabel = 'tipo';
-        const selectedOption = dietSelect.value;
-        states[dietLabel] = selectedOption === 'vegetarian' ? 2 : selectedOption === 'gluten_free' ? 1 : 0;
+        states["tipo"] = dietSelect.value === 'vegetarian' ? 2 : dietSelect.value === 'gluten_free' ? 1 : 0;
+        states["nombre"] = searchInput.value.trim();
 
         return states;
     }
 
-    function updateFilterStates() {
-        const currentStates = getFilterStates();
-        console.log("Estados de filtros actuales:", currentStates);
-        sendFilterStates(currentStates);
+    /** Función para enviar filtros al servidor */
+    async function sendFilterStates() {
+        const states = getFilterStates();
+        console.log("Enviando JSON al servidor:", states);
+        try {
+            const response = await fetch('/descubre', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(states)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                recetas = data;
+                updateRecipeCards();
+            } else {
+                console.error('Error en el POST:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
     }
 
-    const postContainer = document.querySelector(".recipe-cards");
-    const modalOverlay = document.getElementById("modal_overlay");
-    const modalPanel = document.getElementById("recipe_info");
-    const closeModalButton = document.getElementById("close_recipeinf");
-
-    const getMethods = () => {
+    /** Función para actualizar las tarjetas de recetas */
+    function updateRecipeCards() {
         postContainer.innerHTML = "";
-
         recetas.forEach((postData, index) => {
             const card = document.createElement("div");
             card.classList.add("recipe-card");
-
             card.innerHTML = `
                 <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="recipe-image">
                 <div class="recipe-card-content">
                     <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
-                    <p class="recipe-card-description">${postData.ingredientes}</p>
-                    <div class="recipe-card-footer"></div>
+                    <p class="recipe-card-description">${postData.descripcion}</p>
                 </div>
                 <button class="btn view-recipe" data-index="${index}">Ver receta</button>
             `;
-
             postContainer.appendChild(card);
         });
-
         addModalEventListeners();
-    };
+    }
 
-    const addModalEventListeners = () => {
+    /** Eventos para el modal */
+    function addModalEventListeners() {
         const recipeButtons = document.querySelectorAll(".view-recipe");
 
         recipeButtons.forEach(button => {
@@ -170,20 +160,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 document.querySelector(".recipe-title").innerText = recipeData.nombre_comida;
                 document.querySelector(".mod_desc").innerText = "Conoce la información nutricional de esta receta.";
+                document.querySelector(".recipe-description").innerText = recipeData.descripcion;
 
                 const modalImage = document.querySelector(".modal-recipe-image");
                 modalImage.src = `${recipeData.url_imagen}.jpg`;
                 modalImage.alt = recipeData.nombre_comida;
 
-                const description = document.querySelector(".recipe-description");
-                description.innerText = recipeData.ingredientes;
-
                 const ingredientsList = document.querySelector(".ingredients-list");
-                const ingredientsArray = Array.isArray(recipeData.ingredientes)
-                    ? recipeData.ingredientes
-                    : recipeData.ingredientes.split(',').map(ing => ing.trim());
-
-                ingredientsList.innerHTML = ingredientsArray.map(ing => `<li>${ing}</li>`).join("");
+                ingredientsList.innerHTML = recipeData.ingredientes.split(',').map(ing => `<li>${ing.trim()}</li>`).join("");
 
                 const nutritionList = document.querySelector(".nutrition-list");
                 nutritionList.innerHTML = `
@@ -195,21 +179,50 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 modalPanel.classList.add("open");
                 modalOverlay.classList.add("open");
+
+                const abrirAgregar = document.getElementById("abrir_agregar");
+                abrirAgregar.addEventListener("click", () => {
+                    panelAgregar.classList.add("open");
+                });
             });
         });
-    };
 
-    if (closeModalButton && modalOverlay) {
-        closeModalButton.addEventListener("click", () => {
-            modalPanel.classList.remove("open");
-            modalOverlay.classList.remove("open");
+        cerrarAgregar.addEventListener("click", () => {
+            panelAgregar.classList.remove("open");
         });
 
-        modalOverlay.addEventListener("click", () => {
-            modalPanel.classList.remove("open");
-            modalOverlay.classList.remove("open");
+        closeModalButton.addEventListener("click", closeModal);
+        modalOverlay.addEventListener("click", closeModal);
+    }
+
+    function closeModal() {
+        modalPanel.classList.remove("open");
+        modalOverlay.classList.remove("open");
+    }
+
+    /** Debounce para evitar múltiples solicitudes */
+    function debounce(func, delay) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(func, delay);
+    }
+
+    if (botonAgregar)
+        botonAgregar.addEventListener("click", cerrarModalesYConfetti);
+    function cerrarModalesYConfetti() {
+        modalPanel.classList.remove("open");
+        modalOverlay.classList.remove("open");
+        
+        panelAgregar.classList.remove("open");
+    
+     
+        confetti({
+            particleCount: 400, 
+            spread: 180,       
+            origin: { y: 0.6 }  
         });
     }
 
-    updateFilterStates();
+    // Inicializar estados
+    sendFilterStates();
+    updateFilterButton();
 });
