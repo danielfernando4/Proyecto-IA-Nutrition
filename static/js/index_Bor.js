@@ -26,6 +26,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Función para mostrar los detalles del plato
   const mostrarDetalles = (plato) => {
+      if (!plato) {
+          console.error("El objeto plato es inválido:", plato);
+          return;
+      }
+      
       const imagen = document.getElementById('plato-imagen');
       const nombre = document.getElementById('plato-nombre'); 
       const dia = document.getElementById('plato-dia');
@@ -33,10 +38,15 @@ document.addEventListener("DOMContentLoaded", function() {
       const propiedadesList = document.getElementById('plato-propiedades');
       const descripcion = document.getElementById('plato-descripcion');
 
+      if (!imagen || !nombre || !dia || !ingredientesList || !propiedadesList || !descripcion) {
+          console.error("Faltan elementos en el DOM para mostrar detalles del plato.");
+          return;
+      }
+
       imagen.src = plato.url_imagen + '.jpg';	
       nombre.textContent = plato.nombre_comida;
-      dia.innerText = plato.dia;
-      descripcion.textContent = plato.descripcion;
+      dia.innerText = plato.dia || 'Día no especificado';
+      descripcion.textContent = plato.descripcion || 'Sin descripción disponible';
       ingredientesList.innerHTML = '';
       propiedadesList.innerHTML = '';
 
@@ -54,12 +64,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
       document.getElementById('recipe-popup').classList.add('open');
       document.getElementById('modal_overlay').classList.add('open');
-  }
+  };
 
   const closePopup = () => {
       document.getElementById('recipe-popup').classList.remove('open');
       document.getElementById('modal_overlay').classList.remove('open');
-  }
+  };
 
   // Función para cargar las recetas
   const loadRecipes = () => {
@@ -79,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
                           <button class="btn" data-recipe-id="${postData.id_comida}">Ver receta</button>
                       </div>
                       <div class="rating">
-                          ${[5,4,3,2,1].map(star => `
+                          ${[5, 4, 3, 2, 1].map(star => `
                               <input type="radio" id="star${star}-${postData.id_comida}" name="rate-${postData.id_comida}" value="${star}" ${star == postData.calificacion ? 'checked' : ''} />
                               <label for="star${star}-${postData.id_comida}" title="${star} estrellas"></label>
                           `).join('')}
@@ -118,4 +128,9 @@ document.addEventListener("DOMContentLoaded", function() {
           closePopup();
       }
   });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const botonVerReceta = document.getElementById('ver-receta');
+  botonVerReceta.addEventListener('click', () => mostrarDetalles(plato));
 });
