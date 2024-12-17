@@ -14,6 +14,7 @@ class Usuario(db.Model):
     sexo = db.Column(db.String(1))
     password_usuario = db.Column(db.String(200), nullable=False)  # Contraseña no nula
     nivel_actividad = db.Column(db.String(20))
+    grupo = db.Column(db.Integer)
 
     planes_nutricionales = db.relationship('PlanNutricional', backref='usuario', lazy=True)
 
