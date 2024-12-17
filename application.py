@@ -1,7 +1,7 @@
 #app main
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
-from basemodels import Comida, PlanNutricional, Usuario, db
+from basemodels import Calificaciones, Comida, PlanNutricional, Usuario, db
 
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -65,10 +65,6 @@ def loginRegister():
                 flash("Credenciales incorrectas", "danger")
                 return render_template("loginRegister.html")
     return render_template("loginRegister.html")
-
-
-
-
 
 
 @app.route("/generation", methods=["GET", "POST"])
@@ -177,6 +173,7 @@ def rate_comida():
     db.session.commit()
     
     return jsonify({'message': 'Calificación guardada correctamente'}), 200
+
 
 
 # --------- Obtener datos del Plan---------------------------------------------
