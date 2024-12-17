@@ -35,12 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 sortIcon.src = '/static/icons/abajo.png';
                 sortIcon.classList.add('sort-icon', 'desc');
                 button.appendChild(sortIcon);
-            } else {
-                button.classList.remove('active');
             }
 
             debounce(() => {
                 updateFilterStates();
+                updateFilterButton();
             }, 300); // Evita múltiples solicitudes rápidas
         });
     });
@@ -60,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         debounce(() => {
             updateFilterStates();
+            updateFilterButton();
         }, 300);
     });
 
@@ -71,10 +71,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateFilterButton() {
         const hasActiveFilters = Array.from(allFilters).some(filter => filter.classList.contains('active'));
         const filterImg = filterButton.querySelector('img');
+
         if (hasActiveFilters) {
-            filterImg.src = '/static/icons/filtroActivo.png';
+            filterImg.src = '/static/icons/filtroActivo.png'; // Imagen con contorno negro
         } else {
-            filterImg.src = '/static/icons/filtrar.png';
+            filterImg.src = '/static/icons/filtrar.png'; // Imagen original
         }
     }
 
@@ -212,4 +213,5 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     updateFilterStates();
+    updateFilterButton();
 });
