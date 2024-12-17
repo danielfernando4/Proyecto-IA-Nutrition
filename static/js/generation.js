@@ -7,6 +7,7 @@
       return data;
     } else {
       console.error("Error en el POST:", response.statusText);
+      });
     }
   } catch (error) {
     console.error("Error en la solicitud:", error);
@@ -324,9 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    <div class="recipe-card-footer">
-     <button class="btn-ready"  id="agregarAPlan">Agregar a plan</button>
-    </div>
+    
       // Añadir la tarjeta al contenedor
       postContainer.appendChild(card);
     });
@@ -382,10 +381,11 @@ const enviarDatos = () => {
             proteinas: comida.proteinas || 0,
           }));
 
-          postContainer.innerHTML = ""; // Limpiar contenedor
+          postContainer.innerHTML = ""; 
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     });
+  });
 }
