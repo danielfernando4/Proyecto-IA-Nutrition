@@ -79,7 +79,7 @@ def generation():
             edad = int(data.get("edad"))
             altura = int(data.get("altura"))
             sexo = data.get("sexo")
-            peso = float(data.get("peso"))
+            peso = float(data.get("peso"))  
             print(request.json)
 
             # Procesar los datos
