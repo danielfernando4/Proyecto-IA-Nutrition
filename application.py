@@ -176,20 +176,60 @@ def rate_comida():
     
     return jsonify({'message': 'Calificación guardada correctamente'}), 200
 
+
+
+
 @app.route("/get_recipes", methods=["GET"])
 def get_recipes():
     if "correo" in session and "id_usuario" in session:
-        comidas = Comida.query.order_by(func.random()).limit(7).all()
+        id_usuario = session["id_usuario"]
 
-        dias_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+        # Consultar los planes nutricionales del usuario con sus comidas asociadas
+        planes = (
+            PlanNutricional.query
+            .filter_by(id_usuario=id_usuario)
+            .join(Comida, PlanNutricional.id_comida == Comida.id_comida)
+            .add_columns(
+                PlanNutricional.dia_comida,
+                PlanNutricional.calificacion,
+                Comida.id_comida,
+                Comida.nombre_comida,
+                Comida.calorias,
+                Comida.proteinas,
+                Comida.carbohidratos,
+                Comida.grasas,
+                Comida.ingredientes,
+                Comida.tipo_comida,
+                Comida.grupo,
+                Comida.url_imagen,
+                Comida.descripcion
+            )
+            .limit(7)  # Limitar a 7 registros
+            .all()
+        )
+
+        # Preparar la respuesta
         recetas = []
-
-        for idx, comida in enumerate(comidas):
-            receta = comida.to_dict()
-            receta["dia"] = dias_semana[idx]
+        for plan in planes:
+            receta = {
+                "dia": plan.dia_comida,
+                "calificacion": plan.calificacion,
+                "id_comida": plan.id_comida,
+                "nombre_comida": plan.nombre_comida,
+                "calorias": plan.calorias,
+                "proteinas": plan.proteinas,
+                "carbohidratos": plan.carbohidratos,
+                "grasas": plan.grasas,
+                "ingredientes": plan.ingredientes.split(",") if plan.ingredientes else [],
+                "tipo_comida": plan.tipo_comida,
+                "grupo": plan.grupo,
+                "url_imagen": plan.url_imagen,
+                "descripcion": plan.descripcion
+            }
             recetas.append(receta)
 
         return jsonify(recetas)
+
     else:
         return redirect(url_for("homepage"))
 
