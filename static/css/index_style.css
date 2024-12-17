@@ -304,6 +304,21 @@ body {
 }
 
 /* Pop-up */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.overlay.open {
+  display: block;
+}
+
 .recipe_info {
   position: fixed;
   top: 50%;
@@ -330,6 +345,11 @@ body {
   opacity: 1;
   z-index: 1000;
 }
+
+.overlay.open {
+  display: block;
+}
+
 
 /* Botón de cerrar */
 .close-button {

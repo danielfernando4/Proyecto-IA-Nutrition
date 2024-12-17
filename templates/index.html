@@ -1,58 +1,78 @@
 {% extends "base.html" %}
-    {% block css %}
-        <link rel="stylesheet" href="static/css/index_style.css">
-    {% endblock %}
 
-    {% block scriptjs %}
-        <script src="static/js/index_Bor.js"></script>
-    {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">
+{% endblock %}
+
+{% block scriptjs %}
+    <script src="{{ url_for('static', filename='js/index_Bor.js') }}"></script>
+{% endblock %}
 
 {% block content %}
+<!-- Sección del plan nutricional -->
 <section class="plan-container">
     <div class="plan-title">
         <h1>PLAN NUTRICIONAL</h1>
     </div>
 </section>
 
+<!-- Sección de desayunos -->
 <section class="plan-container2">
     <div class="plan-title2">
-        <h2><img src="static/icons/desayuno.png" alt="Icono" class="title-icon"> Desayunos</h2>
+        <h2>
+            <img src="{{ url_for('static', filename='icons/desayuno.png') }}" alt="Icono" class="title-icon"> 
+            Desayunos
+        </h2>
     </div>
 </section>
 
-<section class="plan-thumbnails">
-    
-</section>
+<!-- Contenedor para los thumbnails -->
+<section class="plan-thumbnails"></section>
 
+<!-- Fondo del pop-up -->
 <div id="modal_overlay" class="overlay"></div>
 
 <!-- Pop-up para los detalles de la receta -->
 <div id="recipe-popup" class="recipe_info">
+    <!-- Botón de cierre -->
     <button class="close-button" id="close-popup">
-        <img src="static/icons/cerrar.png" class="close-icon" alt="Cerrar">
+        <img src="{{ url_for('static', filename='icons/cerrar.png') }}" class="close-icon" alt="Cerrar">
     </button>
+    
+    <!-- Detalles del plato -->
     <section class="plan-details">
-        <h2><img src="static/icons/detalles.png" alt="Icono" class="title-icon2"> Detalles del Plato</h2>
+        <h2>
+            <img src="{{ url_for('static', filename='icons/detalles.png') }}" alt="Icono" class="title-icon2"> 
+            Detalles del Plato
+        </h2>
+        <!-- Día del plato -->
         <div class="plan-day">
             <div class="day-box" id="plato-dia">Lunes</div>
         </div>
+        
+        <!-- Propiedades del plato -->
         <div class="plan-properties">
             <h3>Propiedades:</h3>
             <ul id="plato-propiedades"></ul>
         </div>
+        
+        <!-- Imagen y nombre del plato -->
         <div class="plan-image">
             <img id="plato-imagen" src="" alt="Imagen del plato">
             <div class="image-description" id="plato-nombre">Descripción de la imagen aquí</div>
         </div>
+        
+        <!-- Ingredientes del plato -->
         <div class="plan-ingredients">
             <h3>Ingredientes:</h3>
             <ul id="plato-ingredientes"></ul>
         </div>
+        
+        <!-- Descripción del plato -->
         <div class="plan-description">
             <h3>Descripción:</h3>
             <p id="plato-descripcion"></p>
         </div>
     </section>
 </div>
-
 {% endblock %}
