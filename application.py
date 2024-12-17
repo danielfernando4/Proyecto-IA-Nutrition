@@ -106,6 +106,29 @@ def generation():
 
 
 
+@app.route("/guardar_tarjetas", metho=["POST"])
+def guardar_tarjetas():
+    if "correo" in session and "id_usuario" in session:
+        data = request.json()
+
+        print(data)
+
+        lunes = data["Lunes"],
+        martes = data["Martes"],
+        miercoles = data["Miércoles"],
+        jueves = data["Jueves"],
+        viernes = data["Viernes"],
+        sabado = data["Sábado"],
+        domingo = data["Domingo"]
+
+        comidas = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
+
+        for comida in comidas:
+            pass
+
+        pass
+    return redirect(url_for("/homepage"))
+
 
 
 @app.route("/config", methods=["GET", "POST"])
@@ -174,6 +197,8 @@ def rate_comida():
     db.session.commit()
     
     return jsonify({'message': 'Calificación guardada correctamente'}), 200
+
+
 
 
 
