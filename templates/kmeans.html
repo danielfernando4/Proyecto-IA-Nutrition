@@ -1,122 +1,35 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 {% block css %}
 <link rel="stylesheet" href="static/css/kmeans.css">
 {% endblock %}
+
 {% block content %}
 <div class="kmeans">
     <div class="header">
-        <h1 class="headercontent">Descubre recetas</h1>
+        <h1 class="headercontent">Recetas extra</h1>
     </div>
 
     <div class="contenidokmeans">
-        <span>En este apartado encontratarás recetas según el grupo al alimenticio al que te hemos asignado. ¡Esperamos
-            que te gusten!
-            Lo mejor de todo es que tocas es acoplan a tus necesidades nutricionales.
-        </span>
-        
-        <span>Lo mejor de todo es que tocas es acoplan a tus necesidades nutricionales.</span>
+        <span>En este apartado encontrarás recetas según el grupo alimenticio al que te hemos asignado. ¡Esperamos que te gusten! Lo mejor de todo es que se acoplan a tus necesidades nutricionales.</span>
         <span>¡Buen provecho!</span>
+    </div>
 
+    <div class="header2">
+        <h1 class="headercontent2">Recetas según tu grupo</h1>
+        <span>Su grupo es <span id="grupo" data-grupo="{{grupo}}">{{grupo}}</span>
+    
+    </span>
     </div>
 
     <div class="recipe-cards">
-        <div class="recipe-card">
-            <img src="/static/images/comida112.jpg" alt="Recipe Image">
-            <div class="recipe-card-content">
-                <h3 class="recipe-card-title">Pastel de carne</h3>
-                <p class="recipe-card-description">Aqui iba la descripcion XD.</p>
-                <div class="recipe-card-footer">
-                    <span>Más información</span>
-                    <button class="btn" id="ver_infoRec">Ver receta</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="recipe-card">
-            <img src="/static/images/comida118.jpg" alt="Recipe Image">
-            <div class="recipe-card-content">
-                <h3 class="recipe-card-title">Lasaña Italiana</h3>
-                <p class="recipe-card-description">Aqui iba la descripcion XD.</p>
-                <div class="recipe-card-footer">
-                    <span>Más información</span>
-                    <button class="btn">Ver receta</button>
-                </div>
-            </div>
-        </div>
-        <div class="recipe-card">
-            <img src="/static/images/comida104.jpg" alt="Recipe Image">
-            <div class="recipe-card-content">
-                <h3 class="recipe-card-title">Arroz zucini</h3>
-                <p class="recipe-card-description">Aqui iba la descripcion XD.</p>
-                <div class="recipe-card-footer">
-                    <span>Más información</span>
-                    <button class="btn">Ver receta</button>
-                </div>
-            </div>
-        </div>
-        <div class="recipe-card">
-            <img src="/static/images/comida103.jpg" alt="Recipe Image">
-            <div class="recipe-card-content">
-                <h3 class="recipe-card-title">Mocatto de vainilla</h3>
-                <p class="recipe-card-description">Aqui iba la descripcion XD.</p>
-                <div class="recipe-card-footer">
-                    <span>Más información</span>
-                    <button class="btn">Ver receta</button>
-                </div>
-            </div>
-        </div>
+        <!-- Aquí se llenarán las tarjetas de recetas dinámicamente -->
     </div>
 
     <div class="overlay" id="modal_overlay"></div>
 
-    <div class="recipe_info" id="recipe_info">
-        <button class="close-button" aria-label="Cerrar" id="close_recipe_info">
-            <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon" id="close_recipeinf">
-        </button>
-        <h2>Pastel de carne</h2>
-        <p class="mod_desc">Descubre más sobre este platillo. Aquí tienes toda la información que necesitas, desde los
-            ingredientes hasta el aporte nutricional.</p>
 
-        <div class="recipe_content">
-            <img src="/static/images/comida112.jpg" alt="Imagen de la receta" class="recipe-image">
-            <div class="recipe_description">
-                <h3>Descripción</h3>
-                <p>El pastel de carne es un plato muy popular en la gastronomía de muchos países. Se trata de un plato
-                    que se elabora con carne picada, huevo, pan rallado, cebolla, ajo, perejil y especias. La mezcla se
-                    coloca en un molde y se hornea hasta que esté dorada y crujiente por fuera y jugosa por dentro.</p>
-            </div>
-        </div>
+    
 
-        <div class="recipe_spec">
-            <div class="recipe_ingr">
-                <h3>Ingredientes</h3>
-                <ul>
-                    <li>Carne molida</li>
-                    <li>Tomate</li>
-                    <li>Queso</li>
-                    <li>Sal</li>
-                    <li>Pimienta</li>
-                    <li>Orégano</li>
-                    <li>Comino</li>
-                    <li>Chile</li>
-                    <li>Harina</li>
-                    <li>Leche</li>
-                    <li>Mantequilla</li>
-                </ul>
-            </div>
-            <div class="recipe_nutri">
-                <h3>Información nutricional</h3>
-                <ul>
-                    <li>Calorías: 300 kcal</li>
-                    <li>Proteínas: 12.3 g</li>
-                    <li>Carbohidratos: 8.4 g</li>
-                    <li>Grasas: 9.2 g</li>
-                </ul>
-            </div>
-        </div>
-
-        <button class="update-button">Agregar al plan</button>
-    </div>
 </div>
 {% endblock %}
 
