@@ -1,7 +1,7 @@
 #app main
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
-from basemodels import Comida, Plan_nutricional_user, Usuario, db
+from basemodels import Comida, PlanNutricional, Usuario, db
 
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
