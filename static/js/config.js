@@ -30,15 +30,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const filterButtons = document.querySelectorAll('.icon-button');
 
     filterButtons.forEach((button) => {
-        let isAscending = true; // Estado inicial del orden
+        let isAscending = true; 
 
         button.addEventListener('click', () => {
-            // Quitar el estado activo de otros botones
             filterButtons.forEach((btn) => {
                 if (btn !== button) {
                     btn.classList.remove('active');
                     const icon = btn.querySelector('.sort-icon');
-                    if (icon) icon.remove(); // Eliminar cualquier icono en otros botones
+                    if (icon) icon.remove(); 
                 }
             });
 
@@ -83,16 +82,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (abrirReceta && panelReceta) {
         abrirReceta.addEventListener("click", () => {
             panelReceta.classList.add("open");
-            overlay.classList.add("open"); // Hacer visible el overlay
+            overlay.classList.add("open"); 
         });
 
         cerrarReceta.addEventListener("click", () => {
             panelReceta.classList.remove("open");
-            overlay.classList.remove("open"); // Ocultar el overlay
+            overlay.classList.remove("open"); 
         });
     }
 
-    // Cerrar modal si se hace clic en el overlay
     if (overlay) {
         overlay.addEventListener("click", () => {
             panelReceta.classList.remove("open");

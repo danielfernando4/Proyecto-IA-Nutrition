@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeModalButton = document.getElementById("close_recipeinf");
     const allFilters = document.querySelectorAll('.icon-button, .diet-select');
 
+    // Modal "Agregar al plan"
+    const panelAgregar = document.getElementById("modal_agregar");
+    const cerrarAgregar = document.getElementById("cerrar_plan");
+
     let recetas = [];
     let debounceTimer;
 
@@ -21,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /** Evento para la búsqueda por nombre */
     searchInput.addEventListener('input', () => {
-        debounce(sendFilterStates, 500); // Llamar al servidor con un retraso de 500ms
+        debounce(sendFilterStates, 500);
     });
 
     /** Configuración de los filtros interactivos */
@@ -76,9 +80,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const filterImg = filterButton.querySelector('img');
 
         if (hasActiveFilters) {
-            filterImg.src = '/static/icons/filtroActivo.png'; // Ícono con filtros activos
+            filterImg.src = '/static/icons/filtroActivo.png';
         } else {
-            filterImg.src = '/static/icons/filtrar.png'; // Ícono por defecto
+            filterImg.src = '/static/icons/filtrar.png';
         }
     }
 
@@ -99,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         states["tipo"] = dietSelect.value === 'vegetarian' ? 2 : dietSelect.value === 'gluten_free' ? 1 : 0;
-        states["nombre"] = searchInput.value.trim(); // Añadir la búsqueda por nombre
+        states["nombre"] = searchInput.value.trim();
 
         return states;
     }
@@ -149,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /** Eventos para el modal */
     function addModalEventListeners() {
         const recipeButtons = document.querySelectorAll(".view-recipe");
+
         recipeButtons.forEach(button => {
             button.addEventListener("click", () => {
                 const recipeIndex = button.getAttribute("data-index");
@@ -174,7 +179,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 modalPanel.classList.add("open");
                 modalOverlay.classList.add("open");
+
+                const abrirAgregar = document.getElementById("abrir_agregar");
+                abrirAgregar.addEventListener("click", () => {
+                    panelAgregar.classList.add("open");
+                });
             });
+        });
+
+        cerrarAgregar.addEventListener("click", () => {
+            panelAgregar.classList.remove("open");
         });
 
         closeModalButton.addEventListener("click", closeModal);
