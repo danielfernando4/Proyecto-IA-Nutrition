@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*async function getInformation() {
   try {
     const response = await fetch("/generation");
@@ -245,49 +246,47 @@ document.addEventListener('DOMContentLoaded', () => {
 */
 
 // Suponiendo que el servidor te retorna un array de objetos con 'nombre_comida' y 'url_imagen'
+=======
+>>>>>>> 2d03b5dbc461b51d28017e1afd45ee236752b164
 document.addEventListener("DOMContentLoaded", () => {
-  // Seleccionar el formulario y el botón
   const form = document.getElementById("generationForm");
   const submitButton = document.getElementById("submitButton");
 
-  // Contenedor donde se mostrarán las tarjetas
   const postContainer = document.querySelector(".recipe-cards");
 
-  // Escuchar el evento de clic del botón
+  const tarjetasRenderizadas = {};
+  const diasSemana = [
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo",
+  ];
+
+  let recetaIndex = 0; // Controla la asignación de días
+
   submitButton.addEventListener("click", () => {
-    // Crear un objeto para almacenar los datos del formulario
-    const formData = {};
+    const formData = {
+      peso: form.elements["peso"].value,
+      edad: form.elements["edad"].value,
+      altura: form.elements["altura"].value,
+      sexo: form.elements["sexo"].value,
+    };
 
-    // Leer los valores de los campos de entrada
-    const peso = form.elements["peso"].value;
-    const edad = form.elements["edad"].value;
-    const altura = form.elements["altura"].value;
-    const sexo = form.elements["sexo"].value;
-
-    // Guardar los valores en el objeto
-    formData.peso = peso;
-    formData.edad = edad;
-    formData.altura = altura;
-    formData.sexo = sexo;
-
-    // Enviar los datos al endpoint /generation
     fetch("/generation", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error en la solicitud");
-        }
+        if (!response.ok) throw new Error("Error en la solicitud");
         return response.json();
       })
       .then((data) => {
         console.log("Respuesta del servidor:", data);
 
-        // Aquí obtenemos las comidas que nos retorna el servidor
         const recetas = data.map((comida) => ({
           nombre_comida: comida.nombre_comida || "No disponible",
           url_imagen: comida.url_imagen || "No disponible",
@@ -295,7 +294,6 @@ document.addEventListener("DOMContentLoaded", () => {
           proteinas: comida.proteinas || 0,
         }));
 
-        // Llamar a la función para renderizar las tarjetas
         postMethods(recetas);
       })
       .catch((error) => {
@@ -303,28 +301,41 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  // Función para renderizar las tarjetas
   const postMethods = (recetas) => {
     postContainer.innerHTML = ""; // Limpiar contenedor
 
-    // Iterar sobre las recetas
     recetas.forEach((postData) => {
-      // Crear un elemento HTML para cada receta
       const card = document.createElement("div");
       card.classList.add("recipe-card", "bounce-in-top");
 
       card.innerHTML = `
-      <div class="recipe-card-content">
-        <img src="${postData.url_imagen}.jpg" alt="${
+        <div class="recipe-card-content">
+          <img src="${postData.url_imagen}.jpg" alt="${
         postData.nombre_comida
       }" class="recipe-card-image" />
-        <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
-        <p class="recipe-card-description">Calorías: ${postData.calorias.toFixed(
-          2
-        )} | Proteínas: ${postData.proteinas}</p>
-      </div>
+          <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
+          <p class="recipe-card-description">Calorías: ${postData.calorias.toFixed(
+            2
+          )} | Proteínas: ${postData.proteinas}</p>
+        </div>
+      `;
+
+      postContainer.appendChild(card);
+
+      // Asignar la receta al día de la semana
+      const diaAsignado = diasSemana[recetaIndex % diasSemana.length];
+      tarjetasRenderizadas[diaAsignado] = postData.nombre_comida;
+      recetaIndex++; // Incrementar índice para el siguiente día
+    });
+
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("recipe-card-footer");
+
+    buttonContainer.innerHTML = `
+      <button class="btn-ready" id="agregarAPlan">Agregar al plan</button>
     `;
 
+<<<<<<< HEAD
     
       // Añadir la tarjeta al contenedor
       postContainer.appendChild(card);
@@ -389,3 +400,31 @@ const enviarDatos = () => {
     });
   });
 }
+=======
+    postContainer.appendChild(buttonContainer);
+
+    const agregarAPlanButton = document.getElementById("agregarAPlan");
+    agregarAPlanButton.addEventListener("click", enviarTarjetasABaseDeDatos);
+  };
+
+  const enviarTarjetasABaseDeDatos = () => {
+    console.log("Tarjetas a enviar:", tarjetasRenderizadas);
+    fetch("/guardar_tarjetas", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(tarjetasRenderizadas),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Error al guardar las tarjetas");
+        return response.json();
+      })
+      .then((result) => {
+        console.log("Tarjetas guardadas exitosamente:", result);
+        alert("Las tarjetas se guardaron correctamente en la base de datos.");
+      })
+      .catch((error) => {
+        console.error("Error al guardar las tarjetas:", error);
+      });
+  };
+});
+>>>>>>> 2d03b5dbc461b51d28017e1afd45ee236752b164
