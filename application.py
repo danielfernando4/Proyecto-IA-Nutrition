@@ -1,7 +1,7 @@
 #app main
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
-from basemodels import Comida, Plan_nutricional_user, Usuario, db
+from basemodels import Comida, PlanNutricional, Usuario, db
 
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -184,54 +184,45 @@ def get_recipes():
     if "correo" in session and "id_usuario" in session:
         id_usuario = session["id_usuario"]
 
-        # Consultar los planes nutricionales del usuario con sus comidas asociadas
-        planes = (
-            PlanNutricional.query
-            .filter_by(id_usuario=id_usuario)
-            .join(Comida, PlanNutricional.id_comida == Comida.id_comida)
-            .add_columns(
-                PlanNutricional.dia_comida,
-                PlanNutricional.calificacion,
-                Comida.id_comida,
-                Comida.nombre_comida,
-                Comida.calorias,
-                Comida.proteinas,
-                Comida.carbohidratos,
-                Comida.grasas,
-                Comida.ingredientes,
-                Comida.tipo_comida,
-                Comida.grupo,
-                Comida.url_imagen,
-                Comida.descripcion
-            )
-            .limit(7)  # Limitar a 7 registros
-            .all()
-        )
+        # Consultar el plan nutricional del usuario
+        plan = Plan_nutricional_user.query.filter_by(id_usuario=id_usuario).first()
 
-        # Preparar la respuesta
-        recetas = []
-        for plan in planes:
-            receta = {
-                "dia": plan.dia_comida,
-                "calificacion": plan.calificacion,
-                "id_comida": plan.id_comida,
-                "nombre_comida": plan.nombre_comida,
-                "calorias": plan.calorias,
-                "proteinas": plan.proteinas,
-                "carbohidratos": plan.carbohidratos,
-                "grasas": plan.grasas,
-                "ingredientes": plan.ingredientes.split(",") if plan.ingredientes else [],
-                "tipo_comida": plan.tipo_comida,
-                "grupo": plan.grupo,
-                "url_imagen": plan.url_imagen,
-                "descripcion": plan.descripcion
-            }
-            recetas.append(receta)
+        if plan:
+            comidas_ids = [
+                ("lunes", plan.comida_lunes),
+                ("martes", plan.comida_martes),
+                ("miercoles", plan.comida_miercoles),
+                ("jueves", plan.comida_jueves),
+                ("viernes", plan.comida_viernes),
+                ("sabado", plan.comida_sabado),
+                ("domingo", plan.comida_domingo)
+            ]
 
-        return jsonify(recetas)
+            recetas = []
+            for dia, comida_id in comidas_ids:
+                if comida_id:
+                    comida = Comida.query.get(comida_id)
+                    if comida:
+                        receta = {
+                            "dia": dia.capitalize(),
+                            "id_comida": comida.id_comida,
+                            "nombre_comida": comida.nombre_comida,
+                            "calorias": comida.calorias,
+                            "proteinas": comida.proteinas,
+                            "carbohidratos": comida.carbohidratos,
+                            "grasas": comida.grasas,
+                            "ingredientes": comida.ingredientes.split(",") if comida.ingredientes else [],
+                            "tipo_comida": comida.tipo_comida,
+                            "grupo": comida.grupo,
+                            "url_imagen": comida.url_imagen,
+                            "descripcion": comida.descripcion
+                        }
+                        recetas.append(receta)
 
-    else:
-        return redirect(url_for("homepage"))
+            return jsonify(recetas)
+
+    return redirect(url_for("homepage"))
+
 
 
 @app.route("/descubre", methods=["GET", "POST"])
