@@ -18,9 +18,6 @@ db.init_app(app)
 app.secret_key = "Nutritionkey12345session"
 app.permanent_session_lifetime = timedelta(minutes=120)
 
-
-
-
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
