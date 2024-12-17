@@ -1,20 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
   const postContainer = document.querySelector(".plan-thumbnails");
 
-  // Función para enviar las calificaciones
   const sendRating = (id_comida, calificacion) => {
-    const ratingData = {
-      id_comida: id_comida,
-      calificacion: calificacion,
-    };
-
+    const ratingData = { id_comida: id_comida, calificacion: calificacion };
     console.log('Datos enviados en el JSON:', ratingData);
 
     fetch("/rate", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ratingData),
     })
       .then((response) => {
@@ -29,8 +22,8 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   };
 
-  // Función para mostrar los detalles del plato
-  function mostrarDetalles(plato) {
+  const mostrarDetalles = (plato) => {
+    console.log("Mostrando detalles para:", plato); // Añadir log
     const imagen = document.getElementById('plato-imagen');
     const nombre = document.getElementById('plato-nombre'); 
     const dia = document.getElementById('plato-dia');
@@ -38,8 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const propiedadesList = document.getElementById('plato-propiedades');
     const descripcion = document.getElementById('plato-descripcion');
 
-    imagen.src = plato.imagen;
-    nombre.textContent = plato.nombre;
+    imagen.src = plato.url_imagen;
+    nombre.textContent = plato.nombre_comida;
     dia.innerText = plato.dia;
     descripcion.textContent = plato.descripcion;
     ingredientesList.innerHTML = '';
@@ -61,10 +54,11 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('modal_overlay').classList.add('open');
   }
 
-  function closePopup() {
+  const closePopup = () => {
     document.getElementById('recipe-popup').classList.remove('open');
     document.getElementById('modal_overlay').classList.remove('open');
   }
+
 
   // Función para cargar las recetas
   const loadRecipes = () => {
@@ -76,15 +70,15 @@ document.addEventListener("DOMContentLoaded", function() {
           card.classList.add("thumbnail"); // Asegúrate de usar las clases CSS correctas
           card.innerHTML = `
             <div class="thumbnail-content">
-              <img src="${postData.imagen}" alt="${postData.nombre}" class="thumbnail-img" />
-              <h3 class="thumbnail-title">${postData.nombre}</h3>
+              <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="thumbnail-img" />
+              <h3 class="thumbnail-title">${postData.nombre_comida}</h3>
               <p class="thumbnail-description">${postData.descripcion}</p>
               <div class="thumbnail-footer">
                 <span>Más información</span>
                 <button class="btn" data-recipe-id="${postData.id_comida}">Ver receta</button>
               </div>
               <div class="rating">
-                ${[1, 2, 3, 4, 5].map(star => `
+                ${[5,4,3,2,1].map(star => `
                   <input type="radio" id="star${star}-${postData.id_comida}" name="rate-${postData.id_comida}" value="${star}" ${star == postData.calificacion ? 'checked' : ''} />
                   <label for="star${star}-${postData.id_comida}" title="${star} estrellas"></label>
                 `).join('')}
@@ -126,3 +120,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 });
+
+
+

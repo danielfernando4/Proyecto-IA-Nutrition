@@ -35,7 +35,7 @@
             <div class="stat-card">
                 <img src="/static/icons/pastel.png" alt="Icono" class="stat-icon">
                 <div>
-                    {% if edad is None %}
+                    {% if edad is none %}
                     <div class="stat-number">_________ años</div>
                     {% else %}
                     <div class="stat-number">{{ edad }} años</div>
@@ -47,7 +47,7 @@
             <div class="stat-card">
                 <img src="/static/icons/peso.png" alt="Icono" class="stat-icon">
                 <div>
-                    {% if peso is None %}
+                    {% if peso is none %}
                     <div class="stat-number">_________ kg</div>
                     {% else %}
                     <div class="stat-number">{{ peso }} kg</div>
@@ -58,7 +58,7 @@
             <div class="stat-card">
                 <img src="/static/icons/estatura.png" alt="Icono" class="stat-icon">
                 <div>
-                    {% if estatura is None %}
+                    {% if estatura is none %}
                     <div class="stat-number">_________ cm</div>
                     {% else %}
                     <div class="stat-number">{{ estatura }} cm</div>
@@ -75,6 +75,7 @@
             </div>
         </div>
     </div>
+    <div class="modal-overlay" id="modal_overlay"></div>
 
     <div class="modal" id="profile_conf">
         <button class="close-button" aria-label="Cerrar" id="close_profile">
@@ -121,8 +122,14 @@
             <label for="input-box">Estatura</label>
             <input type="text" id="input-box" class="input-box" name="estatura" />
 
-            <label for="input-box">Actividad Física</label>
-            <input type="text" id="input-box" class="input-box" name="actividad" />
+            <label for="actividad">Actividad Física</label>
+            <select id="actividad" class="input-box" name="actividad">
+                <option value="Sedentario">Sedentario</option>
+                <option value="Normal">Normal</option>
+                <option value="Activo">Activo</option>
+                <option value="Muy activo">Muy activo</option>
+                <option value="Deportista Olimpico">Deportista Olímpico</option>
+            </select>
 
             <input type="hidden" name="type_config" value="datos">
 
