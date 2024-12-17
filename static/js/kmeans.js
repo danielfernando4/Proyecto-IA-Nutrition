@@ -2,60 +2,43 @@ document.addEventListener('DOMContentLoaded', function () {
     const postContainer = document.querySelector(".recipe-cards");
     const modalOverlay = document.getElementById("modal_overlay");
     const modalPanel = document.getElementById("recipe_info");
-    const closeModalButton = document.getElementById("close_recipeinf");
-    const abrirAgregar = document.getElementById("abrir_agregar");
-    const cerrarAgregar = document.getElementById("cerrar_plan");
     const panelAgregar = document.getElementById("modal_agregar");
-    const addToPlanButton = document.querySelector(".boton-agregar");
+    const closeModalButton = document.getElementById("close_recipeinf");
+    const cerrarAgregarButton = document.getElementById("cerrar_plan");
+    const confirmarAgregarButton = document.getElementById("confirmar_agregar");
+    let recetaSeleccionada = null;
     let recetas = [];
 
-    
-    const grupo = document.getElementById('grupo').getAttribute('data-grupo');
-    const label = grupo; 
-
-    console.log("Grupo asignado a label:", label); 
-
-    function getFilterStates() {
-        const states = {
-            label: label 
-        };
-        return states;
-    }
-
-    async function sendFilterStates() {
-        const states = getFilterStates();
-        console.log("Enviando JSON al servidor:", states);
+    async function fetchRecetas() {
         try {
+            const grupo = document.getElementById('grupo').getAttribute('data-grupo');
             const response = await fetch('/kmeans', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(states)
+                body: JSON.stringify({ label: grupo })
             });
 
             if (response.ok) {
-                const data = await response.json();
-                recetas = data;
-                updateRecipeCards();
-            } else {
-                console.error('Error en el POST:', response.statusText);
+                recetas = await response.json();
+                renderRecetas();
             }
         } catch (error) {
-            console.error('Error en la solicitud:', error);
+            console.error("Error al cargar recetas:", error);
         }
     }
 
-    function updateRecipeCards() {
+    function renderRecetas() {
         postContainer.innerHTML = "";
-        recetas.forEach((postData) => {
+        recetas.forEach(receta => {
             const card = document.createElement("div");
             card.classList.add("recipe-card");
             card.innerHTML = `
-                <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="recipe-image">
+                <img src="${receta.url_imagen}.jpg" alt="${receta.nombre_comida}" />
                 <div class="recipe-card-content">
-                    <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
-                    <p class="recipe-card-description">${postData.descripcion}</p>
+                    <h3 class="recipe-card-title">${receta.nombre_comida}</h3>
+                    <p class="recipe-card-description">${receta.descripcion}</p>
                 </div>
-                <button class="btn view-recipe" data-index="${postData.id_comida}">Ver receta</button>
+                <button class="btn view-recipe" data-id="${receta.id_comida}">Ver Receta</button>
             `;
             postContainer.appendChild(card);
         });
@@ -63,56 +46,64 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function addModalEventListeners() {
-        const recipeButtons = document.querySelectorAll(".view-recipe");
-        recipeButtons.forEach(button => {
+        document.querySelectorAll(".view-recipe").forEach(button => {
             button.addEventListener("click", () => {
-                const recipeId = button.getAttribute("data-index");
-                const recipeData = recetas.find(post => post.id_comida == recipeId);
-
-                if (recipeData) {
-                    document.querySelector(".recipe-title").innerText = recipeData.nombre_comida;
-                    document.querySelector(".recipe-description").innerText = recipeData.descripcion;
-
-                    const modalImage = document.querySelector(".recipe-image");
-                    modalImage.src = `${recipeData.url_imagen}.jpg`;
-                    modalImage.alt = recipeData.nombre_comida;
-
-                    const ingredientsList = document.querySelector(".ingredients-list");
-                    ingredientsList.innerHTML = recipeData.ingredientes.split(',').map(ing => `<li>${ing.trim()}</li>`).join("");
-
-                    const nutritionList = document.querySelector(".nutrition-list");
-                    nutritionList.innerHTML = `
-                        <li>Calorías: ${recipeData.calorias}</li>
-                        <li>Proteínas: ${recipeData.proteinas}</li>
-                        <li>Carbohidratos: ${recipeData.carbohidratos}</li>
-                        <li>Grasas: ${recipeData.grasas}</li>
-                    `;
-
-                    modalPanel.classList.add("open");
-                    modalOverlay.classList.add("open");
-
-                    abrirAgregar.addEventListener("click", () => {
-                        panelAgregar.classList.add("open");
-                    });
-                }
+                const id = button.getAttribute("data-id");
+                recetaSeleccionada = recetas.find(r => r.id_comida == id);
+                openModal(recetaSeleccionada);
             });
         });
     }
 
+    function openModal(receta) {
+        console.log("Datos de la receta:", receta); 
+    
+        modalPanel.querySelector(".recipe-title").innerText = receta.nombre_comida;
+        modalPanel.querySelector(".recipe-description").innerText = receta.descripcion;
+        modalPanel.querySelector(".modal-recipe-image").src = receta.url_imagen + ".jpg";
+    
+        const ingredientsList = modalPanel.querySelector(".ingredients-list");
+        const ingredientes = receta.ingredientes.split(',');
+        ingredientsList.innerHTML = ingredientes.map(ing => `<li>${ing.trim()}</li>`).join('');
+    
+        const nutritionList = modalPanel.querySelector(".nutrition-list");
+        nutritionList.innerHTML = `
+            <li>Calorías: ${receta.calorias}</li>
+            <li>Proteínas: ${receta.proteinas}</li>
+            <li>Carbohidratos: ${receta.carbohidratos}</li>
+            <li>Grasas: ${receta.grasas}</li>
+        `;
+    
+        modalOverlay.classList.add("open");
+        modalPanel.classList.add("open");
+    
+        const abrirAgregarButton = document.getElementById("abrir_agregar");
+        abrirAgregarButton.addEventListener("click", () => {
+            panelAgregar.classList.add("open");
+        });
+    }
+    
+
     function closeModal() {
-        modalPanel.classList.remove("open");
         modalOverlay.classList.remove("open");
+        modalPanel.classList.remove("open");
         panelAgregar.classList.remove("open");
+        confetti({
+            particleCount: 500, 
+            spread: 170,       
+            origin: { y: 0.6 }  
+        });
     }
 
     closeModalButton.addEventListener("click", closeModal);
     modalOverlay.addEventListener("click", closeModal);
-    cerrarAgregar.addEventListener("click", () => panelAgregar.classList.remove("open"));
+    cerrarAgregarButton.addEventListener("click", closeModal);
 
-    addToPlanButton.addEventListener("click", () => {
-        const diaSeleccionado = document.getElementById("dia").value;
+    // Confirmar agregar al plan - sin POST, solo cierra los overlays
+    confirmarAgregarButton.addEventListener("click", () => {
+        console.log("Receta agregada al plan (sin petición)");
         closeModal();
     });
 
-    sendFilterStates();
+    fetchRecetas();
 });
