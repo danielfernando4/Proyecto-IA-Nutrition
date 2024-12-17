@@ -149,6 +149,7 @@ def config():
         return redirect(url_for("homepage"))
 
 
+# ------------- Calificación de comidas -------------
 @app.route('/rate', methods=['POST'])
 def rate_comida():
     data = request.get_json()
@@ -176,7 +177,7 @@ def rate_comida():
     return jsonify({'message': 'Calificación guardada correctamente'}), 200
 
 
-
+# --------- Obtener datos del Plan---------------------------------------------
 
 @app.route("/get_recipes", methods=["GET"])
 def get_recipes():
