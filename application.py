@@ -145,7 +145,8 @@ def guardar_tarjetas():
             print("LLEGANDO")
             data = request.get_json()
 
-            lunes = data["Lunes"],
+            """
+            lunes = data["id_lunes"],
             martes = data["Martes"],
             miercoles = data["Miércoles"],
             jueves = data["Jueves"],
@@ -159,7 +160,8 @@ def guardar_tarjetas():
 
             for a in comidas:
                 print(a)
-
+            """
+            print(data)
             return jsonify({"status": "ok"})
 
         pass
