@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              nombre_comida: recipeData.nombre_comida,
+              id_comida: recipeData.id_comida,
               dia: diaSeleccionado
             }),
           });

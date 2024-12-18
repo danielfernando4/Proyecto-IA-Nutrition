@@ -21,7 +21,37 @@ app.permanent_session_lifetime = timedelta(minutes=120)
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
-        return render_template("index.html", nombre=session["nombre"], correo=session["correo"])
+        return render_template("index.html", nombre=session["nombre"], correo=session["correo"], edad=session["edad"], 
+                               estatura=session["estatura"], peso=session["peso"], 
+                               nivel_actividad=session["nivel_actividad"])
+    else:
+        return redirect(url_for("homepage"))
+
+
+@app.route("/fistlogin", methods=["POST"])
+def fistlogin():
+    if "correo" in session and "id_usuario" in session:
+        if request.method == "POST":
+            datos = request.get_json()
+            edad = datos.get("edad")
+            estatura = datos.get("estatura")
+            peso = datos.get("peso")
+            nivel_actividad = datos.get("nivel_actividad")
+
+            usuario = Usuario.query.get(session["id_usuario"])
+            usuario.edad = edad
+            usuario.estatura = estatura
+            usuario.peso = peso
+            usuario.nivel_actividad = nivel_actividad
+            session["edad"] = usuario.edad
+            session["estatura"] = usuario.estatura
+            session["peso"] = usuario.peso
+            session["nivel_actividad"] = usuario.nivel_actividad
+            db.session.commit()
+
+            return render_template("fistlogin.html", nombre=session["nombre"], correo=session["correo"])
+
+        return render_template("fistlogin.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
@@ -166,7 +196,9 @@ def config():
                 session["peso"] = usuario.peso  
                 db.session.commit()
             pass 
-        return render_template("config.html", edad=session["edad"], estatura=session['estatura'],  peso=session['peso'], actividad=session['nivel_actividad'], nombre=session["nombre"], correo=session["correo"], nombre_config=session["nombre"], correo_config=session["correo"])
+        return render_template("config.html", edad=session["edad"], estatura=session['estatura'],  peso=session['peso'], 
+                               actividad=session['nivel_actividad'], nombre=session["nombre"], 
+                               correo=session["correo"], nombre_config=session["nombre"], correo_config=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
@@ -362,9 +394,9 @@ def kmeans():
 @app.route("/cambio_receta", methods=["POST"])
 def cambio_receta():
     respuesta = request.get_json()
-    nombre_comida = respuesta.get("nombre_comida")
+    id_comida = respuesta.get("id_comida")
     dia = respuesta.get("dia")
-    print(nombre_comida)
+    print(id_comida)
     print(dia)
     
     return jsonify({"status": "ok"})
@@ -375,7 +407,7 @@ def cambio_receta():
 @app.route("/para_ti")
 def para_ti():
     if "correo" in session and "id_usuario" in session:
-        return render_template("para_ti.html")
+        return render_template("para_ti.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
