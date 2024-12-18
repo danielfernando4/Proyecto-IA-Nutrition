@@ -145,8 +145,8 @@ def guardar_tarjetas():
             print("LLEGANDO")
             data = request.get_json()
 
-            """
-            lunes = data["id_lunes"],
+         
+            lunes = data["Lunes"],
             martes = data["Martes"],
             miercoles = data["Miércoles"],
             jueves = data["Jueves"],
@@ -154,13 +154,17 @@ def guardar_tarjetas():
             sabado = data["Sábado"],
             domingo = data["Domingo"]
 
-            comidas = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
-
             plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
 
-            for a in comidas:
-                print(a)
-            """
+            plan_nutricional.comida_lunes = lunes
+            plan_nutricional.comida_martes = martes
+            plan_nutricional.comida_miercoles = miercoles
+            plan_nutricional.comida_jueves = jueves
+            plan_nutricional.comida_viernes = viernes
+            plan_nutricional.comida_sabado = sabado 
+            plan_nutricional.comida_domingo = domingo
+            
+            db.session.commit()
             print(data)
             return jsonify({"status": "ok"})
 
