@@ -144,6 +144,7 @@ def guardar_tarjetas():
         if request.method == "POST": 
             print("LLEGANDO")
             data = request.get_json()
+            print(data)
 
          
             lunes = data["Lunes"],
