@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const postContainer = document.querySelector(".recipe-cards");
 
-  const tarjetasRenderizadas = {};
+  const tarjetasRenderizadas = {}; // Este será el JSON estructurado
   const diasSemana = [
     "Lunes",
     "Martes",
@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Respuesta del servidor:", data);
 
         const recetas = data.map((comida) => ({
+          id_comida: comida.id_comida || "No disponible",
           nombre_comida: comida.nombre_comida || "No disponible",
           url_imagen: comida.url_imagen || "No disponible",
           calorias: comida.calorias || 0,
@@ -57,25 +58,27 @@ document.addEventListener("DOMContentLoaded", () => {
     recetas.forEach((postData) => {
       const card = document.createElement("div");
       card.classList.add("recipe-card", "bounce-in-top");
-
+    
       card.innerHTML = `
         <div class="recipe-card-content">
-          <img src="${postData.url_imagen}.jpg" alt="${
-        postData.nombre_comida
-      }" class="recipe-card-image" />
+          <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="recipe-card-image" />
           <h3 class="recipe-card-title">${postData.nombre_comida}</h3>
           <p class="recipe-card-description">Calorías: ${postData.calorias.toFixed(
             2
           )} | Proteínas: ${postData.proteinas}</p>
         </div>
       `;
-
+    
       postContainer.appendChild(card);
-
-      
+    
+      // Asignar receta al día de la semana correspondiente
       const diaAsignado = diasSemana[recetaIndex % diasSemana.length];
+    
+      // Asignar directamente el id_comida al día
       tarjetasRenderizadas[diaAsignado] = postData.id_comida;
-      recetaIndex++; 
+    
+      recetaIndex++;
+      console.log(`Día asignado: ${diaAsignado}, Receta: ${postData.id_comida}`);
     });
 
     const buttonContainer = document.createElement("div");
