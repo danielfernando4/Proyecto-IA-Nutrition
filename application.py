@@ -359,6 +359,17 @@ def kmeans():
         return redirect(url_for("homepage"))
 
 
+@app.route("/cambio_receta", methods=["POST"])
+def cambio_receta():
+    respuesta = request.get_json()
+    nombre_comida = respuesta.get("nombre_comida")
+    dia = respuesta.get("dia")
+    print(nombre_comida)
+    print(dia)
+    
+    return jsonify({"status": "ok"})
+    
+    
 
 
 @app.route("/para_ti")

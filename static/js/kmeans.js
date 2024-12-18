@@ -56,16 +56,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function openModal(receta) {
-        console.log("Datos de la receta:", receta); 
-    
+        console.log("Datos de la receta:", receta);
+
         modalPanel.querySelector(".recipe-title").innerText = receta.nombre_comida;
         modalPanel.querySelector(".recipe-description").innerText = receta.descripcion;
         modalPanel.querySelector(".modal-recipe-image").src = receta.url_imagen + ".jpg";
-    
+
         const ingredientsList = modalPanel.querySelector(".ingredients-list");
         const ingredientes = receta.ingredientes.split(',');
         ingredientsList.innerHTML = ingredientes.map(ing => `<li>${ing.trim()}</li>`).join('');
-    
+
         const nutritionList = modalPanel.querySelector(".nutrition-list");
         nutritionList.innerHTML = `
             <li>Calorías: ${receta.calorias}</li>
@@ -73,37 +73,68 @@ document.addEventListener('DOMContentLoaded', function () {
             <li>Carbohidratos: ${receta.carbohidratos}</li>
             <li>Grasas: ${receta.grasas}</li>
         `;
-    
+
         modalOverlay.classList.add("open");
         modalPanel.classList.add("open");
-    
+
         const abrirAgregarButton = document.getElementById("abrir_agregar");
         abrirAgregarButton.addEventListener("click", () => {
             panelAgregar.classList.add("open");
         });
     }
-    
+
 
     function closeModal() {
         modalOverlay.classList.remove("open");
         modalPanel.classList.remove("open");
         panelAgregar.classList.remove("open");
         confetti({
-            particleCount: 500, 
-            spread: 170,       
-            origin: { y: 0.6 }  
+            particleCount: 500,
+            spread: 170,
+            origin: { y: 0.6 }
         });
+
     }
 
-    closeModalButton.addEventListener("click", closeModal);
-    modalOverlay.addEventListener("click", closeModal);
-    cerrarAgregarButton.addEventListener("click", closeModal);
+    closeModalButton.addEventListener("click", cerrarInfo);
+    cerrarAgregarButton.addEventListener("click", cerrarModalAgregar);
 
-    // Confirmar agregar al plan - sin POST, solo cierra los overlays
-    confirmarAgregarButton.addEventListener("click", () => {
-        console.log("Receta agregada al plan (sin petición)");
-        closeModal();
+    function cerrarInfo() {
+        modalOverlay.classList.remove("open");
+        modalPanel.classList.remove("open");
+    }
+    function cerrarModalAgregar() {
+        panelAgregar.classList.remove("open");
+    }
+
+    confirmarAgregarButton.addEventListener("click", async () => {
+        const diaSeleccionado = document.getElementById("dia").value;
+    
+        if (recetaSeleccionada && diaSeleccionado) {
+            try {
+                const response = await fetch('/cambio_receta', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre_comida: recetaSeleccionada.nombre_comida,
+                        dia: diaSeleccionado
+                    })
+                });
+    
+                if (response.ok) {
+                    console.log("Receta agregada correctamente al plan.");
+                    closeModal();
+                } else {
+                    console.error("Error al agregar la receta:", await response.text());
+                }
+            } catch (error) {
+                console.error("Error en la petición POST:", error);
+            }
+        } else {
+            console.error("Faltan datos: nombre de la receta o día seleccionado.");
+        }
     });
+    
 
     fetchRecetas();
 });

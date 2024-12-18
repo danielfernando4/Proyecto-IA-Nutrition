@@ -10,14 +10,13 @@
     </div>
 
     <div class="contenidokmeans">
-        <span>En este apartado encontrarás recetas según el grupo alimenticio al que te hemos asignado. ¡Esperamos que
-            te gusten! Lo mejor de todo es que se acoplan a tus necesidades nutricionales.</span>
-        <span>¡Buen provecho!</span>
+        <span>Recibe recetas adaptadas específicamente a tus necesidades calóricas y objetivos nutricionales.</span>
     </div>
 
     <div class="header2">
         <h1 class="headercontent2">Recetas según tu grupo</h1>
-        <span>Su grupo es <span id="grupo" data-grupo="{{grupo}}">{{grupo}}</span>
+        <div id="grupocal">Deja de preocuparte por qué comer. Nuestra IA selecciona opciones ideales para ti.</div>
+        <span id="grupo" data-grupo="{{grupo}}">
 
         </span>
     </div>
@@ -61,29 +60,29 @@
                 <h2>Agregar al plan</h2>
                 <span class="cerrar-modal" id="cerrar_plan">&times;</span>
             </div>
-    
+
             <div class="contenido">
                 <p>Seleccione el día al que desea agregar esta receta</p>
                 <div class="seleccion-dia">
                     <label for="dia">Día:</label>
                     <select id="dia">
-                        <option value="lunes">Lunes</option>
-                        <option value="martes">Martes</option>
-                        <option value="miercoles">Miércoles</option>
-                        <option value="jueves">Jueves</option>
-                        <option value="viernes">Viernes</option>
-                        <option value="sabado">Sábado</option>
-                        <option value="domingo">Domingo</option>
+                        <option value="comida_lunes">Lunes</option>
+                        <option value="comida_martes">Martes</option>
+                        <option value="comida_miercoles">Miércoles</option>
+                        <option value="comida_jueves">Jueves</option>
+                        <option value="comida_viernes">Viernes</option>
+                        <option value="comida_sabado">Sábado</option>
+                        <option value="comida_domingo">Domingo</option>
                     </select>
                 </div>
             </div>
-    
+
             <div class="pie">
                 <button class="boton-agregar" id="confirmar_agregar">Agregar</button>
             </div>
         </div>
     </div>
-    
+
 
 
 
