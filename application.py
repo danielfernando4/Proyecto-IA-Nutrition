@@ -155,8 +155,10 @@ def guardar_tarjetas():
 
             comidas = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
 
-            for comida in comidas:
-                pass
+            plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
+
+            for a in comidas:
+                print(a)
 
             return jsonify({"status": "ok"})
 
