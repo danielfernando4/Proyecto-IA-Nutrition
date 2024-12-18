@@ -232,44 +232,42 @@ def rate_comida():
     calificacion_existente = Calificaciones.query.filter_by(id_comida=id_comida, id_usuario=id_usuario).first()
 
     if calificacion_existente:
-        calificacion_existente.calificacion = calificacion
-    else:
-        nueva_calificacion = Calificaciones(
-            id_comida=id_comida,
-            calificacion=calificacion,
-            id_usuario=id_usuario
-        )
-        db.session.add(nueva_calificacion)
+        db.session.delete(calificacion_existente)
 
+    nueva_calificacion = Calificaciones(
+        id_comida=id_comida,
+        calificacion=calificacion,
+        id_usuario=id_usuario
+    )
+    db.session.add(nueva_calificacion)
     db.session.commit()
 
     return jsonify({'message': 'Calificación guardada correctamente'}), 200
 
-@app.route('/ratings', methods=['GET'])
-def get_ratings():
+@app.route('/get_rating/<int:id_comida>', methods=['GET'])
+def get_rating(id_comida):
     id_usuario = session.get("id_usuario")
     if not id_usuario:
         return jsonify({'message': 'Usuario no autenticado'}), 403
 
-    calificaciones = Calificaciones.query.filter_by(id_usuario=id_usuario).all()
-    return jsonify([{
-        "id_comida": c.id_comida,
-        "calificacion": c.calificacion
-    } for c in calificaciones])
-
+    calificacion_existente = Calificaciones.query.filter_by(id_comida=id_comida, id_usuario=id_usuario).first()
+    if calificacion_existente:
+        return jsonify({'calificacion': calificacion_existente.calificacion}), 200
+    else:
+        return jsonify({'calificacion': None}), 200
 
 import json
 # --------- Obtener datos del Plan---------------------------------------------
-
 @app.route("/get_recipes", methods=["GET"])
 def get_recipes():
     if "correo" in session and "id_usuario" in session:
         id_plan = session.get("id_plan")
-        print(f"ID de plan en la sesión: {id_plan}")  # Añade esto para verificar el valor
         if not id_plan:
             return jsonify({"error": "ID de plan no encontrado en la sesión"}), 400
+
         plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
 
+        # Obtener comidas para cada día de la semana
         comida_lunes = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_lunes).first()
         comida_martes = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_martes).first()
         comida_miercoles = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_miercoles).first()
@@ -278,23 +276,14 @@ def get_recipes():
         comida_sabado = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_sabado).first()
         comida_domingo = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_domingo).first()
 
-        calif_lunes = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_lunes).first()
-        calif_martes = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_martes).first()
-        calif_miercoles = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_miercoles).first()
-        calif_jueves = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_jueves).first()
-        calif_viernes = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_viernes).first()
-        calif_sabado = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_sabado).first()
-        calif_domingo = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_domingo).first()
-
-        """
-        comidas.append(comida_lunes)
-        comidas.append(comida_martes)
-        comidas.append(comida_miercoles)
-        comidas.append(comida_jueves)
-        comidas.append(comida_viernes)
-        comidas.append(comida_sabado)
-        comidas.append(comida_domingo)
-        """
+        # Obtener calificaciones para cada comida
+        calif_lunes = Calificaciones.query.filter_by(id_usuario=session["id_usuario"], id_comida=plan_nutricional.comida_lunes).first()
+        calif_martes = Calificaciones.query.filter_by(id_usuario=session["id_usuario"], id_comida=plan_nutricional.comida_martes).first()
+        calif_miercoles = Calificaciones.query.filter_by(id_usuario=session["id_usuario"], id_comida=plan_nutricional.comida_miercoles).first()
+        calif_jueves = Calificaciones.query.filter_by(id_usuario=session["id_usuario"], id_comida=plan_nutricional.comida_jueves).first()
+        calif_viernes = Calificaciones.query.filter_by(id_usuario=session["id_usuario"], id_comida=plan_nutricional.comida_viernes).first()
+        calif_sabado = Calificaciones.query.filter_by(id_usuario=session["id_usuario"], id_comida=plan_nutricional.comida_sabado).first()
+        calif_domingo = Calificaciones.query.filter_by(id_usuario=session["id_usuario"], id_comida=plan_nutricional.comida_domingo).first()
 
         json_comidas = {
             "lunes": {
@@ -327,7 +316,6 @@ def get_recipes():
             }
         }
 
-        print(json.dumps(json_comidas, indent=4))
         return jsonify(json_comidas)
 
     else:

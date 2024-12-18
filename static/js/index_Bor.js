@@ -1,37 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
     const postContainer = document.querySelector(".plan-thumbnails");
-    const messageContainer = document.getElementById("rating-message");
 
-    // Función para cargar calificaciones existentes
-    const loadRatings = () => {
-        fetch("/ratings", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-        })
-            .then((response) => response.json())
-            .then((ratings) => {
-                ratings.forEach((rating) => {
-                    const ratingElement = document.querySelector(
-                        `.rating[data-id-comida="${rating.id_comida}"]`
-                    );
-                    if (ratingElement) {
-                        ratingElement.value = rating.calificacion; // Asigna la calificación en el elemento
-                    }
-                });
-            })
-            .catch((error) => console.error("Error al cargar calificaciones:", error));
-    };
-
-    // Función para enviar calificaciones
+    
     const sendRating = (id_comida, calificacion) => {
         const ratingData = { id_comida: id_comida, calificacion: calificacion };
-
+    
         fetch("/rate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(ratingData),
         })
             .then((response) => {
+                const messageContainer = document.getElementById("rating-message");
                 if (response.ok) {
                     messageContainer.textContent = "Calificación enviada exitosamente";
                     messageContainer.style.color = "green";
@@ -49,17 +29,35 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     };
 
-    // Añadir eventos a los controles de calificación
-    document.querySelectorAll(".rating").forEach((ratingElement) => {
-        ratingElement.addEventListener("change", (event) => {
-            const id_comida = ratingElement.dataset.idComida;
-            const calificacion = event.target.value;
-            sendRating(id_comida, calificacion);
-        });
+    const getRating = (id_comida) => {
+        fetch(`/get_rating/${id_comida}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.calificacion !== null) {
+                    const ratingElement = document.getElementById(`rating-${id_comida}`);
+                    if (ratingElement) {
+                        ratingElement.value = data.calificacion;
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    };
+
+    // Llamar a getRating para cada plato cuando la página carga
+    const foodItems = document.querySelectorAll(".food-item");
+    foodItems.forEach(item => {
+        const id_comida = item.dataset.id;
+        getRating(id_comida);
     });
 
-    // Cargar calificaciones al cargar la página
-    loadRatings();
+    // Manejar el evento de calificación
+    postContainer.addEventListener("click", function (event) {
+        if (event.target.matches(".rating-button")) {
+            const id_comida = event.target.dataset.id;
+            const calificacion = document.getElementById(`rating-${id_comida}`).value;
+            sendRating(id_comida, calificacion);
+        }
+    });
 
     // Función para mostrar los detalles del plato
     const mostrarDetalles = (plato) => {
@@ -104,7 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch("/get_recipes")
             .then((response) => response.json())
             .then((recetas) => {
-                Object.keys(recetas).forEach((dia) => {
+                const order = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
+                order.forEach((dia) => {
                     const data = recetas[dia];
                     const postData = data.comida;
 
@@ -169,3 +168,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
