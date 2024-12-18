@@ -1,12 +1,7 @@
 #app main
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
-<<<<<<< HEAD
 from basemodels import Calificaciones, Comida, PlanNutricional, Usuario, db
-=======
-from basemodels import Comida, PlanNutricional, Usuario, db, Calificaciones
->>>>>>> 07cd23ed2a3e9a38ab9b1c1f218c97a0ecb42573
-
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -295,12 +290,6 @@ def get_recipes():
             return jsonify(recetas)
         return redirect(url_for("homepage"))
 
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 07cd23ed2a3e9a38ab9b1c1f218c97a0ecb42573
 @app.route("/descubre", methods=["GET", "POST"])
 def descubre():
     if "correo" in session and "id_usuario" in session:
