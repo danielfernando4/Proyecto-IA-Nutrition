@@ -242,18 +242,16 @@ def rate_comida():
     db.session.commit()
     return jsonify({'message': 'Calificación guardada correctamente'}), 200
 
-
-
-
-
 import json
-
-
 # --------- Obtener datos del Plan---------------------------------------------
 
 @app.route("/get_recipes", methods=["GET"])
 def get_recipes():
     if "correo" in session and "id_usuario" in session:
+        id_plan = session.get("id_plan")
+        print(f"ID de plan en la sesión: {id_plan}")  # Añade esto para verificar el valor
+        if not id_plan:
+            return jsonify({"error": "ID de plan no encontrado en la sesión"}), 400
         plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
 
         comida_lunes = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_lunes).first()
