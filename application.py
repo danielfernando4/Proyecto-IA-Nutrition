@@ -1,8 +1,7 @@
 #app main
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
-from basemodels import Comida, PlanNutricional, Usuario, db, Calificaciones
-
+from basemodels import Calificaciones, Comida, PlanNutricional, Usuario, db
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -99,10 +98,6 @@ def loginRegister():
     return render_template("loginRegister.html")
 
 
-
-
-
-
 @app.route("/generation", methods=["GET", "POST"])
 def generation():
     if "correo" in session and "id_usuario" in session:
@@ -146,8 +141,8 @@ def guardar_tarjetas():
             data = request.get_json()
             print(data)
 
-            """
-            lunes = data["id_lunes"],
+         
+            lunes = data["Lunes"],
             martes = data["Martes"],
             miercoles = data["Miércoles"],
             jueves = data["Jueves"],
@@ -155,13 +150,17 @@ def guardar_tarjetas():
             sabado = data["Sábado"],
             domingo = data["Domingo"]
 
-            comidas = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
-
             plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
 
-            for a in comidas:
-                print(a)
-            """
+            plan_nutricional.comida_lunes = lunes
+            plan_nutricional.comida_martes = martes
+            plan_nutricional.comida_miercoles = miercoles
+            plan_nutricional.comida_jueves = jueves
+            plan_nutricional.comida_viernes = viernes
+            plan_nutricional.comida_sabado = sabado 
+            plan_nutricional.comida_domingo = domingo
+            
+            db.session.commit()
             print(data)
             return jsonify({"status": "ok"})
 
@@ -213,6 +212,9 @@ def config():
         return redirect(url_for("homepage"))
 
 
+
+# ------------- Calificación de comidas -------------
+
 @app.route('/rate', methods=['POST'])
 def rate_comida():
     data = request.get_json()
@@ -224,82 +226,100 @@ def rate_comida():
     if not id_comida or not calificacion:
         return jsonify({'message': 'Datos incompletos'}), 400
     
-    plan_nutricional = PlanNutricional.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
-    if plan_nutricional:
-        plan_nutricional.calificacion = calificacion
+    # Verificar si ya existe una calificación para el usuario y la comida especificada
+    calificacion_existente = Calificaciones.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
+    
+    if calificacion_existente:
+        calificacion_existente.calificacion = calificacion
     else:
-        nueva_calificacion = PlanNutricional(
+        # Crear una nueva calificación
+        nueva_calificacion = Calificaciones(
             id_comida=id_comida,
             calificacion=calificacion,
-            id_usuario=session.get("id_usuario"),
-            dia_comida="algún_día"
+            id_usuario=session.get("id_usuario")
         )
         db.session.add(nueva_calificacion)
     db.session.commit()
-    
     return jsonify({'message': 'Calificación guardada correctamente'}), 200
 
 
 
 
 
+import json
+
+
+# --------- Obtener datos del Plan---------------------------------------------
 
 @app.route("/get_recipes", methods=["GET"])
 def get_recipes():
     if "correo" in session and "id_usuario" in session:
-        id_usuario = session["id_usuario"]
+        plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
 
-        # Consultar los planes nutricionales del usuario con sus comidas asociadas
-        planes = (
-            PlanNutricional.query
-            .filter_by(id_usuario=id_usuario)
-            .join(Comida, PlanNutricional.id_comida == Comida.id_comida)
-            .add_columns(
-                PlanNutricional.dia_comida,
-                PlanNutricional.calificacion,
-                Comida.id_comida,
-                Comida.nombre_comida,
-                Comida.calorias,
-                Comida.proteinas,
-                Comida.carbohidratos,
-                Comida.grasas,
-                Comida.ingredientes,
-                Comida.tipo_comida,
-                Comida.grupo,
-                Comida.url_imagen,
-                Comida.descripcion
-            )
-            .limit(7)  # Limitar a 7 registros
-            .all()
-        )
+        comida_lunes = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_lunes).first()
+        comida_martes = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_martes).first()
+        comida_miercoles = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_miercoles).first()
+        comida_jueves = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_jueves).first()
+        comida_viernes = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_viernes).first()
+        comida_sabado = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_sabado).first()
+        comida_domingo = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_domingo).first()
 
-        # Preparar la respuesta
-        recetas = []
-        for plan in planes:
-            receta = {
-                "dia": plan.dia_comida,
-                "calificacion": plan.calificacion,
-                "id_comida": plan.id_comida,
-                "nombre_comida": plan.nombre_comida,
-                "calorias": plan.calorias,
-                "proteinas": plan.proteinas,
-                "carbohidratos": plan.carbohidratos,
-                "grasas": plan.grasas,
-                "ingredientes": plan.ingredientes.split(",") if plan.ingredientes else [],
-                "tipo_comida": plan.tipo_comida,
-                "grupo": plan.grupo,
-                "url_imagen": plan.url_imagen,
-                "descripcion": plan.descripcion
+        calif_lunes = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_lunes).first()
+        calif_martes = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_martes).first()
+        calif_miercoles = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_miercoles).first()
+        calif_jueves = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_jueves).first()
+        calif_viernes = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_viernes).first()
+        calif_sabado = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_sabado).first()
+        calif_domingo = Calificaciones.query.filter(Calificaciones.id_usuario == session["id_usuario"] and Calificaciones.id_comida == plan_nutricional.comida_domingo).first()
+
+        """
+        comidas.append(comida_lunes)
+        comidas.append(comida_martes)
+        comidas.append(comida_miercoles)
+        comidas.append(comida_jueves)
+        comidas.append(comida_viernes)
+        comidas.append(comida_sabado)
+        comidas.append(comida_domingo)
+        """
+
+        json_comidas = {
+            "lunes": {
+                "comida": comida_lunes.to_dict(),
+                "calificacion": calif_lunes.calificacion if calif_lunes else None
+            },
+            "martes": {
+                "comida": comida_martes.to_dict(),
+                "calificacion": calif_martes.calificacion if calif_martes else None
+            },
+            "miercoles": {
+                "comida": comida_miercoles.to_dict(),
+                "calificacion": calif_miercoles.calificacion if calif_miercoles else None
+            },
+            "jueves": {
+                "comida": comida_jueves.to_dict(),
+                "calificacion": calif_jueves.calificacion if calif_jueves else None
+            },
+            "viernes": {
+                "comida": comida_viernes.to_dict(),
+                "calificacion": calif_viernes.calificacion if calif_viernes else None
+            },
+            "sabado": {
+                "comida": comida_sabado.to_dict(),
+                "calificacion": calif_sabado.calificacion if calif_sabado else None
+            },
+            "domingo": {
+                "comida": comida_domingo.to_dict(),
+                "calificacion": calif_domingo.calificacion if calif_domingo else None
             }
-            recetas.append(receta)
+        }
 
-        return jsonify(recetas)
+        print(json.dumps(json_comidas, indent=4))
+        return jsonify(json_comidas)
 
     else:
         return redirect(url_for("homepage"))
 
-
-
+        
 
 @app.route("/descubre", methods=["GET", "POST"])
 def descubre():
