@@ -72,10 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       postContainer.appendChild(card);
 
-      // Asignar la receta al día de la semana
+      
       const diaAsignado = diasSemana[recetaIndex % diasSemana.length];
-      tarjetasRenderizadas[diaAsignado] = postData.nombre_comida;
-      recetaIndex++; // Incrementar índice para el siguiente día
+      tarjetasRenderizadas[diaAsignado] = postData.id_comida;
+      recetaIndex++; 
     });
 
     const buttonContainer = document.createElement("div");
