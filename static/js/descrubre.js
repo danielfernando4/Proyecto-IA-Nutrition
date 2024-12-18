@@ -160,7 +160,6 @@ document.addEventListener("DOMContentLoaded", function () {
     addModalEventListeners();
   }
 
-  /** Eventos para el modal */
   function addModalEventListeners() {
     const recipeButtons = document.querySelectorAll(".view-recipe");
     recipeButtons.forEach((button) => {
@@ -256,7 +255,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function cerrarModalesYConfetti() {
     modalPanel.classList.remove("open");
     modalOverlay.classList.remove("open");
-
     panelAgregar.classList.remove("open");
 
     confetti({
