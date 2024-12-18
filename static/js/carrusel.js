@@ -6,8 +6,9 @@ const cargarRecetasEnSwiper = async (endpoint) => {
   try {
     const response = await fetch(endpoint); // Llamada al endpoint
     if (!response.ok) throw new Error("Error al cargar los datos");
-    const recetas = await response.json(); // Parsear la respuesta como JSON
 
+    const recetas = await response.json(); // Parsear la respuesta como JSON
+    console.log("Si entro");
     // Limpiar el contenedor Swiper antes de cargar nuevas tarjetas
     swiperWrapper.innerHTML = "";
 
@@ -43,7 +44,7 @@ const cargarRecetasEnSwiper = async (endpoint) => {
 
 // Función para inicializar Swiper
 const inicializarSwiper = () => {
-  new Swiper(".mySwiper", {
+  new Swiper(".swiper-container", {
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
