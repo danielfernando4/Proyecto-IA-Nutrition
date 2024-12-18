@@ -12,15 +12,15 @@ body {
 .plan-container::before {
   content: "";
   position: absolute;
-  top: -18px; 
-  left: -600px; 
+  top: -18px;
+  left: -600px;
   background-image: linear-gradient(78deg, #ffffffd3 0%, #ffffffcc 100%), url(../icons/fruitsPlan.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   clip-path: polygon(100% 0, 100% 17%, 61% 14%, 14.7% 17%, 14.7% 0);
   z-index: -1;
-  width: 1900px; 
-  height: 800px; 
+  width: 1900px;
+  height: 800px;
 }
 
 .plan-title {
@@ -51,7 +51,7 @@ body {
 .plan-details {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-areas: 
+  grid-template-areas:
     "day-box day-box day-box"
     "properties image ingredients";
   gap: 20px;
@@ -60,10 +60,10 @@ body {
   background-color: #8cf3ca68;
   border: 5px solid #6ac577e1;
   width: 100%;
-  max-width: 1200px; 
-  height: 500px; 
-  box-sizing: border-box; 
-  padding: 20px; 
+  max-width: 1200px;
+  height: 500px;
+  box-sizing: border-box;
+  padding: 20px;
   border-radius: 10px;
 }
 
@@ -76,21 +76,21 @@ body {
 .plan-day {
   position: absolute;
   top: 25px;
-  right: 10px;      
+  right: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
 .day-box {
-  padding: 15px; 
-  background-color: #e0f7fa; 
-  border: 2px solid #00796b; 
-  border-radius: 8px; 
+  padding: 15px;
+  background-color: #e0f7fa;
+  border: 2px solid #00796b;
+  border-radius: 8px;
   font-weight: bold;
-  font-size: 25px; 
-  color: #004d40; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  font-size: 25px;
+  color: #004d40;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .plan-properties {
@@ -105,11 +105,13 @@ body {
 .plan-properties ul {
   margin: 0;
   padding: 0;
-  list-style-type: none;  /* Eliminar viñetas */
+  list-style-type: none;
+  /* Eliminar viñetas */
 }
 
 .plan-properties li {
-  margin-bottom: 10px;  /* Ajustar el espaciado inferior */
+  margin-bottom: 10px;
+  /* Ajustar el espaciado inferior */
   color: #555;
 }
 
@@ -135,7 +137,7 @@ body {
 
 .plan-image img {
   max-width: 80%;
-  height: auto; 
+  height: auto;
   border-radius: 8px;
 }
 
@@ -156,9 +158,9 @@ body {
   position: relative;
   grid-area: ingredients;
   margin: 10px;
-  text-align: right; 
-  align-self: center; 
-  padding: 10px; 
+  text-align: right;
+  align-self: center;
+  padding: 10px;
   border-radius: 8px;
   list-style-position: inside;
 }
@@ -166,11 +168,13 @@ body {
 .plan-ingredients ul {
   margin: 0;
   padding: 0;
-  list-style-type: none;  /* Eliminar viñetas */
+  list-style-type: none;
+  /* Eliminar viñetas */
 }
 
 .plan-ingredients li {
-  margin-bottom: 10px;  /* Ajustar el espaciado inferior */
+  margin-bottom: 10px;
+  /* Ajustar el espaciado inferior */
   color: #555;
 }
 
@@ -204,7 +208,7 @@ body {
 }
 
 .thumbnail img {
-  height: 200px; 
+  height: 200px;
   object-fit: cover;
 }
 
@@ -262,36 +266,36 @@ body {
   gap: 5px;
 }
 
-.rating:not(:checked) > input {
+.rating:not(:checked)>input {
   position: absolute;
   appearance: none;
 }
 
-.rating:not(:checked) > label {
+.rating:not(:checked)>label {
   float: left;
   cursor: pointer;
   font-size: 30px;
   color: #666;
 }
 
-.rating:not(:checked) > label:before {
+.rating:not(:checked)>label:before {
   content: "★";
 }
 
-.rating > input:checked + label:hover,
-.rating > input:checked + label:hover ~ label,
-.rating > input:checked ~ label:hover,
-.rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
+.rating>input:checked+label:hover,
+.rating>input:checked+label:hover~label,
+.rating>input:checked~label:hover,
+.rating>input:checked~label:hover~label,
+.rating>label:hover~input:checked~label {
   color: #e58e09;
 }
 
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
+.rating:not(:checked)>label:hover,
+.rating:not(:checked)>label:hover~label {
   color: #ff9e0b;
 }
 
-.rating > input:checked ~ label {
+.rating>input:checked~label {
   color: #ffa723;
 }
 
@@ -325,18 +329,19 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  flex-direction: column; /* Coloca elementos en columna */
+  flex-direction: column;
+  /* Coloca elementos en columna */
   background-color: #fff;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   opacity: 0;
   z-index: -1;
-  width: 90%; 
-  max-width: 750px;  
-  max-height: 90%;  
+  width: 90%;
+  max-width: 750px;
+  max-height: 90%;
   height: 550px;
-  overflow-y: auto; 
+  overflow-y: auto;
   transition: opacity 0.2s ease, z-index 0.2s ease;
   border: 0.1px solid #2ecc71;
 }
@@ -380,18 +385,18 @@ body {
 /* Detalles del Pop-up */
 .recipe_info h2 {
   position: absolute;
-  font-size: 35px;  
+  font-size: 35px;
   font-weight: bold;
   color: #333;
   margin-bottom: 5px;
-  white-space: nowrap;  
-top: 0;
+  white-space: nowrap;
+  top: 0;
   left: 35%;
   transform: translateX(-50%);
 }
 
 .title-icon2 {
-  width: 28px;  
+  width: 28px;
   height: 28px;
   margin-right: 5px;
 }
@@ -399,30 +404,31 @@ top: 0;
 .plan-day {
   position: absolute;
   top: 15px;
-  right: 10px;      
+  right: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
 .day-box {
-  padding: 10px; 
-  background-color: #e0f7fa; 
-  border: 2px solid #00796b; 
-  border-radius: 8px; 
+  padding: 10px;
+  background-color: #e0f7fa;
+  border: 2px solid #00796b;
+  border-radius: 8px;
   font-weight: bold;
-  font-size: 25px; 
-  color: #004d40; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  font-size: 25px;
+  color: #004d40;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .plan-properties {
   position: relative;
-  left: 10px ;
+  left: 10px;
   top: 85px;
   margin: 10px;
   /* Añade esto para cambiar posición horizontalmente */
-  order: 2; /* Cambia el número para reordenar */
+  order: 2;
+  /* Cambia el número para reordenar */
   width: 150px;
 }
 
@@ -433,21 +439,26 @@ top: 0;
   align-items: center;
   justify-content: center;
   /* Añade esto para cambiar posición horizontalmente */
-  order: 2; /* Cambia el número para reordenar */
+  order: 2;
+  /* Cambia el número para reordenar */
   top: 60px;
 }
 
 .plan-image img {
   max-width: 100%;
-  height: auto; 
+  height: auto;
   border-radius: 8px;
 }
 
 .image-description {
-  position: relative; /* Cambia a relative si estaba absolute */
-  margin-top: 10px; /* Añade un pequeño margen superior */
-  background-color: transparent; /* Quita el fondo */
-  padding: 0; /* Elimina el padding */
+  position: relative;
+  /* Cambia a relative si estaba absolute */
+  margin-top: 10px;
+  /* Añade un pequeño margen superior */
+  background-color: transparent;
+  /* Quita el fondo */
+  padding: 0;
+  /* Elimina el padding */
   font-size: 20px;
   text-align: center;
   top: -5px;
@@ -458,14 +469,15 @@ top: 0;
 .plan-ingredients {
   position: relative;
   margin: 10px;
-  text-align: right; 
-  align-self: center; 
-  padding: 10px; 
+  text-align: right;
+  align-self: center;
+  padding: 10px;
   border-radius: 8px;
   list-style-position: inside;
   /* Añade esto para cambiar posición horizontalmente */
-  order: 3; /* Cambia el número para reordenar */
-  left: -20px; 
+  order: 3;
+  /* Cambia el número para reordenar */
+  left: -20px;
 }
 
 .plan-ingredients ul {
@@ -480,18 +492,128 @@ top: 0;
 }
 
 .plan-description {
-  
+
   margin-top: 10px;
   font-size: 16px;
   color: #0b0e0d;
-  background-color: transparent; /* Quita el fondo */
+  background-color: transparent;
+  /* Quita el fondo */
   border-color: transparent;
-  padding: 0; /* Elimina el padding */
+  padding: 0;
+  /* Elimina el padding */
   /* Añade esto para cambiar posición horizontalmente */
-  order: 4; /* Cambia el número para reordenar */
+  order: 4;
+  /* Cambia el número para reordenar */
   position: absolute;
   left: 50px;
   top: 70px;
   width: 620px;
   padding-left: 15px;
+}
+
+
+.user-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease, z-index 0.3s ease;
+}
+
+.user-modal-overlay.open {
+  opacity: 1;
+  z-index: 999;
+}
+
+.user-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  z-index: -1;
+  width: 90%;
+  max-width: 450px;
+  transition: opacity 0.3s ease, z-index 0.3s ease;
+}
+
+.user-modal.open {
+  opacity: 1;
+  z-index: 1000;
+}
+
+.user-close-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.user-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.user-close-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.user-mod-desc {
+  font-size: 14px;
+  color: #555;
+  margin: 10px 0 20px;
+}
+
+.user-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.user-input-box {
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.user-input-box:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.user-update-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  align-self: flex-end;
+}
+
+.user-update-button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
 }
