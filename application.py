@@ -177,8 +177,6 @@ def config():
 
             if tipo_conf == "perfil":
                 usuario = Usuario.query.get(session["id_usuario"])  
-                #if not usuario:
-                 #   return redirect(url_for("loginRegister"))
                 usuario.nombre = request.form.get("nombre")
                 usuario.correo = request.form.get("correo")
 
@@ -197,19 +195,21 @@ def config():
                 usuario.edad = request.form.get("edad")
                 usuario.estatura = request.form.get("estatura")
                 usuario.peso = request.form.get("peso")
+                usuario.nivel_actividad = request.form.get("actividad")  # Agregado: Guardar nivel de actividad
 
                 if not usuario.edad or not usuario.estatura or not usuario.peso:
                     return redirect(url_for("index"))
                 session["edad"] = usuario.edad
                 session["estatura"] = usuario.estatura
                 session["peso"] = usuario.peso  
+                session["nivel_actividad"] = usuario.nivel_actividad  # Actualizar sesión
                 db.session.commit()
-            pass 
-        return render_template("config.html", edad=session["edad"], estatura=session['estatura'],  peso=session['peso'], 
-                               actividad=session['nivel_actividad'], nombre=session["nombre"], 
+        return render_template("config.html", edad=session["edad"], estatura=session["estatura"], peso=session["peso"], 
+                               actividad=session["nivel_actividad"], nombre=session["nombre"], 
                                correo=session["correo"], nombre_config=session["nombre"], correo_config=session["correo"])
     else:
         return redirect(url_for("homepage"))
+
 
 
 
