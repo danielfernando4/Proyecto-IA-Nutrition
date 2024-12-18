@@ -408,7 +408,7 @@ def cambio_receta():
         print(id_comida)
         print(dia)
         
-        plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"])
+        plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
         
         if dia == "comida_lunes":
             plan_nutricional.comida_lunes = id_comida
@@ -425,6 +425,7 @@ def cambio_receta():
         elif dia == "comida_domingo":
             plan_nutricional.comida_domingo = id_comida
 
+        db.session.commit()
         return jsonify({"status": "ok"})
     else:
         return redirect(url_for("homepage"))
