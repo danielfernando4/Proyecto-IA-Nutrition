@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const botonAgregar = document.querySelector(".boton-agregar");
 
   let recetas = [];
+  let recipeData = [];
   let debounceTimer;
 
   /** Mostrar/Ocultar el panel de filtros */
@@ -110,8 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
       dietSelect.value === "vegetarian"
         ? 2
         : dietSelect.value === "gluten_free"
-        ? 1
-        : 0;
+          ? 1
+          : 0;
     states["nombre"] = searchInput.value.trim();
 
     return states;
@@ -165,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
     recipeButtons.forEach((button) => {
       button.addEventListener("click", () => {
         const recipeId = button.getAttribute("data-index");
-        const recipeData = recetas.find((post) => post.id_comida == recipeId);
+        recipeData = recetas.find((post) => post.id_comida == recipeId);
 
         if (recipeData) {
           document.querySelector(".recipe-title").innerText =
@@ -209,7 +210,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     closeModalButton.addEventListener("click", closeModal);
-    modalOverlay.addEventListener("click", closeModal);
   }
 
   function closeModal() {
@@ -222,8 +222,37 @@ document.addEventListener("DOMContentLoaded", function () {
     debounceTimer = setTimeout(func, delay);
   }
 
-  if (botonAgregar)
-    botonAgregar.addEventListener("click", cerrarModalesYConfetti);
+
+  if (botonAgregar) {
+    botonAgregar.addEventListener("click", async () => {
+      const diaSeleccionado = document.getElementById("dia").value;
+
+      if (recipeData && diaSeleccionado) {
+        try {
+          const response = await fetch("/cambio_receta", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              nombre_comida: recipeData.nombre_comida,
+              dia: diaSeleccionado
+            }),
+          });
+
+          if (response.ok) {
+            console.log("Receta agregada correctamente al plan.");
+            cerrarModalesYConfetti();
+          } else {
+            console.error("Error al agregar la receta:", await response.text());
+          }
+        } catch (error) {
+          console.error("Error en la petición POST:", error);
+        }
+      } else {
+        console.error("Faltan datos: nombre de la receta o día seleccionado.");
+      }
+    });
+  }
+
   function cerrarModalesYConfetti() {
     modalPanel.classList.remove("open");
     modalOverlay.classList.remove("open");
