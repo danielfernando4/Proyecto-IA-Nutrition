@@ -1,7 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
     const postContainer = document.querySelector(".plan-thumbnails");
+    const messageContainer = document.getElementById("rating-message");
 
-    // Función para enviar las calificaciones
+    // Función para cargar calificaciones existentes
+    const loadRatings = () => {
+        fetch("/ratings", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        })
+            .then((response) => response.json())
+            .then((ratings) => {
+                ratings.forEach((rating) => {
+                    const ratingElement = document.querySelector(
+                        `.rating[data-id-comida="${rating.id_comida}"]`
+                    );
+                    if (ratingElement) {
+                        ratingElement.value = rating.calificacion; // Asigna la calificación en el elemento
+                    }
+                });
+            })
+            .catch((error) => console.error("Error al cargar calificaciones:", error));
+    };
+
+    // Función para enviar calificaciones
     const sendRating = (id_comida, calificacion) => {
         const ratingData = { id_comida: id_comida, calificacion: calificacion };
 
@@ -12,15 +33,33 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then((response) => {
                 if (response.ok) {
-                    alert("Calificación enviada exitosamente");
+                    messageContainer.textContent = "Calificación enviada exitosamente";
+                    messageContainer.style.color = "green";
                 } else {
-                    alert("Hubo un error al enviar la calificación");
+                    messageContainer.textContent = "Hubo un error al enviar la calificación";
+                    messageContainer.style.color = "red";
                 }
+                messageContainer.style.display = "block";
+                setTimeout(() => {
+                    messageContainer.style.display = "none";
+                }, 3000);
             })
             .catch((error) => {
                 console.error("Error:", error);
             });
     };
+
+    // Añadir eventos a los controles de calificación
+    document.querySelectorAll(".rating").forEach((ratingElement) => {
+        ratingElement.addEventListener("change", (event) => {
+            const id_comida = ratingElement.dataset.idComida;
+            const calificacion = event.target.value;
+            sendRating(id_comida, calificacion);
+        });
+    });
+
+    // Cargar calificaciones al cargar la página
+    loadRatings();
 
     // Función para mostrar los detalles del plato
     const mostrarDetalles = (plato) => {

@@ -214,33 +214,49 @@ def config():
 
 
 # ------------- Calificación de comidas -------------
-
 @app.route('/rate', methods=['POST'])
 def rate_comida():
     data = request.get_json()
     id_comida = data.get('id_comida')
     calificacion = data.get('calificacion')
 
-    app.logger.info(f'Recibida calificación: Comida ID {id_comida}, Calificación: {calificacion}')
-
-    if not id_comida or not calificacion:
+    if not id_comida or calificacion is None:
         return jsonify({'message': 'Datos incompletos'}), 400
-    
-    # Verificar si ya existe una calificación para el usuario y la comida especificada
-    calificacion_existente = Calificaciones.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
-    
+
+    id_usuario = session.get("id_usuario")
+    if not id_usuario:
+        return jsonify({'message': 'Usuario no autenticado'}), 403
+
+    app.logger.info(f'Recibida calificación: Comida ID {id_comida}, Calificación: {calificacion}, Usuario ID {id_usuario}')
+
+    calificacion_existente = Calificaciones.query.filter_by(id_comida=id_comida, id_usuario=id_usuario).first()
+
     if calificacion_existente:
         calificacion_existente.calificacion = calificacion
     else:
-        # Crear una nueva calificación
         nueva_calificacion = Calificaciones(
             id_comida=id_comida,
             calificacion=calificacion,
-            id_usuario=session.get("id_usuario")
+            id_usuario=id_usuario
         )
         db.session.add(nueva_calificacion)
+
     db.session.commit()
+
     return jsonify({'message': 'Calificación guardada correctamente'}), 200
+
+@app.route('/ratings', methods=['GET'])
+def get_ratings():
+    id_usuario = session.get("id_usuario")
+    if not id_usuario:
+        return jsonify({'message': 'Usuario no autenticado'}), 403
+
+    calificaciones = Calificaciones.query.filter_by(id_usuario=id_usuario).all()
+    return jsonify([{
+        "id_comida": c.id_comida,
+        "calificacion": c.calificacion
+    } for c in calificaciones])
+
 
 import json
 # --------- Obtener datos del Plan---------------------------------------------
