@@ -448,11 +448,12 @@ input:valid ~ label {
 }
 
 .recipe-card-footer {
-  margin-top: auto;
+  margin-top: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  text-align: center; /* Centra el botón */
 }
 
 .recipe-card-footer .btn {
@@ -584,4 +585,30 @@ input:valid ~ label {
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
   }
+}
+
+#postContainer {
+  display: flex;
+  flex-wrap: wrap; /* Las tarjetas se ajustan a la línea */
+  justify-content: center; /* Centra las tarjetas */
+  gap: 1rem; /* Espacio entre tarjetas */
+}
+
+.recipe-card {
+  width: 250px; /* Ancho de cada tarjeta */
+}
+
+.recipe-card-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centra el botón horizontalmente */
+  margin-top: 1rem; /* Espacio hacia arriba */
+  margin-right: 120px;
+}
+
+.btn-ready {
+  padding: 0.7em 2.7em;
+  font-size: 15px;
+  border-radius: 0.6em;
+  transition: all 0.3s ease-in-out;
 }
