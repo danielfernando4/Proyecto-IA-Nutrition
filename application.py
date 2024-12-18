@@ -216,18 +216,29 @@ def config():
                 usuario.edad = request.form.get("edad")
                 usuario.estatura = request.form.get("estatura")
                 usuario.peso = request.form.get("peso")
-                usuario.nivel_actividad = request.form.get("actividad")  # Agregado: Guardar nivel de actividad
+                usuario.nivel_actividad = request.form.get("actividad")  # Guardar nivel de actividad
+                usuario.sexo = request.form.get("sexo") 
 
-                if not usuario.edad or not usuario.estatura or not usuario.peso:
+                if not usuario.edad or not usuario.estatura or not usuario.peso or not usuario.sexo:
                     return redirect(url_for("index"))
                 session["edad"] = usuario.edad
                 session["estatura"] = usuario.estatura
                 session["peso"] = usuario.peso  
                 session["nivel_actividad"] = usuario.nivel_actividad  # Actualizar sesión
+                session["sexo"] = usuario.sexo 
+                auxpeso = float(usuario.peso)
+                auxestatura = float(usuario.estatura)
+                auxedad = float(usuario.edad)
+                auxsexo = 0 if usuario.sexo == "M" else 1
+                cal, prot, carb, grasas = separatebreakfast(auxestatura, auxpeso, auxedad, auxsexo, 3)
+                diets = int(kmeans_generator_diet(cal, prot, carb, grasas))
+                usuario.grupo = diets
+                session["grupo"] = usuario.grupo
                 db.session.commit()
         return render_template("config.html", edad=session["edad"], estatura=session["estatura"], peso=session["peso"], 
                                actividad=session["nivel_actividad"], nombre=session["nombre"], 
-                               correo=session["correo"], nombre_config=session["nombre"], correo_config=session["correo"])
+                               correo=session["correo"], nombre_config=session["nombre"], correo_config=session["correo"],
+                               sexo=session.get("sexo"))  # Agregado: sexo en el contexto
     else:
         return redirect(url_for("homepage"))
 

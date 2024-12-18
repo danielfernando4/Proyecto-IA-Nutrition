@@ -31,18 +31,19 @@
     <button class="user-close-button" aria-label="Cerrar" id="close_user_modal">
         <img src="/static/icons/cerrar.png" alt="Cerrar" class="user-close-icon">
     </button>
-    <h2>Actualizar Datos Personales</h2>
-    <p class="user-mod-desc">Es necesario que completes tus datos personales para que podamos personalizar las recomendaciones.</p>
+    <h2>Datos Personales</h2>
+    <p class="user-mod-desc">Es necesario que completes tus datos personales para que podamos personalizar las
+        recomendaciones.</p>
 
     <form method="POST" action="{{ url_for('config') }}" class="user-form-container">
         <label for="user_edad">Edad</label>
-        <input type="text"  id="user_edad" class="user-input-box" name="edad" required />
+        <input type="text" id="user_edad" class="user-input-box" name="edad" required />
 
         <label for="user_peso">Peso</label>
-        <input type="text"  id="user_peso" class="user-input-box" name="peso" required />
+        <input type="text" id="user_peso" class="user-input-box" name="peso" required />
 
         <label for="user_estatura">Estatura</label>
-        <input type="text"  id="user_estatura" class="user-input-box" name="estatura" required />
+        <input type="text" id="user_estatura" class="user-input-box" name="estatura" required />
 
         <label for="user_actividad">Actividad Física</label>
         <select id="user_actividad" class="user-input-box" name="actividad" required>
@@ -53,6 +54,14 @@
             <option value="Activo">Activo</option>
             <option value="Muy activo">Muy activo</option>
         </select>
+
+        <label for="user_sexo">Sexo</label>
+        <select id="user_sexo" class="user-input-box" name="sexo" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+        </select>
+
 
         <input type="hidden" name="type_config" value="datos">
 
