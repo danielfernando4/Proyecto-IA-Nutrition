@@ -25,3 +25,17 @@ print(p)
 print(car)
 print(grasas)
 print(kmeans_generator_diet(c, p, car, grasas))
+
+
+print()
+print()
+print()
+print(knn_generator_diet(c,p,car,grasas))
+
+
+c, p, car, grasas = separatebreakfast(195,96,26,0,2)
+print(c)
+print(p)
+print(car)
+print(grasas)
+print(knn_generator_diet(c, p, car, grasas))

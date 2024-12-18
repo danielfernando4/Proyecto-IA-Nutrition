@@ -6,7 +6,8 @@ from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from foodseparator import separatebreakfast
-from modelfunction import kmeans_generator_diet
+from modelfunction import kmeans_generator_diet, knn_generator_diet
+
 from sqlalchemy.sql.expression import func
 
 app = Flask(__name__, template_folder="templates")
@@ -90,6 +91,7 @@ def loginRegister():
                 session["nivel_actividad"] = usuario.nivel_actividad
                 session["grupo"] = usuario.grupo
                 session["id_plan"] = usuario.id_plan
+                session["nivel_actividad"] = usuario.nivel_actividad
                 flash("Login exitoso", "success")
                 return redirect(url_for("index"))  
             else:
@@ -112,15 +114,34 @@ def generation():
 
             # Procesar los datos
             sexo_num = 0 if sexo == "masculino" else 1
-            cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, 3)
-            diets = int(kmeans_generator_diet(cal, prot, carb, grasas))
-            print(diets)
+
+            actividad_fisica = session["nivel_actividad"]
+            nivel_actividad = 0
+            if actividad_fisica == "Sedentario":
+                nivel_actividad = 0
+            elif actividad_fisica == "Ligera actividad":
+                nivel_actividad = 1
+            elif actividad_fisica == "Moderadamente activo":
+                nivel_actividad = 2
+            elif actividad_fisica == "Activo":
+                nivel_actividad = 3
+            elif actividad_fisica == "Muy activo":
+                nivel_actividad = 4
+
+            cal, prot, carb, grasas = separatebreakfast(altura, peso, edad, sexo_num, nivel_actividad)
+            # Convertir a enteros estándar y sumar 1 a cada valor
+            diets_ids = [int(id) + 1 for id in knn_generator_diet(cal, prot, carb, grasas)]
+            print(diets_ids)
+
             # Consultar la base de datos para obtener las comidas
-            comidas = Comida.query.filter(Comida.grupo == diets).order_by(func.random()).limit(7).all()
+            comidas = Comida.query.filter(Comida.grupo.in_(diets_ids)).order_by(func.random()).limit(7).all()
 
             # Convertir las comidas a JSON
             comidas_json = [comida.to_dict() for comida in comidas]
-            return jsonify(comidas_json)  # Devolver el JSON al cliente
+            print(comidas_json)
+
+            # Devolver el JSON al cliente
+            return jsonify(comidas_json)
 
         # Manejar solicitudes GET
         return render_template("generation.html", nombre=session["nombre"], correo=session["correo"], 
@@ -213,7 +234,6 @@ def config():
 
 
 
-# ------------- Calificación de comidas -------------
 @app.route('/rate', methods=['POST'])
 def rate_comida():
     data = request.get_json()
@@ -403,6 +423,8 @@ def cerrarsesion():
     session.pop("edad", None)
     session.pop("nivel_actividad", None)
     session.pop("id_plan", None)
+    session.pop("nivel_actividad", None)
+    session.pop("grupo", None)
 
     flash("Has cerrado sesión exitosamente", "success")
     return redirect(url_for("homepage"))
@@ -467,17 +489,6 @@ def para_ti():
     else:
         return redirect(url_for("homepage"))
 
-
-
-@app.route("/datos")
-def datos():
-    comidas = Comida.query.all()
-    return '<br>'.join([f'ID: {comida.id_comida}, Nombre: {comida.nombre_comida}' for comida in comidas])
-
-@app.route("/usuarios")
-def usuarios():
-    comidas = Usuario.query.all()
-    return '<br>'.join([f'ID: {comida.nombre}, Nombre: {comida.password_usuario}' for comida in comidas])
 
 
 

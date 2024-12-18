@@ -19,7 +19,7 @@ def kmeans_generator_diet(calories, protein, carbs, fat):
     return predicted_cluster[0]
 
 
-def knn_generator_diet(calories, protein, carbs, fat):
+def knn_generator_diet(calories, protein, carbs, fat, n_neighbors=15):
     prediccion = None
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", message="X does not have valid feature names")
@@ -28,7 +28,8 @@ def knn_generator_diet(calories, protein, carbs, fat):
 
         modelo = joblib.load('models/nearest_neighbors_model.pkl')
 
-        datos_entrada = np.array([[calories, protein, carbs, fat]])
 
+        datos_entrada = np.array([[calories, protein, carbs, fat]])
+        modelo.set_params(n_neighbors=n_neighbors)
         prediccion = modelo.kneighbors(datos_entrada)    
     return prediccion[1][0]
