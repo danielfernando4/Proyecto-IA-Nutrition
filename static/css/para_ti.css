@@ -1,18 +1,79 @@
 .para_ti {
-    display: flex;
-    flex-direction: column;
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    color: #333;
-    padding-left: 2%;
-    gap: 10px;
-    background-color: #FAFAFA;
-    justify-content: left;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  color: #333;
+  padding-left: 2%;
+  gap: 70px;
+  background-color: #fafafa;
+  justify-content: flex-start;
+  text-align: left;
 }
 
+.container {
+  width: 100%;
+  padding: 10px;
+  position: relative;
+  overflow: hidden; /* Limita el contenido, pero las flechas estarán fuera */
+}
 
-.headercontent {
-    font-size: 32px;
-    color: #333;
-    margin-bottom: 10px;
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  position: relative;
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.25);
+  overflow: hidden;
+}
+
+/* Ajuste de las flechas fuera del contenedor */
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-next {
+  right: -10px; /* Saca un poco más la flecha a la derecha */
+}
+
+.swiper-button-prev {
+  left: -10px; /* Saca un poco más la flecha a la izquierda */
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px;
+  color: #333;
+}
+
+.container .swiper-slide .card-description {
+  padding: 1rem 1rem;
+}
+.container .swiper-slide .card-title,
+.container .swiper-slide .card-text {
+  margin-bottom: 0.5rem;
+}
+.container .swiper-slide .card-link {
+  text-align: center;
+}
+.container .swiper-slide .card-link a {
+  text-decoration: none;
+  color: #1d6ce2;
 }
