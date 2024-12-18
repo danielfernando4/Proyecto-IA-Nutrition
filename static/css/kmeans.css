@@ -10,6 +10,11 @@
     text-align: left;
 }
 
+.grupocal{
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
 
 .headercontent {
     font-size: 32px;
@@ -18,7 +23,7 @@
 }
 
 .headercontent2 {
-    font-size: 27px;
+    font-size: 23px;
     color: #333;
     margin-bottom: 20px;
 }
@@ -34,6 +39,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    margin-top: 20px;
     justify-content: left;
 }
 

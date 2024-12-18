@@ -7,16 +7,11 @@
   </div>
 
   <div class="search-bar">
-    <input
-      type="text"
-      placeholder="Busca recetas por su título..."
-      class="search-input"
-      id="search_input"
-    />
+    <input type="text" placeholder="Busca recetas por su título..." class="search-input" id="search_input" />
     <button class="filter-button" id="ver_filtro">
       <img src="/static/icons/filtrar.png" alt="Filtros" /> Filtros
     </button>
-</div>
+  </div>
 
   <div class="filters_content" id="filters_content">
     <button class="icon-button" type="submit">
@@ -58,12 +53,7 @@
 
   <div class="recipe_info" id="recipe_info">
     <button class="close-button" aria-label="Cerrar" id="close_recipe_info">
-      <img
-        src="/static/icons/cerrar.png"
-        alt="Cerrar"
-        class="close-icon"
-        id="close_recipeinf"
-      />
+      <img src="/static/icons/cerrar.png" alt="Cerrar" class="close-icon" id="close_recipeinf" />
     </button>
     <h2 class="recipe-title"></h2>
     <p class="mod_desc"></p>
@@ -94,23 +84,23 @@
         <h2>Agregar al plan</h2>
         <span class="cerrar-modal" id="cerrar_plan">&times;</span>
       </div>
-  
+
       <div class="contenido">
-        <p>Seleccione el día la que desea agregar esta receta</p>
+        <p>Seleccione el día al que desea agregar esta receta</p>
         <div class="seleccion-dia">
           <label for="dia">Día:</label>
           <select id="dia">
-            <option value="lunes">Lunes</option>
-            <option value="martes">Martes</option>
-            <option value="miercoles">Miércoles</option>
-            <option value="jueves">Jueves</option>
-            <option value="viernes">Viernes</option>
-            <option value="sabado">Sábado</option>
-            <option value="domingo">Domingo</option>
+            <option value="comida_lunes">Lunes</option>
+            <option value="comida_martes">Martes</option>
+            <option value="comida_miercoles">Miércoles</option>
+            <option value="comida_jueves">Jueves</option>
+            <option value="comida_viernes">Viernes</option>
+            <option value="comida_sabado">Sábado</option>
+            <option value="comida_domingo">Domingo</option>
           </select>
         </div>
       </div>
-  
+
       <div class="pie">
         <button class="boton-agregar">Agregar</button>
       </div>

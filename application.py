@@ -1,7 +1,11 @@
 #app main
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
+<<<<<<< HEAD
 from basemodels import Calificaciones, Comida, PlanNutricional, Usuario, db
+=======
+from basemodels import Comida, PlanNutricional, Usuario, db, Calificaciones
+>>>>>>> 07cd23ed2a3e9a38ab9b1c1f218c97a0ecb42573
 
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -21,7 +25,37 @@ app.permanent_session_lifetime = timedelta(minutes=120)
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
-        return render_template("index.html", nombre=session["nombre"], correo=session["correo"])
+        return render_template("index.html", nombre=session["nombre"], correo=session["correo"], edad=session["edad"], 
+                               estatura=session["estatura"], peso=session["peso"], 
+                               nivel_actividad=session["nivel_actividad"])
+    else:
+        return redirect(url_for("homepage"))
+
+
+@app.route("/fistlogin", methods=["POST"])
+def fistlogin():
+    if "correo" in session and "id_usuario" in session:
+        if request.method == "POST":
+            datos = request.get_json()
+            edad = datos.get("edad")
+            estatura = datos.get("estatura")
+            peso = datos.get("peso")
+            nivel_actividad = datos.get("nivel_actividad")
+
+            usuario = Usuario.query.get(session["id_usuario"])
+            usuario.edad = edad
+            usuario.estatura = estatura
+            usuario.peso = peso
+            usuario.nivel_actividad = nivel_actividad
+            session["edad"] = usuario.edad
+            session["estatura"] = usuario.estatura
+            session["peso"] = usuario.peso
+            session["nivel_actividad"] = usuario.nivel_actividad
+            db.session.commit()
+
+            return render_template("fistlogin.html", nombre=session["nombre"], correo=session["correo"])
+
+        return render_template("fistlogin.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
@@ -33,14 +67,18 @@ def loginRegister():
     if request.method == "POST":
         form_type = request.form.get("form_type")
         if form_type == "registro":
+            plan_nutricional = PlanNutricional()
+            db.session.add(plan_nutricional)  
+            db.session.commit()      
             usuario = Usuario()
             usuario.nombre = request.form.get("nombre")
             usuario.correo = request.form.get("correo")
             usuario.password_usuario = generate_password_hash(request.form.get("password"))
+            usuario.id_plan = plan_nutricional.id_plan
             if not usuario.nombre or not usuario.correo or not usuario.password_usuario:
                 return redirect(url_for("loginRegister"))
-            db.session.add(usuario)  
-            db.session.commit()      
+            db.session.add(usuario)
+            db.session.commit()
             flash("Usuario registrado correctamente", "success")
             return redirect(url_for("loginRegister"))  
         elif form_type == "login":
@@ -56,6 +94,7 @@ def loginRegister():
                 session["peso"] = usuario.peso
                 session["nivel_actividad"] = usuario.nivel_actividad
                 session["grupo"] = usuario.grupo
+                session["id_plan"] = usuario.id_plan
                 flash("Login exitoso", "success")
                 return redirect(url_for("index"))  
             else:
@@ -105,7 +144,9 @@ def guardar_tarjetas():
         if request.method == "POST": 
             print("LLEGANDO")
             data = request.get_json()
+            print(data)
 
+         
             lunes = data["Lunes"],
             martes = data["Martes"],
             miercoles = data["Miércoles"],
@@ -114,11 +155,18 @@ def guardar_tarjetas():
             sabado = data["Sábado"],
             domingo = data["Domingo"]
 
-            comidas = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
+            plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
 
-            for comida in comidas:
-                pass
-
+            plan_nutricional.comida_lunes = lunes
+            plan_nutricional.comida_martes = martes
+            plan_nutricional.comida_miercoles = miercoles
+            plan_nutricional.comida_jueves = jueves
+            plan_nutricional.comida_viernes = viernes
+            plan_nutricional.comida_sabado = sabado 
+            plan_nutricional.comida_domingo = domingo
+            
+            db.session.commit()
+            print(data)
             return jsonify({"status": "ok"})
 
         pass
@@ -162,7 +210,9 @@ def config():
                 session["peso"] = usuario.peso  
                 db.session.commit()
             pass 
-        return render_template("config.html", edad=session["edad"], estatura=session['estatura'],  peso=session['peso'], actividad=session['nivel_actividad'], nombre=session["nombre"], correo=session["correo"], nombre_config=session["nombre"], correo_config=session["correo"])
+        return render_template("config.html", edad=session["edad"], estatura=session['estatura'],  peso=session['peso'], 
+                               actividad=session['nivel_actividad'], nombre=session["nombre"], 
+                               correo=session["correo"], nombre_config=session["nombre"], correo_config=session["correo"])
     else:
         return redirect(url_for("homepage"))
 
@@ -247,6 +297,10 @@ def get_recipes():
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 07cd23ed2a3e9a38ab9b1c1f218c97a0ecb42573
 @app.route("/descubre", methods=["GET", "POST"])
 def descubre():
     if "correo" in session and "id_usuario" in session:
@@ -326,6 +380,7 @@ def cerrarsesion():
     session.pop("estatura", None)
     session.pop("edad", None)
     session.pop("nivel_actividad", None)
+    session.pop("id_plan", None)
 
     flash("Has cerrado sesión exitosamente", "success")
     return redirect(url_for("homepage"))
@@ -349,12 +404,44 @@ def kmeans():
         return redirect(url_for("homepage"))
 
 
+@app.route("/cambio_receta", methods=["POST"])
+def cambio_receta():
+    if "correo" in session and "id_usuario" in session:
+        respuesta = request.get_json()
+        id_comida = respuesta.get("id_comida")
+        dia = respuesta.get("dia")
+        print(id_comida)
+        print(dia)
+        
+        plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
+        
+        if dia == "comida_lunes":
+            plan_nutricional.comida_lunes = id_comida
+        elif dia == "comida_martes":
+            plan_nutricional.comida_martes = id_comida
+        elif dia == "comida_miercoles":
+            plan_nutricional.comida_miercoles = id_comida
+        elif dia == "comida_jueves":
+            plan_nutricional.comida_jueves = id_comida
+        elif dia == "comida_viernes":
+            plan_nutricional.comida_viernes = id_comida
+        elif dia == "comida_sabado":
+            plan_nutricional.comida_sabado = id_comida
+        elif dia == "comida_domingo":
+            plan_nutricional.comida_domingo = id_comida
+
+        db.session.commit()
+        return jsonify({"status": "ok"})
+    else:
+        return redirect(url_for("homepage"))
+    
+    
 
 
 @app.route("/para_ti")
 def para_ti():
     if "correo" in session and "id_usuario" in session:
-        return render_template("para_ti.html")
+        return render_template("para_ti.html", nombre=session["nombre"], correo=session["correo"])
     else:
         return redirect(url_for("homepage"))
 

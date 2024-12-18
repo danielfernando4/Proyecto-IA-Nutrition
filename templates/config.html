@@ -87,13 +87,13 @@
 
         <form method="POST" action="{{ url_for('config') }}" class="form-container">
             <label for="nombre">Nombres</label>
-            <input type="text" id="nombre" name="nombre" class="input-box" required>
+            <input type="text" value="{{nombre}}" id="nombre" name="nombre" class="input-box" required>
 
             <label for="correo">Correo</label>
-            <input type="email" id="correo" name="correo" class="input-box" required>
+            <input type="email" value="{{correo_config}}" id="correo" name="correo" class="input-box" required>
 
             <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" class="input-box" required>
+            <input type="password" value="{{contra}}" id="password" name="password" class="input-box" required>
 
             <input type="hidden" name="type_config" value="perfil">
 
@@ -114,21 +114,21 @@
 
         <form method="post" action="{{url_for('config')}}" class="form-container">
             <label for="input-box">Edad</label>
-            <input type="text" id="input-box" class="input-box" name="edad" />
+            <input type="text" value="{{edad}}" id="input-box" class="input-box" name="edad" />
 
             <label for="input-box">Peso</label>
-            <input type="text" id="input-box" class="input-box" name="peso" />
+            <input type="text"  value="{{peso}}" id="input-box" class="input-box" name="peso" />
 
             <label for="input-box">Estatura</label>
-            <input type="text" id="input-box" class="input-box" name="estatura" />
+            <input type="text"  value="{{estatura}}" id="input-box" class="input-box" name="estatura" />
 
             <label for="actividad">Actividad Física</label>
             <select id="actividad" class="input-box" name="actividad">
                 <option value="Sedentario">Sedentario</option>
-                <option value="Normal">Normal</option>
+                <option value="Ligera actividad">Ligera actividad</option>
+                <option value="Moderadamente activo">Moderadamente activo</option>
                 <option value="Activo">Activo</option>
                 <option value="Muy activo">Muy activo</option>
-                <option value="Deportista Olimpico">Deportista Olímpico</option>
             </select>
 
             <input type="hidden" name="type_config" value="datos">

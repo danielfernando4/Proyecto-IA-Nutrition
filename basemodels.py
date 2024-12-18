@@ -2,36 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-# Tabla Plan Nutricional del Usuario
-class PlanNutricional(db.Model):
-    __tablename__ = 'plan_nutricional_user'
-
-    id_plan = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
-    comida_lunes = db.Column(db.BigInteger)
-    comida_martes = db.Column(db.BigInteger)
-    comida_miercoles = db.Column(db.BigInteger)
-    comida_jueves = db.Column(db.BigInteger)
-    comida_viernes = db.Column(db.BigInteger)
-    comida_sabado = db.Column(db.BigInteger)
-    comida_domingo = db.Column(db.BigInteger)
-    id_usuario = db.Column(db.BigInteger, db.ForeignKey('usuario.id_usuario'), nullable=False)
-
-    def __repr__(self):
-        return f'<PlanNutricional id_plan={self.id_plan}, id_usuario={self.id_usuario}>'
-
-    def to_dict(self):
-        return {
-            "id_plan": self.id_plan,
-            "comida_lunes": self.comida_lunes,
-            "comida_martes": self.comida_martes,
-            "comida_miercoles": self.comida_miercoles,
-            "comida_jueves": self.comida_jueves,
-            "comida_viernes": self.comida_viernes,
-            "comida_sabado": self.comida_sabado,
-            "comida_domingo": self.comida_domingo,
-            "id_usuario": self.id_usuario
-        }
-
 # Tabla Usuario
 class Usuario(db.Model):
     __tablename__ = 'usuario'
@@ -46,9 +16,9 @@ class Usuario(db.Model):
     password_usuario = db.Column(db.String(200), nullable=False)
     nivel_actividad = db.Column(db.String(20))
     grupo = db.Column(db.Integer)
+    id_plan = db.Column(db.BigInteger, db.ForeignKey('plan_nutricional_user.id_plan'), nullable=False)
 
     # Relaciones con otras tablas
-    planes_nutricionales = db.relationship('PlanNutricional', backref='usuario', lazy=True, cascade="all, delete-orphan")
     calificaciones = db.relationship('Calificaciones', backref='usuario', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
@@ -65,8 +35,44 @@ class Usuario(db.Model):
             "sexo": self.sexo,
             "password_usuario": self.password_usuario,
             "nivel_actividad": self.nivel_actividad,
-            "grupo": self.grupo
+            "grupo": self.grupo,
+            "id_plan": self.id_plan
         }
+
+
+
+
+# Tabla Plan Nutricional
+class PlanNutricional(db.Model):
+    __tablename__ = 'plan_nutricional_user'
+
+    id_plan = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    comida_lunes = db.Column(db.BigInteger)
+    comida_martes = db.Column(db.BigInteger)
+    comida_miercoles = db.Column(db.BigInteger)
+    comida_jueves = db.Column(db.BigInteger)
+    comida_viernes = db.Column(db.BigInteger)
+    comida_sabado = db.Column(db.BigInteger)
+    comida_domingo = db.Column(db.BigInteger)
+
+    # Relación con Usuario
+    usuarios = db.relationship('Usuario', backref='plan_nutricional', lazy=True, cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return f'<PlanNutricional id_plan={self.id_plan}>'
+
+    def to_dict(self):
+        return {
+            "id_plan": self.id_plan,
+            "comida_lunes": self.comida_lunes,
+            "comida_martes": self.comida_martes,
+            "comida_miercoles": self.comida_miercoles,
+            "comida_jueves": self.comida_jueves,
+            "comida_viernes": self.comida_viernes,
+            "comida_sabado": self.comida_sabado,
+            "comida_domingo": self.comida_domingo
+        }
+
 
 # Tabla Comida
 class Comida(db.Model):
