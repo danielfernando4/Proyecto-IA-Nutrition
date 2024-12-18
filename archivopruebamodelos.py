@@ -19,7 +19,7 @@ print(grasas)
 print(kmeans_generator_diet(c, p, car, grasas))
 
 
-c, p, car, grasas = separatebreakfast(176,70,24,0,2)
+c, p, car, grasas = separatebreakfast(155,51,19,1,1)
 print(c)
 print(p)
 print(car)
