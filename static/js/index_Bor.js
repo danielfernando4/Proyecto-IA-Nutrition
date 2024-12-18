@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const postContainer = document.querySelector(".plan-thumbnails");
-
-  // Función para enviar las calificaciones
-  const sendRating = (id_comida, calificacion) => {
+    const postContainer = document.querySelector(".plan-thumbnails");
+  
+    // Función para enviar las calificaciones
+    const sendRating = (id_comida, calificacion) => {
       const ratingData = { id_comida: id_comida, calificacion: calificacion };
-
+  
       console.log('Datos enviados en el JSON:', ratingData);
-
+  
       fetch("/rate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", function() {
       .catch((error) => {
           console.error("Error:", error);
       });
-  };
-
-  // Función para mostrar los detalles del plato
-  const mostrarDetalles = (plato) => {
+    };
+  
+    // Función para mostrar los detalles del plato
+    const mostrarDetalles = (plato) => {
       if (!plato) {
-          console.error("El objeto plato es inválido:", plato);
-          return;
+        console.error("El objeto plato es inválido:", plato);
+        return;
       }
       
       const imagen = document.getElementById('plato-imagen');
@@ -37,100 +37,100 @@ document.addEventListener("DOMContentLoaded", function() {
       const ingredientesList = document.getElementById('plato-ingredientes');
       const propiedadesList = document.getElementById('plato-propiedades');
       const descripcion = document.getElementById('plato-descripcion');
-
+  
       if (!imagen || !nombre || !dia || !ingredientesList || !propiedadesList || !descripcion) {
-          console.error("Faltan elementos en el DOM para mostrar detalles del plato.");
-          return;
+        console.error("Faltan elementos en el DOM para mostrar detalles del plato.");
+        return;
       }
-
-      imagen.src = plato.url_imagen + '.jpg';	
+  
+      imagen.src = plato.url_imagen + '.jpg';   
       nombre.textContent = plato.nombre_comida;
       dia.innerText = plato.dia || 'Día no especificado';
       descripcion.textContent = plato.descripcion || 'Sin descripción disponible';
       ingredientesList.innerHTML = '';
       propiedadesList.innerHTML = '';
-
+  
       plato.ingredientes.forEach(ingrediente => {
-          const li = document.createElement('li');
-          li.textContent = ingrediente;
-          ingredientesList.appendChild(li);
+        const li = document.createElement('li');
+        li.textContent = ingrediente;
+        ingredientesList.appendChild(li);
       });
-
-      plato.propiedades.forEach(propiedad => {
+  
+      if (plato.propiedades) {
+        plato.propiedades.forEach(propiedad => {
           const li = document.createElement('li');
           li.textContent = propiedad;
           propiedadesList.appendChild(li);
-      });
-
+        });
+      }
+  
       document.getElementById('recipe-popup').classList.add('open');
       document.getElementById('modal_overlay').classList.add('open');
-  };
-
-  const closePopup = () => {
+    };
+  
+    const closePopup = () => {
       document.getElementById('recipe-popup').classList.remove('open');
       document.getElementById('modal_overlay').classList.remove('open');
-  };
-
-  // Función para cargar las recetas
-  const loadRecipes = () => {
+    };
+  
+    // Función para cargar las recetas
+    const loadRecipes = () => {
       fetch("/get_recipes")
       .then((response) => response.json())
       .then((recetas) => {
-          recetas.forEach((postData) => {
-              const card = document.createElement("div");
-              card.classList.add("thumbnail");
-              card.innerHTML = `
-                  <div class="thumbnail-content">
-                      <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="thumbnail-img" />
-                      <h3 class="thumbnail-title">${postData.nombre_comida}</h3>
-                      <p class="thumbnail-description">${postData.descripcion}</p>
-                      <div class="thumbnail-footer">
-                          <span>Más información</span>
-                          <button class="btn" data-recipe-id="${postData.id_comida}">Ver receta</button>
-                      </div>
-                      <div class="rating">
-                          ${[5, 4, 3, 2, 1].map(star => `
-                              <input type="radio" id="star${star}-${postData.id_comida}" name="rate-${postData.id_comida}" value="${star}" ${star == postData.calificacion ? 'checked' : ''} />
-                              <label for="star${star}-${postData.id_comida}" title="${star} estrellas"></label>
-                          `).join('')}
-                      </div>
+        console.log("Recetas recibidas:", recetas); // Verifica que los datos se reciben correctamente
+        recetas.forEach((postData) => {
+          console.log("Procesando receta:", postData); // Verifica cada receta individualmente
+          const card = document.createElement("div");
+          card.classList.add("thumbnail");
+          card.innerHTML = `
+              <div class="thumbnail-content">
+                  <img src="${postData.url_imagen}.jpg" alt="${postData.nombre_comida}" class="thumbnail-img" />
+                  <h3 class="thumbnail-title">${postData.nombre_comida}</h3>
+                  <p class="thumbnail-description">${postData.descripcion}</p>
+                  <div class="thumbnail-footer">
+                      <span>Más información</span>
+                      <button class="btn" data-recipe-id="${postData.id_comida}">Ver receta</button>
                   </div>
-              `;
-              const stars = card.querySelectorAll('.rating input[type="radio"]');
-              stars.forEach(star => {
-                  star.addEventListener('change', function() {
-                      const calificacion = this.value;
-                      sendRating(postData.id_comida, calificacion);
-                  });
-              });
-              postContainer.appendChild(card);
+                  <div class="rating">
+                      ${[5, 4, 3, 2, 1].map(star => `
+                          <input type="radio" id="star${star}-${postData.id_comida}" name="rate-${postData.id_comida}" value="${star}" ${star == postData.calificacion ? 'checked' : ''} />
+                          <label for="star${star}-${postData.id_comida}" title="${star} estrellas"></label>
+                      `).join('')}
+                  </div>
+              </div>
+          `;
+          const stars = card.querySelectorAll('.rating input[type="radio"]');
+          stars.forEach(star => {
+            star.addEventListener('change', function() {
+              const calificacion = this.value;
+              sendRating(postData.id_comida, calificacion);
+            });
           });
-
-          const detailButtons = document.querySelectorAll('.btn');
-          detailButtons.forEach(button => {
-              button.addEventListener('click', function() {
-                  const platoId = this.getAttribute('data-recipe-id');
-                  const plato = recetas.find(pl => pl.id_comida == platoId);
-                  mostrarDetalles(plato);
-              });
+          postContainer.appendChild(card);
+        });
+  
+        const detailButtons = document.querySelectorAll('.btn');
+        detailButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const platoId = this.getAttribute('data-recipe-id');
+            const plato = recetas.find(pl => pl.id_comida == platoId);
+            mostrarDetalles(plato);
           });
+        });
       })
       .catch((error) => {
-          console.error("Error al cargar las recetas:", error);
+        console.error("Error al cargar las recetas:", error);
       });
-  };
-
-  loadRecipes();
-
-  document.getElementById('close-popup').addEventListener('click', closePopup);
-  document.getElementById('modal_overlay').addEventListener('click', (e) => {
+    };
+  
+    loadRecipes();
+  
+    document.getElementById('close-popup').addEventListener('click', closePopup);
+    document.getElementById('modal_overlay').addEventListener('click', (e) => {
       if (e.target === document.getElementById('modal_overlay')) {
-          closePopup();
+        closePopup();
       }
+    });
   });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const botonVerReceta = document.getElementById('ver-receta');
-  botonVerReceta.addEventListener('click', () => mostrarDetalles(plato));
-});
+  

@@ -1,8 +1,7 @@
 #app main
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
-from basemodels import Comida, PlanNutricional, Usuario, db, Calificaciones
-
+from basemodels import Calificaciones, Comida, PlanNutricional, Usuario, db
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -97,10 +96,6 @@ def loginRegister():
                 flash("Credenciales incorrectas", "danger")
                 return render_template("loginRegister.html")
     return render_template("loginRegister.html")
-
-
-
-
 
 
 @app.route("/generation", methods=["GET", "POST"])
@@ -217,8 +212,12 @@ def config():
         return redirect(url_for("homepage"))
 
 
+<<<<<<< HEAD
 
 
+=======
+# ------------- Calificación de comidas -------------
+>>>>>>> 4fb82d2ff38532ced065ad08da1ab6e12aba8e0d
 @app.route('/rate', methods=['POST'])
 def rate_comida():
     data = request.get_json()
@@ -230,15 +229,17 @@ def rate_comida():
     if not id_comida or not calificacion:
         return jsonify({'message': 'Datos incompletos'}), 400
     
-    plan_nutricional = PlanNutricional.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
-    if plan_nutricional:
-        plan_nutricional.calificacion = calificacion
+    # Verificar si ya existe una calificación para el usuario y la comida especificada
+    calificacion_existente = Calificaciones.query.filter_by(id_comida=id_comida, id_usuario=session.get("id_usuario")).first()
+    
+    if calificacion_existente:
+        calificacion_existente.calificacion = calificacion
     else:
-        nueva_calificacion = PlanNutricional(
+        # Crear una nueva calificación
+        nueva_calificacion = Calificaciones(
             id_comida=id_comida,
             calificacion=calificacion,
-            id_usuario=session.get("id_usuario"),
-            dia_comida="algún_día"
+            id_usuario=session.get("id_usuario")
         )
         db.session.add(nueva_calificacion)
     db.session.commit()
@@ -246,14 +247,19 @@ def rate_comida():
 
 
 
+<<<<<<< HEAD
 
 import json
 
+=======
+# --------- Obtener datos del Plan---------------------------------------------
+>>>>>>> 4fb82d2ff38532ced065ad08da1ab6e12aba8e0d
 @app.route("/get_recipes", methods=["GET"])
 def get_recipes():
     if "correo" in session and "id_usuario" in session:
         plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"]).first()
 
+<<<<<<< HEAD
         comida_lunes = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_lunes).first()
         comida_martes = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_martes).first()
         comida_miercoles = Comida.query.filter(Comida.id_comida == plan_nutricional.comida_miercoles).first()
@@ -316,8 +322,50 @@ def get_recipes():
 
     else:
         return redirect(url_for("homepage"))
+=======
+        # Obtener el usuario actual
+        usuario = Usuario.query.get(id_usuario)
 
+        if usuario:
+            # Consultar el plan nutricional del usuario utilizando id_plan
+            plan = PlanNutricional.query.get(usuario.id_plan)
 
+            if plan:
+                comidas_ids = [
+                    ("lunes", plan.comida_lunes),
+                    ("martes", plan.comida_martes),
+                    ("miercoles", plan.comida_miercoles),
+                    ("jueves", plan.comida_jueves),
+                    ("viernes", plan.comida_viernes),
+                    ("sabado", plan.comida_sabado),
+                    ("domingo", plan.comida_domingo)
+                ]
+>>>>>>> 4fb82d2ff38532ced065ad08da1ab6e12aba8e0d
+
+                recetas = []
+                for dia, comida_id in comidas_ids:
+                    if comida_id:
+                        comida = Comida.query.get(comida_id)
+                        if comida:
+                            receta = {
+                                "dia": dia.capitalize(),
+                                "id_comida": comida.id_comida,
+                                "nombre_comida": comida.nombre_comida,
+                                "calorias": comida.calorias,
+                                "proteinas": comida.proteinas,
+                                "carbohidratos": comida.carbohidratos,
+                                "grasas": comida.grasas,
+                                "ingredientes": comida.ingredientes.split(",") if comida.ingredientes else [],
+                                "tipo_comida": comida.tipo_comida,
+                                "grupo": comida.grupo,
+                                "url_imagen": comida.url_imagen,
+                                "descripcion": comida.descripcion
+                            }
+                            recetas.append(receta)
+
+                return jsonify(recetas)
+    
+    return redirect(url_for("homepage"))
 
 
 @app.route("/descubre", methods=["GET", "POST"])
