@@ -330,7 +330,6 @@ body {
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  /* Coloca elementos en columna */
   background-color: #fff;
   padding: 30px;
   border-radius: 10px;
@@ -354,7 +353,6 @@ body {
 .overlay.open {
   display: block;
 }
-
 
 /* Botón de cerrar */
 .close-button {
@@ -426,10 +424,8 @@ body {
   left: 10px;
   top: 85px;
   margin: 10px;
-  /* Añade esto para cambiar posición horizontalmente */
   order: 2;
-  /* Cambia el número para reordenar */
-  width: 150px;
+  width: 160px;
 }
 
 .plan-image {
@@ -438,9 +434,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Añade esto para cambiar posición horizontalmente */
   order: 2;
-  /* Cambia el número para reordenar */
   top: 60px;
 }
 
@@ -452,18 +446,16 @@ body {
 
 .image-description {
   position: relative;
-  /* Cambia a relative si estaba absolute */
   margin-top: 10px;
-  /* Añade un pequeño margen superior */
   background-color: transparent;
-  /* Quita el fondo */
   padding: 0;
-  /* Elimina el padding */
-  font-size: 20px;
+  font-size: 10px;
   text-align: center;
   top: -5px;
   left: 35%;
   font-weight: bold;
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
 }
 
 .plan-ingredients {
@@ -474,36 +466,37 @@ body {
   padding: 10px;
   border-radius: 8px;
   list-style-position: inside;
-  /* Añade esto para cambiar posición horizontalmente */
   order: 3;
-  /* Cambia el número para reordenar */
   left: -20px;
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+  justify-content: center; /* Centra los elementos */
 }
 
 .plan-ingredients ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+  justify-content: center; /* Centra los elementos */
 }
 
 .plan-ingredients li {
   margin-bottom: 10px;
   color: #0b0e0d;
+  width: 45%; /* Ajusta el ancho para que quepan dos elementos por fila */
+  box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
 }
 
 .plan-description {
-
   margin-top: 10px;
   font-size: 16px;
   color: #0b0e0d;
   background-color: transparent;
-  /* Quita el fondo */
   border-color: transparent;
   padding: 0;
-  /* Elimina el padding */
-  /* Añade esto para cambiar posición horizontalmente */
   order: 4;
-  /* Cambia el número para reordenar */
   position: absolute;
   left: 50px;
   top: 70px;
@@ -517,16 +510,16 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.2); /* Transparencia y color */
+  background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(8px);
-  opacity: 1; /* Oculto por defecto */
+  opacity: 1;
   z-index: 1001;
   transition: opacity 0.3s ease, z-index 0.3s ease;
 }
 
 .user-modal-overlay.open {
-  opacity: 0; /* Visible cuando se abre */
-  z-index: -1; /* Encima del contenido */
+  opacity: 0;
+  z-index: -1;
 }
 
 .user-modal {
@@ -536,12 +529,12 @@ body {
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  background-color: #fff; /* Fondo blanco */
+  background-color: #fff;
   padding: 25px;
   border: 1px solid #2ecc71;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  opacity: 1; /* Oculto por defecto */
+  opacity: 1;
   z-index: 1002;
   width: 80%;
   max-width: 500px;
@@ -549,8 +542,8 @@ body {
 }
 
 .user-modal.open {
-  opacity: 0; /* Visible cuando se abre */
-  z-index: -1; /* Encima del overlay */
+  opacity: 0;
+  z-index: -1;
 }
 
 .user-close-button {
@@ -569,7 +562,7 @@ body {
 }
 
 .user-close-button:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Efecto hover */
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .user-close-icon {
@@ -579,7 +572,7 @@ body {
 
 .user-mod-desc {
   font-size: 16px;
-  color: #333; /* Texto más oscuro */
+  color: #333;
   margin: 10px 0 20px;
   line-height: 1.5;
 }
@@ -593,7 +586,7 @@ body {
 .user-input-box {
   padding: 10px 15px;
   font-size: 16px;
-  border: 1px solid #ddd; /* Borde claro */
+  border: 1px solid #ddd;
   border-radius: 16px;
   width: 100%;
   max-width: 300px;
@@ -604,12 +597,12 @@ body {
 }
 
 .user-input-box:focus {
-  border-color: #2ecc71; /* Verde de enfoque */
+  border-color: #2ecc71;
   box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
 }
 
 .user-update-button {
-  background-color: #2ecc71; /* Botón verde */
+  background-color: #2ecc71;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -622,9 +615,9 @@ body {
   gap: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, transform 0.3s;
-  align-self: flex-end; /* Alineado a la derecha */
+  align-self: flex-end;
 }
 
 .user-update-button:hover {
-  background-color: #27ae60; /* Más oscuro al pasar */
+  background-color: #27ae60;
 }
