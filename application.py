@@ -1,7 +1,7 @@
 #app main
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from configdb import Configdb
-from basemodels import Comida, PlanNutricional, Usuario, db
+from basemodels import Comida, PlanNutricional, Usuario, db, Calificaciones
 
 from datetime import timedelta
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -63,14 +63,18 @@ def loginRegister():
     if request.method == "POST":
         form_type = request.form.get("form_type")
         if form_type == "registro":
+            plan_nutricional = PlanNutricional()
+            db.session.add(plan_nutricional)  
+            db.session.commit()      
             usuario = Usuario()
             usuario.nombre = request.form.get("nombre")
             usuario.correo = request.form.get("correo")
             usuario.password_usuario = generate_password_hash(request.form.get("password"))
+            usuario.id_plan = plan_nutricional.id_plan
             if not usuario.nombre or not usuario.correo or not usuario.password_usuario:
                 return redirect(url_for("loginRegister"))
-            db.session.add(usuario)  
-            db.session.commit()      
+            db.session.add(usuario)
+            db.session.commit()
             flash("Usuario registrado correctamente", "success")
             return redirect(url_for("loginRegister"))  
         elif form_type == "login":
@@ -86,6 +90,7 @@ def loginRegister():
                 session["peso"] = usuario.peso
                 session["nivel_actividad"] = usuario.nivel_actividad
                 session["grupo"] = usuario.grupo
+                session["id_plan"] = usuario.id_plan
                 flash("Login exitoso", "success")
                 return redirect(url_for("index"))  
             else:
@@ -289,6 +294,8 @@ def get_recipes():
         return redirect(url_for("homepage"))
 
 
+
+
 @app.route("/descubre", methods=["GET", "POST"])
 def descubre():
     if "correo" in session and "id_usuario" in session:
@@ -368,6 +375,7 @@ def cerrarsesion():
     session.pop("estatura", None)
     session.pop("edad", None)
     session.pop("nivel_actividad", None)
+    session.pop("id_plan", None)
 
     flash("Has cerrado sesión exitosamente", "success")
     return redirect(url_for("homepage"))
@@ -393,13 +401,33 @@ def kmeans():
 
 @app.route("/cambio_receta", methods=["POST"])
 def cambio_receta():
-    respuesta = request.get_json()
-    id_comida = respuesta.get("id_comida")
-    dia = respuesta.get("dia")
-    print(id_comida)
-    print(dia)
-    
-    return jsonify({"status": "ok"})
+    if "correo" in session and "id_usuario" in session:
+        respuesta = request.get_json()
+        id_comida = respuesta.get("id_comida")
+        dia = respuesta.get("dia")
+        print(id_comida)
+        print(dia)
+        
+        plan_nutricional = PlanNutricional.query.filter(PlanNutricional.id_plan == session["id_plan"])
+        
+        if dia == "comida_lunes":
+            plan_nutricional.comida_lunes = id_comida
+        elif dia == "comida_martes":
+            plan_nutricional.comida_martes = id_comida
+        elif dia == "comida_miercoles":
+            plan_nutricional.comida_miercoles = id_comida
+        elif dia == "comida_jueves":
+            plan_nutricional.comida_jueves = id_comida
+        elif dia == "comida_viernes":
+            plan_nutricional.comida_viernes = id_comida
+        elif dia == "comida_sabado":
+            plan_nutricional.comida_sabado = id_comida
+        elif dia == "comida_domingo":
+            plan_nutricional.comida_domingo = id_comida
+
+        return jsonify({"status": "ok"})
+    else:
+        return redirect(url_for("homepage"))
     
     
 
