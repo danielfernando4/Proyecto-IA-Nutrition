@@ -9,7 +9,7 @@ def kmeans_generator_diet(calories, protein, carbs, fat):
         warnings.filterwarnings("ignore", message="X does not have valid feature names")
         
 
-        km = joblib.load('Proyecto-IA-Nutrition/models/kmeans_model_food.pkl')
+        #km = joblib.load('Proyecto-IA-Nutrition/models/kmeans_model_food.pkl')
 
         #km = joblib.load('models/kmeans_model_food.pkl')
 

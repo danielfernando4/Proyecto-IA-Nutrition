@@ -18,9 +18,6 @@ db.init_app(app)
 app.secret_key = "Nutritionkey12345session"
 app.permanent_session_lifetime = timedelta(minutes=120)
 
-
-
-
 @app.route("/")
 def index():
     if "correo" in session and "id_usuario" in session:
@@ -102,6 +99,31 @@ def generation():
 
 
 
+@app.route("/guardar_tarjetas", methods=["POST"])
+def guardar_tarjetas():
+    if "correo" in session and "id_usuario" in session:
+        if request.method == "POST": 
+            print("LLEGANDO")
+            data = request.get_json()
+
+            lunes = data["Lunes"],
+            martes = data["Martes"],
+            miercoles = data["Miércoles"],
+            jueves = data["Jueves"],
+            viernes = data["Viernes"],
+            sabado = data["Sábado"],
+            domingo = data["Domingo"]
+
+            comidas = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
+
+            for comida in comidas:
+                pass
+
+            return jsonify({"status": "ok"})
+
+        pass
+    return redirect(url_for("/homepage"))
+
 
 
 @app.route("/config", methods=["GET", "POST"])
@@ -177,6 +199,8 @@ def rate_comida():
 
 
 # --------- Obtener datos del Plan---------------------------------------------
+
+
 
 @app.route("/get_recipes", methods=["GET"])
 def get_recipes():

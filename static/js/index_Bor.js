@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
           return;
       }
 
-      imagen.src = plato.url_imagen + '.jpg';	
+      imagen.src = plato.url_imagen + '.jpg';   
       nombre.textContent = plato.nombre_comida;
       dia.innerText = plato.dia || 'Día no especificado';
       descripcion.textContent = plato.descripcion || 'Sin descripción disponible';
@@ -56,11 +56,14 @@ document.addEventListener("DOMContentLoaded", function() {
           ingredientesList.appendChild(li);
       });
 
-      plato.propiedades.forEach(propiedad => {
-          const li = document.createElement('li');
-          li.textContent = propiedad;
-          propiedadesList.appendChild(li);
-      });
+      // Aseguramos que el pop-up tenga estas propiedades
+      if (plato.propiedades) {
+          plato.propiedades.forEach(propiedad => {
+              const li = document.createElement('li');
+              li.textContent = propiedad;
+              propiedadesList.appendChild(li);
+          });
+      }
 
       document.getElementById('recipe-popup').classList.add('open');
       document.getElementById('modal_overlay').classList.add('open');
@@ -128,9 +131,4 @@ document.addEventListener("DOMContentLoaded", function() {
           closePopup();
       }
   });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const botonVerReceta = document.getElementById('ver-receta');
-  botonVerReceta.addEventListener('click', () => mostrarDetalles(plato));
 });
