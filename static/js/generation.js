@@ -107,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then((result) => {
         console.log("Tarjetas guardadas exitosamente:", result);
-        alert("Las tarjetas se guardaron correctamente en la base de datos.");
       })
       .catch((error) => {
         console.error("Error al guardar las tarjetas:", error);

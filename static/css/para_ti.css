@@ -1,25 +1,40 @@
-.para_ti {
-  display: flex;
-  flex-direction: column;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  color: #333;
-  padding-left: 2%;
-  gap: 70px;
-  background-color: #fafafa;
-  justify-content: flex-start;
-  text-align: left;
-}
-
-.container {
+/* Estilo del header */
+.header {
   width: 100%;
   padding: 10px;
-  position: relative;
-  overflow: hidden; /* Limita el contenido, pero las flechas estarán fuera */
+  text-align: center;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(
+    45deg,
+    #1d6ce2,
+    #6bff68
+  ); /* Inicialmente un gradiente entre azul y verde */
+  background-size: 200% 200%; /* Esto permite el movimiento del gradiente */
+  animation: gradientAnimation 10s ease infinite; /* Animación del gradiente */
+  border-radius: 8px;
+}
+
+/* Animación del gradiente que cambia con el tiempo */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .swiper-container {
-  width: 100%;
-  height: 100%;
+  width: 100%; /* Asegúrate de que el contenedor tenga el ancho total */
+  height: 100%; /* Ajuste para el alto */
+  display: flex; /* Asegura que los slides se alineen correctamente */
+  flex-direction: row; /* Para que los slides estén en una fila */
 }
 
 .swiper-slide {
@@ -30,50 +45,44 @@
   border-radius: 15px;
   box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.25);
   overflow: hidden;
+  width: 80%; /* Controla el tamaño de las tarjetas dentro del carrusel */
+  margin: 0 auto; /* Centra las tarjetas dentro del contenedor */
+  max-width: 300px; /* Asegura un tamaño máximo para las tarjetas */
 }
 
-/* Ajuste de las flechas fuera del contenedor */
-.swiper-button-next,
-.swiper-button-prev {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+.swiper-slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+}
+
+.container {
+  width: 100%;
+  padding: 10px;
+  position: relative;
+  overflow: hidden; /* Limita el contenido, las flechas estarán fuera */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Centra el contenido */
 }
 
-.swiper-button-next {
-  right: -10px; /* Saca un poco más la flecha a la derecha */
+.card-description {
+  padding: 1rem;
 }
 
-.swiper-button-prev {
-  left: -10px; /* Saca un poco más la flecha a la izquierda */
-}
-
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 20px;
-  color: #333;
-}
-
-.container .swiper-slide .card-description {
-  padding: 1rem 1rem;
-}
-.container .swiper-slide .card-title,
-.container .swiper-slide .card-text {
+.card-title,
+.card-text {
   margin-bottom: 0.5rem;
 }
-.container .swiper-slide .card-link {
+
+.card-link {
   text-align: center;
 }
-.container .swiper-slide .card-link a {
+
+.card-link a {
   text-decoration: none;
   color: #1d6ce2;
+}
+.swiper-button-next {
+}
+.swiper-button-prev {
 }
