@@ -244,51 +244,54 @@ def rate_comida():
 
 
 # --------- Obtener datos del Plan---------------------------------------------
-
-
-
 @app.route("/get_recipes", methods=["GET"])
 def get_recipes():
     if "correo" in session and "id_usuario" in session:
         id_usuario = session["id_usuario"]
 
-        # Consultar el plan nutricional del usuario
-        plan = PlanNutricional.query.filter_by(id_usuario=id_usuario).first()
+        # Obtener el usuario actual
+        usuario = Usuario.query.get(id_usuario)
 
-        if plan:
-            comidas_ids = [
-                ("lunes", plan.comida_lunes),
-                ("martes", plan.comida_martes),
-                ("miercoles", plan.comida_miercoles),
-                ("jueves", plan.comida_jueves),
-                ("viernes", plan.comida_viernes),
-                ("sabado", plan.comida_sabado),
-                ("domingo", plan.comida_domingo)
-            ]
+        if usuario:
+            # Consultar el plan nutricional del usuario utilizando id_plan
+            plan = PlanNutricional.query.get(usuario.id_plan)
 
-            recetas = []
-            for dia, comida_id in comidas_ids:
-                if comida_id:
-                    comida = Comida.query.get(comida_id)
-                    if comida:
-                        receta = {
-                            "dia": dia.capitalize(),
-                            "id_comida": comida.id_comida,
-                            "nombre_comida": comida.nombre_comida,
-                            "calorias": comida.calorias,
-                            "proteinas": comida.proteinas,
-                            "carbohidratos": comida.carbohidratos,
-                            "grasas": comida.grasas,
-                            "ingredientes": comida.ingredientes.split(",") if comida.ingredientes else [],
-                            "tipo_comida": comida.tipo_comida,
-                            "grupo": comida.grupo,
-                            "url_imagen": comida.url_imagen,
-                            "descripcion": comida.descripcion
-                        }
-                        recetas.append(receta)
+            if plan:
+                comidas_ids = [
+                    ("lunes", plan.comida_lunes),
+                    ("martes", plan.comida_martes),
+                    ("miercoles", plan.comida_miercoles),
+                    ("jueves", plan.comida_jueves),
+                    ("viernes", plan.comida_viernes),
+                    ("sabado", plan.comida_sabado),
+                    ("domingo", plan.comida_domingo)
+                ]
 
-            return jsonify(recetas)
-        return redirect(url_for("homepage"))
+                recetas = []
+                for dia, comida_id in comidas_ids:
+                    if comida_id:
+                        comida = Comida.query.get(comida_id)
+                        if comida:
+                            receta = {
+                                "dia": dia.capitalize(),
+                                "id_comida": comida.id_comida,
+                                "nombre_comida": comida.nombre_comida,
+                                "calorias": comida.calorias,
+                                "proteinas": comida.proteinas,
+                                "carbohidratos": comida.carbohidratos,
+                                "grasas": comida.grasas,
+                                "ingredientes": comida.ingredientes.split(",") if comida.ingredientes else [],
+                                "tipo_comida": comida.tipo_comida,
+                                "grupo": comida.grupo,
+                                "url_imagen": comida.url_imagen,
+                                "descripcion": comida.descripcion
+                            }
+                            recetas.append(receta)
+
+                return jsonify(recetas)
+    
+    return redirect(url_for("homepage"))
+
 
 @app.route("/descubre", methods=["GET", "POST"])
 def descubre():
