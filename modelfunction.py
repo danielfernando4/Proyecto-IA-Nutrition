@@ -19,7 +19,7 @@ def kmeans_generator_diet(calories, protein, carbs, fat):
     return predicted_cluster[0]
 
 
-def knn_generator_diet(calories, protein, carbs, fat, n_neighbors=15):
+def knn_generator_diet(calories, protein, carbs, fat, n_neighbors=30):
     prediccion = None
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", message="X does not have valid feature names")

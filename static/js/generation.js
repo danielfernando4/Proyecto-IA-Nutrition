@@ -107,6 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then((result) => {
         console.log("Tarjetas guardadas exitosamente:", result);
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
       })
       .catch((error) => {
         console.error("Error al guardar las tarjetas:", error);
