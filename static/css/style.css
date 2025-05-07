@@ -277,3 +277,18 @@ header {
 }
 
 
+
+@media (max-width: 768px) {
+  .menu ul li a .menu-text {
+    display: none; 
+  }
+
+  .menu ul li a {
+    justify-content: center; 
+  }
+
+  .menu ul li a img {
+    width: 30px; 
+    height: 30px;
+  }
+}
